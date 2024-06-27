@@ -6,7 +6,6 @@ import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
 import { defineNuxtPlugin } from '#app'
 import "@/assets/scss/style.scss"
-import { VPicker } from 'vuetify/labs/VPicker'
 
 export default defineNuxtPlugin((nuxtApp) => {
   const vuetify = createVuetify({
