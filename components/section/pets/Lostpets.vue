@@ -27,28 +27,29 @@ import Noticelostpets from "@/components/section/pets/Noticelostpets.vue";
             :key="index"
             cols="12"
             md="6"
-            lg="4"
-            class="mb-4"
           >
-            <v-card>
-              <v-img :src="animal.image_url" height="200px"></v-img>
-              <v-card-title>{{ animal.name }}</v-card-title>
-
-              <v-card-subtitle>
-                เพศ: {{ animal.gender }} | อายุ: {{ animal.age }}
-              </v-card-subtitle>
-              <v-card-subtitle>สายพันธุ์: {{ animal.breed }}</v-card-subtitle>
-              <v-card-subtitle>สี: {{ animal.color }}</v-card-subtitle>
+            <v-card class="d-flex">
+              <v-img
+                :src="animal.image_url"
+                max-width="200"
+                height="200"
+                cover
+              ></v-img>
               <v-card-text>
+                <div class="text-h5 mb-2">{{ animal.name }}</div>
+                <div>เพศ: {{ animal.gender }}</div>
+                <div>อายุ: {{ animal.age }}</div>
+                <div>สายพันธุ์: {{ animal.breed }}</div>
+                <div>สี: {{ animal.color }}</div>
                 <div>รางวัล: {{ formatCurrency(animal.reward) }}</div>
-                <div>วันที่หาย: {{ animal.lost_date }}</div>
+                <div>หายเมื่อ: {{ animal.lost_date }}</div>
                 <div>สถานที่หาย: {{ animal.location }}</div>
+                <v-card-actions>
+                  <NuxtLink :to="`/pets/${animal.id}`">
+                    <v-btn text color="primary">รายละเอียด</v-btn>
+                  </NuxtLink>
+                </v-card-actions>
               </v-card-text>
-              <v-card-actions>
-                <NuxtLink :to="`/pets/${animal.id}`">
-                  <v-btn text color="primary">รายละเอียด</v-btn>
-                </NuxtLink>
-              </v-card-actions>
             </v-card>
           </v-col>
         </v-row>

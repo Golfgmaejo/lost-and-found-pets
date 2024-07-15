@@ -7,6 +7,7 @@ import Test from "@/components/section/Test.vue";
 <template>
   <div>
     <!-- <Noticelostpets /> -->
-    <Test/>
+    <!-- <Test/> -->
+    <SectionAdminLostpetstable />
   </div>
 </template>

@@ -50,7 +50,7 @@ import Noticeadoptpet from "@/components/section/pets/Noticeadoptpet.vue";
           </v-col>
         </v-row>
       </v-container>
-      <v-dialog v-model="isDialogOpen" max-width="600px" persistent>
+      <v-dialog v-model="isDialogOpen" max-width="1200px" persistent>
         <v-card>
           <v-card-title class="headline">ประกาศหาบ้าน</v-card-title>
           <v-card-text>

@@ -48,7 +48,7 @@ import Noticefindowner from "@/components/section/pets/Noticefindowner.vue";
           </v-col>
         </v-row>
       </v-container>
-      <v-dialog v-model="isDialogOpen" max-width="600px" persistent>
+      <v-dialog v-model="isDialogOpen" max-width="1200px" persistent>
         <v-card>
           <v-card-title class="headline">ประกาศหาเจ้าของ</v-card-title>
           <v-card-text>

@@ -1,8 +1,8 @@
 <template>
   <div>
     <!-- -----------------------------------------------
-          Start Header
-    ----------------------------------------------- -->
+            Start Header
+      ----------------------------------------------- -->
     <v-app-bar class="app-header img">
       <v-container class="auto-height">
         <v-toolbar class="d-flex align-center">
@@ -39,17 +39,36 @@
         </v-toolbar>
       </v-container>
       <div>
-        <v-btn class="text-nav" to="/login">เข้าสู่ระบบ</v-btn>
-        <v-btn class="text-nav" to="/register">สมัครสมาชิก</v-btn>
+        <v-menu>
+          <template v-slot:activator="{ props }">
+            <v-btn class="text-nav" v-bind="props"
+              ><v-icon>mdi-account</v-icon></v-btn
+            >
+          </template>
+          <v-list>
+            <v-list-item
+              v-for="(userpages, index) in userpages"
+              :key="index"
+              :value="index"
+              class="text-nav"
+            >
+              <!-- <v-list-item-title  class="text-nav">{{ item.title }}</v-list-item-title> -->
+              <nuxt-link :to="userpages.to" class="text-nav">
+                <v-list-item-title>{{ userpages.title }}</v-list-item-title>
+              </nuxt-link>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+        <v-btn class="text-nav" color="red" to="/">ออกจากระบบ</v-btn>
       </div>
     </v-app-bar>
     <!-- -----------------------------------------------
-          End Header
-    ----------------------------------------------- -->
+            End Header
+      ----------------------------------------------- -->
   </div>
   <!----sidebar menu drawer start----->
 </template>
-<script >
+<script>
 export default {
   data() {
     return {
@@ -58,7 +77,12 @@ export default {
         { title: "หาเจ้าของ", to: "/findowner" },
         { title: "หาบ้าน", to: "/adoptpet" },
       ],
-    };
+      userpages: [
+        { title: "แก้ไขข้อมูลส่วนตัว", to: "/edituser" },
+        { title: "ประกาศสัตว์หาย", to: "/notice" },
+        { title: "ประวัติประกาศ", to: "/userpets" },
+      ],
+    }; 
   },
 };
 </script>

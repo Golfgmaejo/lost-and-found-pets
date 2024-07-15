@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <v-main> 
-      <SectionAdminUsertable />
+    <v-main>
+      <SectionAdminFindownertable />
     </v-main>
   </v-app>
 </template>
@@ -11,4 +11,3 @@ definePageMeta({
   layout: "admin",
 });
 </script>
-

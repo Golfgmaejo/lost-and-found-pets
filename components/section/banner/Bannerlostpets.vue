@@ -2,9 +2,6 @@
     <div>
       <div class="feature3-component">
         <v-container class="position-relative">
-          <!-- -----------------------------------------------
-              Start Feature 3 Text
-          ----------------------------------------------- -->
           <v-row>
             <v-col cols="12" md="6">
               <img src="https://i.pinimg.com/564x/ee/7b/a4/ee7ba47196c1a9ab8bd5625f3b19863b.jpg"
@@ -28,11 +25,6 @@
               </v-card>
             </v-col>
           </v-row>
-  
-          <!-- <v-divider class="border-opacity-100"></v-divider> -->
-          <!-- -----------------------------------------------
-              End Feature 3 Text
-          ----------------------------------------------- -->
         </v-container>
       </div>
     </div>

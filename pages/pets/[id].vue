@@ -1,151 +1,120 @@
 <template>
-    <v-container>
-      <v-main>
-        <v-row justify="center" class="mt-10">
-          <v-col cols="12" md="8">
-            <v-card v-if="animal">
-              <v-img :src="animal.image" height="400px"></v-img>
-              <v-card-title class="text-h4">{{ animal.name }}</v-card-title>
-              <v-card-subtitle>สายพันธุ์: {{ animal.breed }}</v-card-subtitle>
-              <v-card-subtitle>เพศ: {{ animal.gender }} | อายุ: {{ animal.age }}</v-card-subtitle>
-              <v-card-text>
-                <div>รางวัล: {{ formatCurrency(animal.reward) }}</div>
-                <div>วันที่หาย: {{ animal.lostDate }}</div>
-                <div>สถานที่หาย: {{ animal.lostLocation }}</div>
-              </v-card-text>
-            </v-card>
-            <v-alert v-else type="error">
-              ไม่พบข้อมูลสัตว์เลี้ยงที่คุณต้องการ
-            </v-alert>
+  <v-container fluid>
+    <v-main>
+      <v-container class="mt-16">
+        <v-row>
+          <v-col cols="12">
+            <h1 class="text-5xl mb-8">{{ pageTitle }}</h1>
           </v-col>
         </v-row>
-      </v-main>
-    </v-container>
-  </template>
-  
-  <script setup>
-  import { ref, onMounted } from 'vue';
-  import { useRoute } from 'vue-router';
-  
-  const route = useRoute();
-  const animalId = route.params.id; // ดึง id จาก URL
-  
-  // ฟังก์ชันสำหรับจัดฟอร์แมตค่าเงิน
-  const formatCurrency = (value) => {
-    return new Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(value);
-  };
-  
-  // Mock data, same as the one used in the main page
-  const mockupData = [
-    {
-      name: "สุนัขชื่อบ๊อบ",
-      image: "https://inwfile.com/s-gf/vzykf4.jpg",
-      breed: "ชิวาวา",
-      gender: "ผู้",
-      age: "2 ปี",
-      reward: 5000,
-      lostDate: "1 มกราคม 2024",
-      lostLocation: "กรุงเทพฯ",
-    },
-    {
-      name: "แมวชื่อมิว",
-      image: "https://example.com/cat.jpg",
-      breed: "เปอร์เซีย",
-      gender: "เมีย",
-      age: "3 ปี",
-      reward: 3000,
-      lostDate: "15 กุมภาพันธ์ 2024",
-      lostLocation: "เชียงใหม่",
-    },
-    {
-      name: "กระต่ายชื่อฮอป",
-      image: "https://example.com/rabbit.jpg",
-      breed: "ฮอลแลนด์ ลอป",
-      gender: "ผู้",
-      age: "1 ปี",
-      reward: 1500,
-      lostDate: "20 มีนาคม 2024",
-      lostLocation: "ภูเก็ต",
-    },
-    {
-      name: "นกชื่อทวิตเตอร์",
-      image: "https://example.com/bird.jpg",
-      breed: "เลิฟเบิร์ด",
-      gender: "เมีย",
-      age: "6 เดือน",
-      reward: 1000,
-      lostDate: "10 เมษายน 2024",
-      lostLocation: "หาดใหญ่",
-    },
-    {
-      name: "แมวชื่อมะลิ",
-      image: "https://example.com/white-cat.jpg",
-      breed: "ไทย",
-      gender: "เมีย",
-      age: "4 ปี",
-      reward: 2000,
-      lostDate: "5 พฤษภาคม 2024",
-      lostLocation: "พัทยา",
-    },
-    {
-      name: "สุนัขชื่อชิโร่",
-      image: "https://example.com/shiba.jpg",
-      breed: "ชิบะ อินุ",
-      gender: "ผู้",
-      age: "1.5 ปี",
-      reward: 4000,
-      lostDate: "25 มิถุนายน 2024",
-      lostLocation: "นครราชสีมา",
-    },
-    {
-      name: "นกแก้วชื่อเรนโบว์",
-      image: "https://example.com/parrot.jpg",
-      breed: "นกแก้วมาคอว์",
-      gender: "ผู้",
-      age: "2 ปี",
-      reward: 2500,
-      lostDate: "8 กรกฎาคม 2024",
-      lostLocation: "กรุงเทพฯ",
-    },
-    {
-      name: "กระต่ายชื่อซูซี่",
-      image: "https://example.com/bunny.jpg",
-      breed: "มินิ เร็กซ์",
-      gender: "เมีย",
-      age: "8 เดือน",
-      reward: 1800,
-      lostDate: "30 สิงหาคม 2024",
-      lostLocation: "ลำพูน",
-    },
-    {
-      name: "แมวชื่อสโนว์",
-      image: "https://example.com/snow-cat.jpg",
-      breed: "สก็อตติช โฟลด์",
-      gender: "ผู้",
-      age: "2.5 ปี",
-      reward: 3500,
-      lostDate: "15 กันยายน 2024",
-      lostLocation: "สุราษฎร์ธานี",
-    },
-    {
-      name: "สุนัขชื่อโคล่า",
-      image: "https://example.com/pug.jpg",
-      breed: "ปั๊ก",
-      gender: "เมีย",
-      age: "3 ปี",
-      reward: 2200,
-      lostDate: "28 ตุลาคม 2024",
-      lostLocation: "ชลบุรี",
-    },
-  ];
-  
-  const animal = ref(null);
-  
-  onMounted(() => {
-    const id = parseInt(animalId);
-    if (id >= 0 && id < mockupData.length) {
-      animal.value = mockupData[id];
-    }
-  });
-  </script>
-  
+        <v-row>
+          <v-col
+            v-for="(animal, index) in lostpetsList"
+            :key="index"
+            cols="12"
+            class="mb-8"
+          >
+            <v-card>
+              <v-img :src="animal.image_url" height="500px" class="full-width-image"></v-img>
+              <v-card-title>{{ animal.name }}</v-card-title>
+              <v-card-text>
+                <v-row>
+                  <v-col cols="12" md="4">
+                    <p><strong>เพศ:</strong> {{ animal.gender }}</p>
+                  </v-col>
+                  <v-col cols="12" md="4">
+                    <p><strong>อายุ:</strong> {{ animal.age }}</p>
+                  </v-col>
+                  <v-col cols="12" md="4">
+                    <p><strong>สายพันธุ์:</strong> {{ animal.breed }}</p>
+                  </v-col>
+                  <v-col cols="12" md="4">
+                    <p><strong>สี:</strong> {{ animal.color }}</p>
+                  </v-col>
+                  <v-col cols="12" md="4">
+                    <p><strong>รางวัล:</strong> {{ formatCurrency(animal.reward) }}</p>
+                  </v-col>
+                  <v-col cols="12" md="4">
+                    <p><strong>วันที่หาย:</strong> {{ animal.lost_date }}</p>
+                  </v-col>
+                  <v-col cols="12">
+                    <p><strong>สถานที่หาย:</strong> {{ animal.location }}</p>
+                  </v-col>
+                  <v-col cols="12">
+                    <LMap
+                      :zoom="zoom"
+                      :center="[animal.lat, animal.lng]"
+                      style="height: 350px; width: 100%"
+                    >
+                      <LTileLayer
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        attribution='&amp;copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                      />
+                      <LMarker
+                        :lat-lng="[animal.lat, animal.lng]"
+                        :draggable="false"
+                      ></LMarker>
+                    </LMap>
+                  </v-col>
+                </v-row>
+              </v-card-text>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-main>
+  </v-container>
+</template>
+
+<script setup>
+import axios from "axios";
+import { ref } from "vue";
+
+const pageTitle = "สัตว์เลี้ยงหาย";
+const zoom = ref(16);
+const lostpetsList = ref([]);
+
+const fetchLostpets = () => {
+  const url = "http://localhost:5000/api/lost_pet/getAll_lost_pets";
+  axios.get(url)
+    .then((response) => {
+      console.log(response.data.data);
+      lostpetsList.value = response.data.data.map((animal) => ({
+        ...animal,
+        lat: parseFloat(animal.lat),
+        lng: parseFloat(animal.lng),
+      }));
+    })
+    .catch((error) => {
+      console.error("Error fetching lost pets:", error);
+    });
+};
+
+const formatCurrency = (value) => {
+  return new Intl.NumberFormat("th-TH", {
+    style: "currency",
+    currency: "THB",
+  }).format(value);
+};
+
+fetchLostpets();
+</script>
+
+<style scoped>
+.text-5xl {
+  font-size: 3rem;
+}
+.mt-16 {
+  margin-top: 4rem;
+}
+.mb-8 {
+  margin-bottom: 2rem;
+}
+.full-width-image {
+  width: 100%;
+  object-fit: cover;
+}
+.v-card {
+  padding: 1rem;
+}
+</style>

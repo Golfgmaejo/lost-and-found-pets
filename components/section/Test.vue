@@ -51,42 +51,165 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols="12" sm="6">
-          <v-container>
-        <v-date-input
+        <!-- <v-col cols="12" sm="6">
+          <v-date-input
+            v-model="formattedDate"
+            label="วันที่หาย"
+            max-width="auto"
+            :rules="Rules"
+            :max="new Date().toISOString().substr(0, 10)"
+          ></v-date-input>
+        </v-col> -->
+        <v-row>
+    <v-col
+      cols="12"
+      sm="6"
+      md="4"
+    >
+      <v-menu
+        ref="menu"
+        v-model="menu"
+        :close-on-content-click="false"
+        :return-value.sync="date"
+        transition="scale-transition"
+        offset-y
+        min-width="auto"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-text-field
+            v-model="date"
+            label="Picker in menu"
+            prepend-icon="mdi-calendar"
+            readonly
+            v-bind="attrs"
+            v-on="on"
+          ></v-text-field>
+        </template>
+        <v-date-picker
           v-model="date"
-          label="Select a date"
-        ></v-date-input>
-      </v-container>
-        </v-col>
-        <v-col cols="12" sm="6">
-          <v-menu
-            v-model="menuTime"
-            :close-on-content-click="false"
-            transition="scale-transition"
-            offset-y
-            min-width="auto"
+          no-title
+          scrollable
+        >
+          <v-spacer></v-spacer>
+          <v-btn
+            text
+            color="primary"
+            @click="menu = false"
           >
-            <template v-slot:activator="{ on, attrs }">
-              <v-text-field
-                v-model="form.lostTime"
-                label="เวลาที่หาย"
-                prepend-icon="mdi-clock"
-                readonly
-                v-bind="attrs"
-                v-on="on"
-                :rules="Rules"
-                @click="menuTime = true"
-              ></v-text-field>
-            </template>
-            <v-time-picker
-              v-model="form.lostTime"
-              @input="menuTime = false"
-              scrollable
-              format="24hr"
-            ></v-time-picker>
-          </v-menu>
-        </v-col>
+            Cancel
+          </v-btn>
+          <v-btn
+            text
+            color="primary"
+            @click="$refs.menu.save(date)"
+          >
+            OK
+          </v-btn>
+        </v-date-picker>
+      </v-menu>
+    </v-col>
+    <v-spacer></v-spacer>
+    <v-col
+      cols="12"
+      sm="6"
+      md="4"
+    >
+      <v-dialog
+        ref="dialog"
+        v-model="modal"
+        :return-value.sync="date"
+        persistent
+        width="290px"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-text-field
+            v-model="date"
+            label="Picker in dialog"
+            prepend-icon="mdi-calendar"
+            readonly
+            v-bind="attrs"
+            v-on="on"
+          ></v-text-field>
+        </template>
+        <v-date-picker
+          v-model="date"
+          scrollable
+        >
+          <v-spacer></v-spacer>
+          <v-btn
+            text
+            color="primary"
+            @click="modal = false"
+          >
+            Cancel
+          </v-btn>
+          <v-btn
+            text
+            color="primary"
+            @click="$refs.dialog.save(date)"
+          >
+            OK
+          </v-btn>
+        </v-date-picker>
+      </v-dialog>
+    </v-col>
+    <v-col
+      cols="12"
+      sm="6"
+      md="4"
+    >
+      <v-menu
+        v-model="menu2"
+        :close-on-content-click="false"
+        :nudge-right="40"
+        transition="scale-transition"
+        offset-y
+        min-width="auto"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-text-field
+            v-model="date"
+            label="Picker without buttons"
+            prepend-icon="mdi-calendar"
+            readonly
+            v-bind="attrs"
+            v-on="on"
+          ></v-text-field>
+        </template>
+        <v-date-picker
+          v-model="date"
+          @input="menu2 = false"
+        ></v-date-picker>
+      </v-menu>
+    </v-col>
+    <v-spacer></v-spacer>
+  </v-row>
+        
+        <!-- <v-col cols="12" sm="6">
+          <v-text-field
+            v-model="time"
+            :active="menu2"
+            :focus="menu2"
+            label="เวลาที่หาย"
+            prepend-icon="mdi-clock-time-four-outline"
+            readonly
+            :rules="Rules"
+          >
+            <v-menu
+              v-model="menu2"
+              :close-on-content-click="true"
+              activator="parent"
+              transition="scale-transition"
+            >
+              <v-time-picker
+                v-if="menu2"
+                v-model="time"
+                full-width
+                format="24hr"
+              ></v-time-picker>
+            </v-menu>
+          </v-text-field>
+        </v-col> -->
       </v-row>
       <v-row>
         <v-col cols="12">
@@ -142,13 +265,33 @@
   </v-form>
 </template>
 
+<script>
+// export default {
+//   data() {
+//     return {
+//       time: null,
+//       menu2: false,
+//       model: null,
+//     };
+//   },
+// };
+export default {
+    data: () => ({
+      date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+      menu: false,
+      modal: false,
+      menu2: false,
+    }),
+  }
+</script>
+
 <script setup>
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import axios from "axios";
 
 const valid = ref(false);
 const genders = ["ผู้", "เมีย", "ไม่ระบุ"];
-let checkdate = null;
+const Rules = [(v) => !!v || "จำเป็นต้องกรอก"];
 const form = ref({
   name: "",
   gender: "",
@@ -164,29 +307,7 @@ const form = ref({
   details: "",
   image: null,
 });
-const Rules = [(v) => !!v || "จำเป็นต้องกรอก"];
-const menuDate = ref(false);
-const menuTime = ref(false);
 
-const SelectedDate = (selectedDate) => {
-  // console.log("Selected Date:", selectedDate);
-  if (selectedDate && selectedDate !== checkdate) {
-    checkdate = selectedDate;
-    menuDate.value = false;
-  }
-};
-
-//format form.lostDate
-const formattedLostDate = computed(() => {
-  if (form.value.lostDate) {
-    const date = new Date(form.value.lostDate);
-    const day = date.getDate().toString().padStart(2, "0");
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const year = date.getFullYear() + 543;
-    return `${day}/${month}/${year}`;
-  }
-  return "";
-});
 const submitForm = () => {
   if (valid.value) {
     const formData = new FormData();
@@ -221,6 +342,5 @@ const clearForm = () => {
     details: "",
     image: null,
   };
-  valid.value = false;
 };
 </script>

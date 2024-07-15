@@ -15,10 +15,10 @@ import SortButtons from "./SortButtons.vue";
             </div>
           </v-col>
         </v-row>
-        <v-btn class="float-right text-feature" to="/product" style="font-weight: 500;">ทั้งหมด</v-btn>
+        <SortButtons />
         <v-row class="mt-8">
           <v-col
-            v-for="product in productList.slice(0, 3)"
+            v-for="product in productList"
             :key="product.id"
             cols="12"
             md="4"
@@ -35,7 +35,6 @@ import SortButtons from "./SortButtons.vue";
                 <p class="text-card-subtext">{{ product.type }}</p>
                 <p class="text-card-title">{{ product.name }}</p>
                 <p class="text-card-subtext-title">{{ product.details }}</p>
-
                 <div class="btn-sty">
                   <v-btn
                     :disabled="!product.link_Shopee"

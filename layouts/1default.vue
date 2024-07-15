@@ -14,7 +14,7 @@ useHead({
 
 <template>
   <v-app>
-    <LcUser />
+    <LcHeader />
     <v-main>
       <slot />
     </v-main>

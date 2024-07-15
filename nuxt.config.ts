@@ -1,18 +1,19 @@
-import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
-import { defineNuxtConfig } from 'nuxt/config'
+import vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
+import { defineNuxtConfig } from "nuxt/config";
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
   build: {
-    transpile: ['vuetify'],
+    transpile: ["vuetify"],
   },
 
   modules: [
     (_options, nuxt) => {
-      nuxt.hooks.hook('vite:extendConfig', (config: any) => {
-        config.plugins.push(vuetify({ autoImport: true }))
-      })
+      nuxt.hooks.hook("vite:extendConfig", (config: any) => {
+        config.plugins.push(vuetify({ autoImport: true }));
+      });
     },
+    "@nuxtjs/leaflet",
   ],
   vite: {
     vue: {
@@ -21,18 +22,11 @@ export default defineNuxtConfig({
       },
     },
     define: {
-      'process.env.DEBUG': false,
+      "process.env.DEBUG": false,
     },
-    plugins: [
-      vuetify({ autoImport: true })
-    ],
+    plugins: [vuetify({ autoImport: true })],
   },
-  css: [
-    'vuetify/styles',
-    '@mdi/font/css/materialdesignicons.css',
-    'material-design-icons-iconfont/dist/material-design-icons.css'
-  ],
   plugins: [
-    '~/plugins/vuetify.ts'
+    "~/plugins/vuetify.ts"
   ],
-})
+});

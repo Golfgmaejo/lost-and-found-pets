@@ -14,7 +14,12 @@
               </template>
               <v-list-group value="gallery" v-model="open">
                 <template v-slot:activator="{ props }">
-                  <v-list-item v-bind="props" title="แกลอรี่"></v-list-item>
+                  <v-list-item
+                  prepend-icon="mdi-image-multiple"
+                    v-bind="props"
+                    title="แกลอรี่"
+                    to="/admin/gallery"
+                  ></v-list-item>
                 </template>
               </v-list-group>
             </v-list-group>
@@ -26,53 +31,46 @@
                   title="ประกาศ"
                 ></v-list-item>
               </template>
-              <v-list-group value="notice1" v-model="open">
+              <v-list-group value="lostpets" v-model="open">
                 <template v-slot:activator="{ props }">
                   <v-list-item
+                    prepend-icon="mdi-dog-service"
                     v-bind="props"
                     title="สัตว์เลี้ยงหาย"
+                    to="/admin/pets/Editlostpets"
                   ></v-list-item>
                 </template>
               </v-list-group>
               <v-list-group value="findowner" v-model="open">
                 <template v-slot:activator="{ props }">
-                  <v-list-item v-bind="props" title="หาเจ้าของ"></v-list-item>
+                  <v-list-item
+                    prepend-icon="mdi-account-eye"
+                    v-bind="props"
+                    title="หาเจ้าของ"
+                    to="/admin/pets/editfindowner"
+                  ></v-list-item>
                 </template>
               </v-list-group>
               <v-list-group value="adoptpet" v-model="open">
                 <template v-slot:activator="{ props }">
-                  <v-list-item v-bind="props" title="หาบ้าน"></v-list-item>
+                  <v-list-item
+                    prepend-icon="mdi-home-search"
+                    v-bind="props"
+                    title="หาบ้าน"
+                    to="/admin/pets/editadoptpet"
+                  ></v-list-item>
                 </template>
               </v-list-group>
             </v-list-group>
-            <v-list-group value="shop" v-model="open">
+            <v-list-group value="product" v-model="open">
               <template v-slot:activator="{ props }">
                 <v-list-item
                   v-bind="props"
                   prepend-icon="mdi-storefront"
                   title="สินค้า"
+                  to="/admin/product"
                 ></v-list-item>
               </template>
-              <v-list-group value="dog" v-model="open">
-                <template v-slot:activator="{ props }">
-                  <v-list-item v-bind="props" title="สุนัข"></v-list-item>
-                </template>
-              </v-list-group>
-              <v-list-group value="cat" v-model="open">
-                <template v-slot:activator="{ props }">
-                  <v-list-item v-bind="props" title="แมว"></v-list-item>
-                </template>
-              </v-list-group>
-              <v-list-group value="magica" v-model="open">
-                <template v-slot:activator="{ props }">
-                  <v-list-item v-bind="props" title="สัตว์พิเศษ"></v-list-item>
-                </template>
-              </v-list-group>
-              <v-list-group value="allproduct" v-model="open">
-                <template v-slot:activator="{ props }">
-                  <v-list-item v-bind="props" title="ทั้งหมด"></v-list-item>
-                </template>
-              </v-list-group>
             </v-list-group>
             <v-list-group value="article" v-model="open">
               <template v-slot:activator="{ props }">
@@ -80,6 +78,7 @@
                   v-bind="props"
                   prepend-icon="mdi-book-open-variant-outline"
                   title="บทความ"
+                  to="/admin/article"
                 ></v-list-item>
               </template>
             </v-list-group>
@@ -89,6 +88,7 @@
                   v-bind="props"
                   prepend-icon="mdi-account-circle"
                   title="Users"
+                  to="/admin/users"
                 ></v-list-item>
               </template>
             </v-list-group>
@@ -97,22 +97,14 @@
       </v-list-item>
     </v-list>
   </v-navigation-drawer>
-  <v-app-bar app dark prominent style="background-color: #ffcc80">
-    <v-toolbar-title>Admin</v-toolbar-title>
+  <v-app-bar app title="Admin" style="background-color: #ffcc80">
     <v-spacer></v-spacer>
-    <v-btn icon>
+    <v-btn icon to="/">
       <v-icon>mdi-export</v-icon>
     </v-btn>
   </v-app-bar>
-  <v-main>
-    <v-container fluid class="pa-0 fill-height">
-      
-    </v-container>
-  </v-main>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-
-const open = ref(['Home', 'Notice', 'shop', 'article', 'Users']) // Default opened groups
+import { ref } from "vue";
 </script>

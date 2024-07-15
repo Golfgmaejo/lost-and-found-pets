@@ -2,9 +2,6 @@
     <div>
       <div class="bg-color">
         <v-container>
-          <!-- -----------------------------------------------
-              Start Portfolio Text
-          ----------------------------------------------- -->
           <v-row justify="center">
             <v-col cols="12" sm="10" md="9" lg="7">
               <div class="text-center">
@@ -17,9 +14,6 @@
               </div>
             </v-col>
           </v-row>
-          <!-- -----------------------------------------------
-              End Portfolio Text 
-          ----------------------------------------------- -->
         </v-container>
       </div>
     </div>

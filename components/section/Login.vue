@@ -12,14 +12,14 @@
         max-height="48"
         src="~/public/images/logos/pets-logo.png"
       ></v-img>
-      <div class="text-subtitle-1 text-medium-emphasis">Account</div>
+      <div class="text-subtitle-1 text-medium-emphasis">E-mail</div>
 
       <v-form v-model="valid" ref="form">
         <v-text-field
           v-model="username"
           :rules="[rules.required, rules.email]"
           density="compact"
-          placeholder="Email address"
+          placeholder="อีเมล"
           prepend-inner-icon="mdi-email-outline"
           variant="outlined"
         ></v-text-field>
@@ -36,7 +36,7 @@
           :type="visible ? 'text' : 'password'"
           :rules="[rules.required]"
           density="compact"
-          placeholder="Enter your password"
+          placeholder="รหัสผ่าน"
           prepend-inner-icon="mdi-lock-outline"
           variant="outlined"
           @click:append-inner="visible = !visible"
@@ -66,6 +66,7 @@
           สมัครสมาชิก <v-icon icon="mdi-chevron-right"></v-icon>
         </a>
       </v-card-text>
+      <v-btn @click="getSessionStorage">Test read</v-btn>
     </v-card>
   </v-container>
 </template>
