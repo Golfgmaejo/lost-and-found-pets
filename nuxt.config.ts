@@ -6,7 +6,6 @@ export default defineNuxtConfig({
   build: {
     transpile: ["vuetify"],
   },
-
   modules: [
     (_options, nuxt) => {
       nuxt.hooks.hook("vite:extendConfig", (config: any) => {
@@ -26,7 +25,9 @@ export default defineNuxtConfig({
     },
     plugins: [vuetify({ autoImport: true })],
   },
-  plugins: [
-    "~/plugins/vuetify.ts"
-  ],
+  plugins: ["~/plugins/vuetify.ts"],
+  compatibilityDate: "2024-08-12",
+  router: {
+    middleware: ['auth'],
+  },
 });

@@ -1,14 +1,9 @@
 <template>
   <div>
-    <!-- -----------------------------------------------
-          Start Header
-    ----------------------------------------------- -->
     <v-app-bar class="app-header img">
       <v-container class="auto-height">
         <v-toolbar class="d-flex align-center">
-          <!-- Logo -->
           <LcLogoPetsLogo />
-          <!-- Desktop view Navigation -->
           <div class="ml-auto">
             <ul class="navbar-nav d-flex" min-height="auto">
               <v-btn class="text-nav" to="/"> หน้าหลัก </v-btn>
@@ -54,15 +49,15 @@ export default {
   data() {
     return {
       pages: [
-        { title: "สัตว์เลี้ยงหาย", to: "/notice" },
-        { title: "หาเจ้าของ", to: "/findowner" },
-        { title: "หาบ้าน", to: "/adoptpet" },
+        { title: "สัตว์เลี้ยงหาย", to: "/lost_pet" },
+        { title: "หาเจ้าของ", to: "/find_owner" },
+        { title: "หาบ้าน", to: "/adopt_pet" },
       ],
     };
   },
 };
 </script>
-<style>
+<style scoped>
 .v-list-item-title {
   -webkit-hyphens: auto;
   hyphens: auto;

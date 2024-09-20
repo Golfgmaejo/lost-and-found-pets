@@ -6,7 +6,7 @@ import PetsCatDog from '/images/pets/pets-cat-dog.png';
 <template>
   <img class="petscat" :src="PetsCatDog" alt="logo"/>
 </template>
-<style>
+<style scoped>
 .petscat {
   height: 300px;
   width: 300px;

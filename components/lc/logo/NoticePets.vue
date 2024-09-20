@@ -6,7 +6,7 @@ import NoticePets from '/images/pets/lost-pets.png';
 <template>
   <img class="petscat" :src="NoticePets" alt="logo"/>
 </template>
-<style>
+<style scoped>
 .petscat {
   height: 300px;
   width: 300px;

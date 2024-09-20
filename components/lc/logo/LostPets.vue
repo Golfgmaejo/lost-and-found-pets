@@ -6,7 +6,7 @@ import LostPets from '/images/pets/lostpets.png';
 <template>
   <img class="lotspets" :src="LostPets" alt="logo"/>
 </template>
-<style>
+<style scoped>
 .lotspets {
   height: 90px;
   width: 90px;

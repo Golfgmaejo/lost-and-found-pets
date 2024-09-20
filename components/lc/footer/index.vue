@@ -35,13 +35,13 @@
             <NuxtLink to="/" class="text-footer-menu no-underline">หน้าแรก</NuxtLink>
           </div>
           <div class="mt-2">
-            <NuxtLink to="/notice" class="text-footer-menu no-underline">ประกาศสัตว์เลี้ยงหาย</NuxtLink>
+            <NuxtLink to="/lost_pet" class="text-footer-menu no-underline">ประกาศสัตว์เลี้ยงหาย</NuxtLink>
           </div>
           <div class="mt-2">
-            <NuxtLink to="/adoptpet" class="text-footer-menu no-underline">ประกาศหาบ้าน</NuxtLink>
+            <NuxtLink to="/adopt_pet" class="text-footer-menu no-underline">ประกาศหาบ้าน</NuxtLink>
           </div>
           <div class="mt-2">
-            <NuxtLink to="/findowner" class="text-footer-menu no-underline">ประกาศหาเจ้าของ</NuxtLink>
+            <NuxtLink to="/find_owner" class="text-footer-menu no-underline">ประกาศหาเจ้าของ</NuxtLink>
           </div>
           <div class="mt-2">
             <NuxtLink to="/product" class="text-footer-menu no-underline">สินค้า</NuxtLink>

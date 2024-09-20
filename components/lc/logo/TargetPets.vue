@@ -6,7 +6,7 @@ import TargetPets from '/images/pets/found-home.png';
 <template>
   <img class="petscat" :src="TargetPets" alt="logo"/>
 </template>
-<style>
+<style scoped>
 .petscat {
   height: 300px;
   width: 300px;

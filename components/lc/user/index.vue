@@ -1,14 +1,9 @@
 <template>
   <div>
-    <!-- -----------------------------------------------
-            Start Header
-      ----------------------------------------------- -->
     <v-app-bar class="app-header img">
       <v-container class="auto-height">
         <v-toolbar class="d-flex align-center">
-          <!-- Logo -->
           <LcLogoPetsLogo />
-          <!-- Desktop view Navigation -->
           <div class="ml-auto">
             <ul class="navbar-nav d-flex" min-height="auto">
               <v-btn class="text-nav" to="/"> หน้าหลัก </v-btn>
@@ -18,21 +13,18 @@
                 </template>
                 <v-list>
                   <v-list-item
-                    v-for="(pages, index) in pages"
+                    v-for="(page, index) in pages"
                     :key="index"
-                    :value="index"
                     class="text-nav"
                   >
-                    <!-- <v-list-item-title  class="text-nav">{{ item.title }}</v-list-item-title> -->
-                    <nuxt-link :to="pages.to" class="text-nav">
-                      <v-list-item-title>{{ pages.title }}</v-list-item-title>
+                    <nuxt-link :to="page.to" class="text-nav">
+                      <v-list-item-title>{{ page.title }}</v-list-item-title>
                     </nuxt-link>
                   </v-list-item>
                 </v-list>
               </v-menu>
               <v-btn class="text-nav" to="/product">สินค้า</v-btn>
-
-              <v-btn class="text-nav" to="/article">บทความ</v-btn>
+              <v-btn class="text-nav" to="/article">บทความ</v-btn>  
               <v-btn class="text-nav" to="/about">เกี่ยวกับเรา</v-btn>
             </ul>
           </div>
@@ -41,52 +33,55 @@
       <div>
         <v-menu>
           <template v-slot:activator="{ props }">
-            <v-btn class="text-nav" v-bind="props"
-              ><v-icon>mdi-account</v-icon></v-btn
-            >
+            <v-btn class="text-nav" v-bind="props">
+              <v-icon>mdi-account</v-icon>
+            </v-btn>
           </template>
           <v-list>
             <v-list-item
-              v-for="(userpages, index) in userpages"
+              v-for="(userpage, index) in userpages"
               :key="index"
-              :value="index"
               class="text-nav"
             >
-              <!-- <v-list-item-title  class="text-nav">{{ item.title }}</v-list-item-title> -->
-              <nuxt-link :to="userpages.to" class="text-nav">
-                <v-list-item-title>{{ userpages.title }}</v-list-item-title>
+              <nuxt-link :to="userpage.to" class="text-nav">
+                <v-list-item-title>{{ userpage.title }}</v-list-item-title>
               </nuxt-link>
             </v-list-item>
           </v-list>
         </v-menu>
-        <v-btn class="text-nav" color="red" to="/">ออกจากระบบ</v-btn>
+        <v-btn class="text-nav" color="red" @click="logout">ออกจากระบบ</v-btn>
       </div>
     </v-app-bar>
-    <!-- -----------------------------------------------
-            End Header
-      ----------------------------------------------- -->
   </div>
-  <!----sidebar menu drawer start----->
 </template>
+
 <script>
 export default {
   data() {
     return {
       pages: [
-        { title: "สัตว์เลี้ยงหาย", to: "/notice" },
-        { title: "หาเจ้าของ", to: "/findowner" },
-        { title: "หาบ้าน", to: "/adoptpet" },
+        { title: "สัตว์เลี้ยงหาย", to: "/lost_pet" },
+        { title: "หาเจ้าของ", to: "/find_owner" },
+        { title: "หาบ้าน", to: "/adopt_pet" },
       ],
       userpages: [
         { title: "แก้ไขข้อมูลส่วนตัว", to: "/edituser" },
-        { title: "ประกาศสัตว์หาย", to: "/notice" },
+        { title: "ประกาศสัตว์หาย", to: "/lost_pet" },
         { title: "ประวัติประกาศ", to: "/userpets" },
       ],
-    }; 
+    };
   },
+  methods: {
+    logout() {
+      // Implement logout functionality here
+      // For example, you might want to clear auth tokens and redirect
+      this.$router.push('/'); // Redirect to the home page
+    }
+  }
 };
 </script>
-<style>
+
+<style scoped>
 .v-list-item-title {
   -webkit-hyphens: auto;
   hyphens: auto;

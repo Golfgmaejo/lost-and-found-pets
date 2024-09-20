@@ -1,12 +1,13 @@
 <script setup>
-import { ref } from 'vue';
-import Gallery from '~/components/section/banner/Gallery.vue';
-import AllProducts from '@/components/section/AllProducts.vue';
+import { ref } from "vue";
+import Gallery from "~/components/section/Home/Gallery.vue";
+import Productspage from "~/components/section/Product/Productspage.vue";
+
 </script>
 
 <template>
-    <div>
-        <Gallery />
-        <AllProducts/>
-    </div>
+  <div>
+    <Gallery />
+    <Productspage />
+  </div>
 </template>

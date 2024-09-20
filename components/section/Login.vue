@@ -6,56 +6,66 @@
       elevation="8"
       max-width="448"
       rounded="lg"
-      ><v-img
+    >
+      <v-img
         class="mx-auto mb-8"
         max-width="228"
         max-height="48"
         src="~/public/images/logos/pets-logo.png"
       ></v-img>
-      <div class="text-subtitle-1 text-medium-emphasis">E-mail</div>
 
+      <!-- v-alert for login feedback -->
+      <v-alert
+        v-if="alert.show"
+        :type="alert.type"
+        dense
+        prominent
+        dismissible
+        @click:close="alert.show = false"
+        class="mb-4"
+      >
+        {{ alert.message }}
+      </v-alert>
+
+      <div class="text-subtitle-1 text-medium-emphasis">E-mail</div>
       <v-form v-model="valid" ref="form">
         <v-text-field
-          v-model="username"
+          v-model="email"
           :rules="[rules.required, rules.email]"
           density="compact"
-          placeholder="อีเมล"
+          placeholder="Email"
           prepend-inner-icon="mdi-email-outline"
           variant="outlined"
         ></v-text-field>
 
-        <div
-          class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between"
-        >
+        <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
           Password
         </div>
-
         <v-text-field
           v-model="password"
           :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
           :type="visible ? 'text' : 'password'"
           :rules="[rules.required]"
           density="compact"
-          placeholder="รหัสผ่าน"
+          placeholder="Password"
           prepend-inner-icon="mdi-lock-outline"
           variant="outlined"
           @click:append-inner="visible = !visible"
         ></v-text-field>
 
-        <v-card class="mb-12" color="surface-variant" variant="tonal"> </v-card>
-
         <v-btn
           class="mb-8"
           color="primary"
           size="large"
-          @click="login()"
+          @click="login"
           variant="tonal"
           block
           :disabled="!valid"
         >
-          Log In
+          เข้าสู่ระบบ
         </v-btn>
       </v-form>
+
       <v-card-text class="text-center">
         <a
           class="text-blue text-decoration-none"
@@ -66,56 +76,100 @@
           สมัครสมาชิก <v-icon icon="mdi-chevron-right"></v-icon>
         </a>
       </v-card-text>
-      <v-btn @click="getSessionStorage">Test read</v-btn>
     </v-card>
   </v-container>
 </template>
+
 <script>
 import axios from "axios";
-import nuxtStorage from "nuxt-storage";
 
 export default {
   data() {
     return {
       valid: false,
       visible: false,
-      username: "",
+      email: "",
       password: "",
+      alert: {
+        show: false,
+        message: "",
+        type: "info", // can be 'success', 'error', 'info', 'warning'
+      },
       rules: {
         required: (value) => !!value || "จำเป็นต้องกรอก",
-        requiredAgreement: (value) =>
-          !!value || "กรุณายินยอมเห็นด้วยกับข้อกำหนดและเงื่อนไข",
         email: (value) => /.+@.+\..+/.test(value) || "อีเมลต้องถูกต้อง",
-        phone: (value) =>
-          /^\d{10}$/.test(value) || "หมายเลขโทรศัพท์ต้องเป็น 10 หลัก",
-        matchPassword: (value) =>
-          value === this.password || "รหัสผ่านต้องตรงกัน",
       },
     };
   },
   methods: {
     async login() {
-      try {
-        const response = await axios.post(
-          "https://3hpsqzbj-5000.asse.devtunnels.ms/api/login",
-          {
-            username: this.username,
+      if (this.$refs.form.validate()) {
+        try {
+          const response = await axios.post("http://localhost:5000/api/login", {
+            email: this.email,
             password: this.password,
+          });
+          const { token, data } = response.data;
+          
+          // Store token in local storage
+          localStorage.setItem('token', token);
+          
+          // Redirect based on is_admin
+          if (data.is_admin) {
+            this.$router.push('/admin');
+          } else {
+            this.$router.push('/user');
           }
-        );
-        nuxtStorage.sessionStorage.setData(
-          "session-token",
-          response.data.data.id
-        );
-      } catch (error) {
-        console.error(error);
-        // Handle error, maybe show an error message to the user
+          
+          // Display success alert
+          this.alert = {
+            show: true,
+            message: "เข้าสู่ระบบสำเร็จ!",
+            type: "success",
+          };
+        } catch (error) {
+          if (error.response) {
+            const message = error.response.data.message;
+            
+            // Handle different error cases
+            if (message === "Incorrect email") {
+              this.alert = {
+                show: true,
+                message: "อีเมลไม่ถูกต้อง กรุณาตรวจสอบอีเมลของคุณ",
+                type: "error",
+              };
+            } else if (message === "Incorrect password") {
+              this.alert = {
+                show: true,
+                message: "รหัสผ่านไม่ถูกต้อง กรุณาตรวจสอบรหัสผ่านของคุณ",
+                type: "error",
+              };
+            } else {
+              this.alert = {
+                show: true,
+                message: "การเข้าสู่ระบบล้มเหลว: " + message,
+                type: "error",
+              };
+            }
+          } else {
+            // Handle network or unexpected errors
+            this.alert = {
+              show: true,
+              message: "เกิดข้อผิดพลาด: " + error.message,
+              type: "error",
+            };
+          }
+        }
+      } else {
+        // Form validation error
+        this.alert = {
+          show: true,
+          message: "กรุณากรอกข้อมูลที่จำเป็นทั้งหมดให้ครบถ้วน",
+          type: "warning",
+        };
       }
-    },
-    getSessionStorage() {
-      const token = sessionStorage.getItem("session-token");
-      console.log(token);
     },
   },
 };
 </script>
+

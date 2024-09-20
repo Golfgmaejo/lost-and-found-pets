@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main>
-      <SectionAdminGallerytable/>
+      <SectionAdminGalleryGallerytable/>
     </v-main>
   </v-app>
 </template>

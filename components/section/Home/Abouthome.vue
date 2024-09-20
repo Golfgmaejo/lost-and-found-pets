@@ -29,7 +29,7 @@
       </div>
     </div>
   </template>
-  <style>
+  <style scoped>
   .text-feature-h {
     font-family: "Prompt", sans-serif;
       color:#582E2C;

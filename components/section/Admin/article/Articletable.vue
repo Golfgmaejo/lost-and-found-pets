@@ -1,0 +1,215 @@
+<template>
+  <div class="ml-6 mt-6 mr-6 mb-2">
+    <v-row class="mt-6">
+      <v-col cols="12" lg="auto" style="display: flex; align-items: center">
+        <span class="text-h2">บทความ</span>
+      </v-col>
+      <v-spacer></v-spacer>
+      <v-col cols="12" lg="auto">
+        <v-dialog v-model="dialog" max-width="1200px">
+          <template v-slot:activator="{ on, props }">
+            <v-btn
+              class="mb-2 btn-style"
+              color="primary"
+              dark
+              v-bind="props"
+              v-on="on"
+            >
+              เพิ่มบทความ
+            </v-btn>
+          </template>
+          <v-card>
+            <v-card-text>
+              <Addarticle @addarticle="onAddArticle" />
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" text @click="close">ยกเลิก</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-col>
+    </v-row>
+
+    <v-data-table
+      :headers="headers"
+      :items="articleList"
+      item-value="id"
+      :sort-by="[{ key: 'name', order: 'asc' }]"
+      class="table-style"
+    >
+      <template v-slot:item.name="{ item }">
+        <span>{{ formatName(item.name) }}</span>
+      </template>
+      <template v-slot:item.details="{ item }">
+        <span>{{ formatDetails(item.details) }}</span>
+      </template>
+      <template v-slot:item.link="{ item }">
+        <a :href="item.link" target="_blank">{{ formatLink(item.link) }}</a>
+      </template>
+      <template v-slot:item.image_url="{ item }">
+        <v-img :src="item.image_url" max-height="200" max-width="200"></v-img>
+      </template>
+      <template v-slot:item.actions="{ item }">
+        <v-icon class="me-2" size="small" @click="editItem(item)"
+          >mdi-pencil</v-icon
+        >
+        <v-icon size="small" @click="deleteItem(item)">mdi-delete</v-icon>
+      </template>
+      <template v-slot:no-data>
+        <v-btn color="primary" @click="fetchArticleList">รีเซ็ต</v-btn>
+      </template>
+    </v-data-table>
+    <v-dialog v-model="dialogEdit" max-width="1200px">
+      <v-card>
+        <v-card-text>
+          <Editarticle
+            :articleData="editedItem"
+            @updatearticle="onEditUpdate"
+          />
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" text @click="closeEdit">ยกเลิก</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="dialogDelete" max-width="500px">
+      <v-card>
+        <v-card-title class="text-h5">
+          คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลนี้?
+        </v-card-title>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue-darken-1" variant="text" @click="closeDelete">
+            ยกเลิก
+          </v-btn>
+          <v-btn
+            color="blue-darken-1"
+            variant="text"
+            @click="deleteItemConfirm"
+          >
+            ตกลง
+          </v-btn>
+          <v-spacer></v-spacer>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </div>
+</template>
+<script>
+import axios from "axios";
+import Addarticle from "@/components/section/Admin/article/Addarticle.vue";
+import Editarticle from "@/components/section/Admin/article/Editarticle.vue";
+
+export default {
+  components: {
+    Addarticle,
+    Editarticle,
+  },
+  data() {
+    return {
+      articleList: [],
+      dialog: false,
+      dialogEdit: false,
+      dialogDelete: false,
+      editedItem: null,
+      headers: [
+        { title: "ชื่อบทความ", key: "name" },
+        { title: "รายละเอียด", key: "details" },
+        { title: "ลิงก์", key: "link" },
+        { title: "รูปภาพ", key: "image_url" },
+        { title: "จัดการ", key: "actions", sortable: false },
+      ],
+    };
+  },
+  methods: {
+    async fetchArticleList() {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/api/article/getAll_article"
+        );
+        this.articleList = response.data.data;
+      } catch (error) {
+        console.error("Error fetching article list:", error);
+      }
+    },
+    formatName(name) {
+      return name.length > 20 ? name.slice(0, 20) + "..." : name;
+    },
+    formatDetails(details) {
+      return details.length > 30 ? details.slice(0, 30) + "..." : details;
+    },
+    formatLink(link) {
+      return link.length > 20 ? link.slice(0, 20) + "..." : link;
+    },
+    onAddArticle() {
+      this.fetchArticleList();
+      this.dialog = false;
+    },
+    editItem(item) {
+      this.editedItem = { ...item };
+      this.dialogEdit = true;
+    },
+    onEditUpdate() {
+      this.fetchArticleList();
+      this.dialogEdit = false;
+    },
+    deleteItem(item) {
+      this.editedItem = item;
+      this.dialogDelete = true;
+    },
+    async deleteItemConfirm() {
+      try {
+        const articleId = this.editedItem.id || this.editedItem._id;
+        if (!articleId) {
+          throw new Error("No valid ID found for the selected item.");
+        }
+        await axios.post("http://localhost:5000/api/image/delete_image", {
+          imageUrl: this.editedItem.image_url,
+        });
+        await axios.delete(
+          `http://localhost:5000/api/article/delete_article/${articleId}`
+        );
+        this.fetchArticleList();
+        this.dialogDelete = false;
+      } catch (error) {
+        console.error("Error deleting article:", error);
+      }
+    },
+    close() {
+      this.dialog = false;
+      this.editedItem = null;
+    },
+    closeEdit() {
+      this.dialogEdit = false;
+      this.editedItem = null;
+    },
+    closeDelete() {
+      this.dialogDelete = false;
+      this.editedItem = null;
+    },
+  },
+  created() {
+    this.fetchArticleList();
+  },
+};
+</script>
+<style scoped>
+.background-image {
+  background-image: url("public/images/logos/bg-pets.png");
+}
+.btn-style {
+  font-family: "Prompt", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+}
+.table-style {
+  font-family: "Prompt", sans-serif;
+}
+::v-deep thead th {
+  background-image: url("public/images/logos/bg-pets.png") !important;
+  color: black !important; /* สีตัวอักษร */
+}
+</style>

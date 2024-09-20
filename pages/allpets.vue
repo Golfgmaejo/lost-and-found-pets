@@ -1,14 +1,15 @@
 <script setup>
 import { ref } from 'vue';
-import Gallery from '~/components/section/banner/Gallery.vue';
-import AllNotice from '~/components/section/AllBanner.vue';
+import Gallery from '~/components/section/Home/Gallery.vue';
+import Bannerlostpets from '~/components/section/banner/Bannerlostpets.vue';
 import Allpets from '~/components/section/pets/Allpets.vue'
+
 </script>
 
 <template>
     <div>
         <Gallery />
-        <AllNotice/>
+        <Bannerlostpets/>
         <Allpets/>
     </div>
 </template>

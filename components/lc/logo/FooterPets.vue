@@ -8,7 +8,7 @@ import FooterPets from '/images/logos/footerpets.png';
         <img class="footpets" :src="FooterPets" alt="logo"/>
     </NuxtLink>
 </template>
-<style>
+<style scoped>
 .footpets {
   height: 100px;
 }

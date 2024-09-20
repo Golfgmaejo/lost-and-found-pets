@@ -8,7 +8,7 @@ import PetsLogo from '/images/logos/pets-logo.png';
         <img class="pets" :src="PetsLogo" alt="logo"/>
     </NuxtLink>
 </template>
-<style>
+<style scoped> 
 .pets {
   height: 70px;
 }

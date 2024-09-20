@@ -11,20 +11,22 @@
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
-    "@nuxtjs/leaflet": "^1.0.14",
+    "@nuxtjs/leaflet": "^1.2.2",
     "@nuxtjs/vuetify": "^1.12.3",
     "axios": "^1.7.2",
-    "leaflet": "^1.9.4",
+    "date-fns": "^4.1.0",
+    "jwt-decode": "^4.0.0",
     "material-design-icons-iconfont": "^6.7.0",
     "nuxt": "^3.12.2",
     "nuxt-storage": "^1.2.2",
     "sass": "^1.77.6",
     "sass-loader": "^14.2.1",
     "vue": "^3.4.30",
+    "vue3-leaflet": "^1.0.48",
     "webpack": "^5.92.1"
   },
   "devDependencies": {
     "vite-plugin-vuetify": "^2.0.3",
-    "vuetify": "^3.6.10"
+    "vuetify": "^3.7.0-beta.1"
   }
 }

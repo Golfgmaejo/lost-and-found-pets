@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main> 
-      <SectionAdminUsertable />
+      <SectionAdminPetsLostpetstable />
     </v-main>
   </v-app>
 </template>

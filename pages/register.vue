@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import Register from "@/components/section/Register.vue";
+import Register from "~/components/section/Register.vue";
 </script>
 
 <template>

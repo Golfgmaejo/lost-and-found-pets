@@ -1,8 +1,8 @@
 <script setup >
 import Aboutmain from './Home/Abouthome.vue'
-import Aboutnoticemain from './Home/Aboutnoticehome.vue'
-import Productsmain from './Product/Productsmain.vue'
-import Articlemain from './Article/Articlemain.vue'
+import Aboutnoticemain from './Home/Aboutnotice.vue'
+import Productsmain from './Home/Productsmain.vue'
+import Articlemain from './Home/Articlemain.vue'
 </script>
 
 <template>

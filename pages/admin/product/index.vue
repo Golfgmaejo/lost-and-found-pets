@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main>
-      <SectionAdminProducttable />
+      <SectionAdminProductProducttable/>
     </v-main>
   </v-app>
 </template>

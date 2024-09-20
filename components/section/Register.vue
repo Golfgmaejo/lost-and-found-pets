@@ -48,12 +48,12 @@
         <v-col cols="12" md="6">
           <v-text-field
             label="Facebook"
-            v-model="facebook"
+            v-model="Facebook"
             variant="outlined"
           />
         </v-col>
         <v-col cols="12" md="6">
-          <v-text-field label="Line" v-model="line" variant="outlined" />
+          <v-text-field label="Line ID" v-model="Line_id" variant="outlined" />
         </v-col>
         <v-col cols="12">
           <v-text-field
@@ -112,9 +112,11 @@
           <v-text-field
             label="Password"
             v-model="password"
-            :type="'password'"
+            :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+            :type="visible ? 'text' : 'password'"
             :rules="[rules.required]"
             variant="outlined"
+            @click:append-inner="visible = !visible"
           />
         </v-col>
         <v-col cols="12" md="6">
@@ -133,8 +135,12 @@
             label="ฉันเห็นด้วยกับข้อกำหนดและเงื่อนไข"
           />
         </v-col>
+        <v-alert v-if="emailError" type="error" class="mt-3">
+          {{ emailError }}
+        </v-alert>
+        <v-alert v-if="success" type="success" class="mt-3" >สมัครสมาชิกสำเร็จ!</v-alert>
         <v-col cols="12" style="display: flex; justify-content: space-evenly">
-          <v-btn :disabled="!valid" @click="submit">สมัครสมาชิก</v-btn>
+          <v-btn color="primary" :disabled="!valid" @click="submit">สมัครสมาชิก</v-btn>
         </v-col>
       </v-row>
     </v-form>
@@ -148,27 +154,30 @@ import axios from "axios";
 export default {
   data() {
     return {
+      visible: false,
       valid: false,
       prefix: "",
       firstName: "",
       lastName: "",
       phone: "",
-      facebook: "",
-      line: "",
+      Facebook: "",
+      Line_id: "",
       address: "",
       province: null,
       district: null,
       subdistrict: null,
       postalCode: null,
       email: "",
+      emailError: "",
       password: "",
       confirmPassword: "",
       agree: false,
+      success: false,
       prefixOptions: ["นาย", "นาง", "นางสาว"],
-      provinces: [], // This should be filled with the list of provinces
-      districts: [], // This will be filled based on selected province
-      subdistricts: [], // This will be filled based on selected district
-      postalcodes: [], // This will be filled based on selected subdistrict
+      provinces: [],
+      districts: [],
+      subdistricts: [],
+      postalcodes: [],
       rules: {
         required: (value) => !!value || "จำเป็นต้องกรอก",
         requiredAgreement: (value) =>
@@ -182,7 +191,7 @@ export default {
     };
   },
   created() {
-    this.fetchProvinces(); // Fetch provinces when component is created
+    this.fetchProvinces();
     this.fetchDistricts();
     this.fetchSubdistricts();
     this.fetchPostalcodes();
@@ -249,31 +258,41 @@ export default {
     submit() {
       if (this.$refs.form.validate()) {
         const data = {
-          email: this.email,
-          password: this.password,
-          tel: this.phone,
+          prefix: this.prefix,
           first_name: this.firstName,
           last_name: this.lastName,
-          username: this.firstName + " " + this.lastName,
+          phone: this.phone,
+          Facebook: this.Facebook || "",
+          Line_id: this.Line_id || "",
           address: this.address,
-          facebook: this.facebook,
-          line: this.line,
           province: this.province,
           district: this.district,
           subdistrict: this.subdistrict,
           postal_code: this.postalCode,
-          prefix: this.prefix,
+          email: this.email,
+          password: this.password,
+          username: this.email,
         };
         axios
-          .post(
-            "https://3hpsqzbj-5000.asse.devtunnels.ms/api/user/create",
-            data
-          )
+          .post("http://localhost:5000/api/user/create", data)
           .then((response) => {
-            console.log(response);
-          });
+            console.log("Form submitted successfully!", response);
+            this.emailError = "";
+            this.success = true;
+          })
+          .catch((error) => {
+            if (error.response) {
+              console.error("Error response from server:", error.response.data);
 
-        console.log("Form submitted!");
+              if (error.response.data.error === "Email already exists") {
+                this.emailError = "อีเมลนี้มีอยู่ในระบบแล้ว";
+              } else {
+                this.emailError = "เกิดข้อผิดพลาดในการสมัครสมาชิก";
+              }
+            } else {
+              console.error("Error submitting form:", error);
+            }
+          });
       } else {
         console.log("Form validation failed!");
       }
