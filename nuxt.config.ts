@@ -13,6 +13,8 @@ export default defineNuxtConfig({
       });
     },
     "@nuxtjs/leaflet",
+    "@pinia/nuxt",
+    
   ],
   vite: {
     vue: {
@@ -27,7 +29,4 @@ export default defineNuxtConfig({
   },
   plugins: ["~/plugins/vuetify.ts"],
   compatibilityDate: "2024-08-12",
-  router: {
-    middleware: ['auth'],
-  },
 });

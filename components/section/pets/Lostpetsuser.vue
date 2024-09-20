@@ -1,3 +1,4 @@
+
 <template>
   <v-container>
     <div class="text-center mb-4">
@@ -10,7 +11,7 @@
         <PetButtonsuser />
       </div>
     </div>
-
+    
     <v-container class="mt-8">
       <v-row>
         <v-col cols="12">

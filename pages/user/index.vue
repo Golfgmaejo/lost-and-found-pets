@@ -1,11 +1,11 @@
 <template>
     <div>
       <SectionHomeGallery />
-      <SectionAllHome />
+      <SectionAllHomeuser />
     </div>
   </template>
-  
   <script>
+
   definePageMeta({
     layout: 'user',
   });

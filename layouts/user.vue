@@ -59,6 +59,7 @@
   </v-app>
 </template>
 <script>
+import { useAuthStore } from '~/store/authStore';
 export default {
   layout: 'user',
   data() {
@@ -76,9 +77,9 @@ export default {
   },
   methods: {
     logout() {
-      // Implement logout functionality here
-      // For example, you might want to clear auth tokens and redirect
-      this.$router.push('/'); // Redirect to the home page
+      const authStore = useAuthStore(); // Access the Pinia store
+      authStore.logout(); // Call the store's logout action
+      this.$router.push('/'); // Redirect to the homepage after logout
     }
   }
 };

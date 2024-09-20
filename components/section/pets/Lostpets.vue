@@ -124,6 +124,7 @@ export default {
       try {
         const response = await axios.get(url);
         this.lostpetsList = response.data.data;
+        useLocalsStorage.setItem("lostpetsList", JSON.stringify(this.lostpetsList));
       } catch (error) {
         console.error("Error fetching lost pets:", error);
       }

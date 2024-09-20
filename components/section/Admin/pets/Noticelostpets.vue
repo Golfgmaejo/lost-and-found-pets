@@ -217,7 +217,9 @@
       <v-row>
         <v-col cols="12" sm="6">
           <v-btn color="primary" @click="submit">ประกาศ</v-btn>
-          <v-btn color="secondary" class="ml-4" @click="confirmClearForm">ล้างข้อมูล</v-btn>
+          <v-btn color="secondary" class="ml-4" @click="confirmClearForm"
+            >ล้างข้อมูล</v-btn
+          >
         </v-col>
       </v-row>
     </v-form>
@@ -226,6 +228,9 @@
 
 <script>
 import axios from "axios";
+import { computed } from "vue";
+import { useAuthStore } from '~/store/authStore';
+import { ref } from "vue";
 
 export default {
   data() {
@@ -266,9 +271,47 @@ export default {
       },
     };
   },
+  computed: {
+    formattedLostDate() {
+      if (this.form.lostDate) {
+        const date = new Date(this.form.lostDate);
+        const day = date.getDate().toString().padStart(2, "0");
+        const month = (date.getMonth() + 1).toString().padStart(2, "0");
+        const year = date.getFullYear() + 543;
+        return `${day}/${month}/${year}`;
+      }
+      return "";
+    },
+  },
+  created() {
+    if (process.client) {
+      const storedCoords = localStorage.getItem("markerCoords");
+      if (storedCoords) {
+        const { lat, lng } = JSON.parse(storedCoords);
+        this.center = [lat, lng];
+        this.markerLatLng = { lat, lng };
+      }
+    }
+  },
+  mounted() {
+    if (process.client && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const { latitude, longitude } = position.coords;
+        this.center = [latitude, longitude];
+        this.markerLatLng = { lat: latitude, lng: longitude };
+        localStorage.setItem(
+          "markerCoords",
+          JSON.stringify({ lat: latitude, lng: longitude })
+        );
+      });
+    }
+  },
   methods: {
     async submit() {
-      // console.log("Form data before validation:", JSON.stringify(this.form, null, 2));
+      const authStore = useAuthStore();
+      const userId = authStore.user.id;
+      console.log("User ID:", authStore.user.id);
+
       if (this.$refs.form.validate()) {
         const isFormIncomplete = Object.values(this.form).some(
           (value) => value === "" || value === null
@@ -282,7 +325,7 @@ export default {
           try {
             const imageData = new FormData();
             imageData.append("file", this.form.image);
-            imageData.append("user_id", "e969bea8-5469-499a-baf8-6c896c556e50"); // replace with actual user_id
+            imageData.append("user_id", userId);
             const response = await axios.post(
               "http://localhost:5000/api/image/upload_images_pets",
               imageData,
@@ -300,7 +343,7 @@ export default {
           }
         }
         const data = {
-          user_id: "e969bea8-5469-499a-baf8-6c896c556e50",
+          user_id: userId,
           name: this.form.name,
           lost_date: this.formattedLostDate,
           lost_time: this.form.lostTime,
@@ -385,41 +428,6 @@ export default {
         localStorage.setItem("markerCoords", JSON.stringify({ lat, lng }));
       }
     },
-  },
-  computed: {
-    formattedLostDate() {
-      if (this.form.lostDate) {
-        const date = new Date(this.form.lostDate);
-        const day = date.getDate().toString().padStart(2, "0");
-        const month = (date.getMonth() + 1).toString().padStart(2, "0");
-        const year = date.getFullYear() + 543;
-        return `${day}/${month}/${year}`;
-      }
-      return "";
-    },
-  },
-  created() {
-    if (process.client) {
-      const storedCoords = localStorage.getItem("markerCoords");
-      if (storedCoords) {
-        const { lat, lng } = JSON.parse(storedCoords);
-        this.center = [lat, lng];
-        this.markerLatLng = { lat, lng };
-      }
-    }
-  },
-  mounted() {
-    if (process.client && navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        const { latitude, longitude } = position.coords;
-        this.center = [latitude, longitude];
-        this.markerLatLng = { lat: latitude, lng: longitude };
-        localStorage.setItem(
-          "markerCoords",
-          JSON.stringify({ lat: latitude, lng: longitude })
-        );
-      });
-    }
   },
 };
 </script>

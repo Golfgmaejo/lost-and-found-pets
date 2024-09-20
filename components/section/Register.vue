@@ -10,6 +10,7 @@
     </h5>
     <v-form v-model="valid" ref="form" class="my-5">
       <v-row>
+        
         <v-col cols="12" md="12">
           <h5 class="text-red">*กรุณากรอก</h5>
           <v-select
@@ -22,6 +23,7 @@
         </v-col>
 
         <v-col cols="12" md="6">
+          <h5 class="text-red">*</h5>
           <v-text-field
             label="ชื่อจริง"
             v-model="firstName"
@@ -29,7 +31,9 @@
             variant="outlined"
           />
         </v-col>
+        
         <v-col cols="12" md="6">
+          <h5 class="text-red">*</h5>
           <v-text-field
             label="นามสกุล"
             v-model="lastName"
@@ -38,6 +42,7 @@
           />
         </v-col>
         <v-col cols="12" md="6">
+          <h5 class="text-red">*</h5>
           <v-text-field
             label="เบอร์โทรศัพท์"
             v-model="phone"
@@ -56,6 +61,7 @@
           <v-text-field label="Line ID" v-model="Line_id" variant="outlined" />
         </v-col>
         <v-col cols="12">
+          <h5 class="text-red">*</h5>
           <v-text-field
             label="ที่อยู่"
             v-model="address"
@@ -64,6 +70,7 @@
           />
         </v-col>
         <v-col cols="12" md="4">
+          <h5 class="text-red">*</h5>
           <v-autocomplete
             label="จังหวัด"
             v-model="province"
@@ -73,6 +80,7 @@
           ></v-autocomplete>
         </v-col>
         <v-col cols="12" md="4">
+          <h5 class="text-red">*</h5>
           <v-autocomplete
             label="อำเภอ"
             v-model="district"
@@ -82,6 +90,7 @@
           ></v-autocomplete>
         </v-col>
         <v-col cols="12" md="4">
+          <h5 class="text-red">*</h5>
           <v-autocomplete
             label="ตำบล"
             v-model="subdistrict"
@@ -91,6 +100,7 @@
           ></v-autocomplete>
         </v-col>
         <v-col cols="12" md="4">
+          <h5 class="text-red">*</h5>
           <v-autocomplete
             label="รหัสไปรษณีย์"
             v-model="postalCode"
@@ -101,6 +111,7 @@
         </v-col>
         <v-col md="6"></v-col>
         <v-col cols="12">
+          <h5 class="text-red">*</h5>
           <v-text-field
             label="Email address"
             v-model="email"
@@ -109,6 +120,7 @@
           />
         </v-col>
         <v-col cols="12" md="6">
+          <h5 class="text-red">*</h5>
           <v-text-field
             label="Password"
             v-model="password"
@@ -120,6 +132,7 @@
           />
         </v-col>
         <v-col cols="12" md="6">
+          <h5 class="text-red">*</h5>
           <v-text-field
             label="Confirm password"
             v-model="confirmPassword"
