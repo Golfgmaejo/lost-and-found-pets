@@ -310,8 +310,6 @@ export default {
     async submit() {
       const authStore = useAuthStore();
       const userId = authStore.user.id;
-      console.log("User ID:", authStore.user.id);
-
       if (this.$refs.form.validate()) {
         const isFormIncomplete = Object.values(this.form).some(
           (value) => value === "" || value === null

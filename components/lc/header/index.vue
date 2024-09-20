@@ -36,6 +36,7 @@
         <v-btn class="text-nav" to="/register">สมัครสมาชิก</v-btn>
       </div>
       <div v-else>
+        
         <v-menu>
           <template v-slot:activator="{ props }">
             <v-btn class="text-nav" v-bind="props">
@@ -55,6 +56,7 @@
           </v-list>
         </v-menu>
         <v-btn class="text-nav" color="red" @click="logout">ออกจากระบบ</v-btn>
+
       </div>
     </v-app-bar>
   </div>
