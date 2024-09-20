@@ -3,7 +3,7 @@
     <v-main>
       <div class="text-center mb-4">
         <v-col class="d-flex justify-end">
-          <v-btn color="red" class="mb-4" @click="openDialog">ประกาศสัตว์หาย</v-btn>
+          <v-btn color="red" class="mb-4" @click="() => $router.push('/register')">ประกาศสัตว์หาย</v-btn>
         </v-col>
         <div>
           <PetButtons />
@@ -139,34 +139,18 @@
           ></v-pagination>
         </div>
       </v-container>
-
-      <v-dialog v-model="isDialogOpen" max-width="1200px" persistent>
-        <v-card>
-          <v-card-text>
-            <Noticelostpets />
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" text @click="closeDialog"
-              >ยกเลิก</v-btn
-            >
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
     </v-main>
   </v-container>
 </template>
 
 <script>
 import PetButtons from "../pets/PetButtons.vue";
-import Noticelostpets from "~/components/section/Admin/pets/Noticelostpets.vue";
 import { ref } from "vue";
 import axios from "axios";
 
 export default {
   components: {
     PetButtons,
-    Noticelostpets,
   },
   data() {
     return {

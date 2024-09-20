@@ -70,7 +70,6 @@ export default {
       ],
       userpages: [
         { title: "แก้ไขข้อมูลส่วนตัว", to: "/user/edituser" },
-        { title: "ประกาศสัตว์หาย", to: "/user/lost_pet" },
         { title: "ประวัติประกาศ", to: "/user/userpets" },
       ],
     };

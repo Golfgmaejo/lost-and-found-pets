@@ -2,7 +2,7 @@
   <v-container>
     <div class="text-center mb-4">
       <v-col class="d-flex justify-end">
-        <v-btn color="red" @click="openDialog" class="mb-4">
+        <v-btn color="red" @click="() => $router.push('/register')" class="mb-4">
           ประกาศหาบ้าน
         </v-btn>
       </v-col>
@@ -97,12 +97,10 @@
 import { ref, computed } from "vue";
 import axios from "axios";
 import PetButtons from "./PetButtons.vue";
-import Noticeadoptpet from "~/components/section/Admin/pets/Noticeadoptpet.vue";
 
 export default {
   components: {
     PetButtons,
-    Noticeadoptpet,
   },
   data() {
     return {

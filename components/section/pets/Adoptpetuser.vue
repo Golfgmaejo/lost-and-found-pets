@@ -50,7 +50,7 @@
                     <template v-if="animal.status === 'กำลังหาบ้าน'">
                       <NuxtLink
                         :to="{
-                          name: 'adopt_pet-detail-id',
+                          name: 'user-adopt_pet-detail-id',
                           params: { id: animal.id },
                         }"
                       >

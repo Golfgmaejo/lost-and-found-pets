@@ -2,7 +2,7 @@
   <v-container>
     <div class="text-center mb-4">
       <v-col class="d-flex justify-end">
-        <v-btn color="red" @click="openDialog" class="mb-4">
+        <v-btn color="red" @click="() => $router.push('/register')" class="mb-4">
           ประกาศหาเจ้าของ
         </v-btn>
       </v-col>
@@ -78,18 +78,6 @@
         ></v-pagination>
       </div>
     </v-container>
-
-    <v-dialog v-model="isDialogOpen" max-width="1200px" persistent>
-      <v-card>
-        <v-card-text>
-          <Noticefindowner />
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="closeDialog">ยกเลิก</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
   </v-container>
 </template>
 
@@ -97,12 +85,10 @@
 import { ref, computed } from "vue";
 import axios from "axios";
 import PetButtons from "./PetButtons.vue";
-import Noticefindowner from "~/components/section/Admin/pets/Noticefindowner.vue";
 
 export default {
   components: {
     PetButtons,
-    Noticefindowner,
   },
   data() {
     return {

@@ -30,142 +30,138 @@
         </v-dialog>
       </v-col>
     </v-row>
-    <div class="">
-      <v-data-table
-        width="auto"
-        :headers="headers"
-        :items="userList"
-        item-value="id"
-        :sort-by="[{ key: 'first_name', order: 'asc' }]"
-        class="table-style-user"
-      >
-        <template v-slot:item.first_name="{ item }">
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, props }">
-              <span v-bind="props" v-on="on">
-                {{ truncateText(item.prefix + " " + item.first_name, 10) }}
-              </span>
-            </template>
-            <span>{{ item.prefix }} {{ item.first_name }}</span>
-          </v-tooltip>
-        </template>
-        <template v-slot:item.last_name="{ item }">
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, props }">
-              <span v-bind="props" v-on="on">
-                {{ truncateText(item.last_name, 10) }}
-              </span>
-            </template>
-            <span>{{ item.last_name }}</span>
-          </v-tooltip>
-        </template>
-        <template v-slot:item.facebook="{ item }">
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, props }">
-              <span v-bind="props" v-on="on">
-                {{ truncateText(item.facebook, 10) }}
-              </span>
-            </template>
-          </v-tooltip>
-        </template>
-        <template v-slot:item.line_id="{ item }">
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, props }">
-              <span v-bind="props" v-on="on">
-                {{ truncateText(item.line_id, 10) }}
-              </span>
-            </template>
-          </v-tooltip>
-        </template>
-        <template v-slot:item.address="{ item }">
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, props }">
-              <span v-bind="props" v-on="on">
-                {{ truncateText(item.address, 20) }}
-              </span>
-            </template>
-            <span>{{ item.address }}</span>
-          </v-tooltip>
-        </template>
-        <template v-slot:item.province="{ item }">
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, props }">
-              <span v-bind="props" v-on="on">
-                {{ truncateText(item.province, 10) }}
-              </span>
-            </template>
-            <span>{{ item.province }}</span>
-          </v-tooltip>
-        </template>
-        <template v-slot:item.district="{ item }">
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, props }">
-              <span v-bind="props" v-on="on">
-                {{ truncateText(item.district, 10) }}
-              </span>
-            </template>
-            <span>{{ item.district }}</span>
-          </v-tooltip>
-        </template>
-        <template v-slot:item.subdistrict="{ item }">
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, props }">
-              <span v-bind="props" v-on="on">
-                {{ truncateText(item.subdistrict, 10) }}
-              </span>
-            </template>
-            <span>{{ item.subdistrict }}</span>
-          </v-tooltip>
-        </template>
-        <template v-slot:item.postal_code="{ item }">
-          <span>{{ item.postal_code }}</span>
-        </template>
+    <v-data-table
+      width="auto"
+      :headers="headers"
+      :items="userList"
+      item-value="id"
+      :sort-by="[{ key: 'first_name', order: 'asc' }]"
+      class="table-style-user"
+    >
+      <template v-slot:item.first_name="{ item }">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, props }">
+            <span v-bind="props" v-on="on">
+              {{ truncateText(item.prefix + " " + item.first_name, 10) }}
+            </span>
+          </template>
+          <span>{{ item.prefix }} {{ item.first_name }}</span>
+        </v-tooltip>
+      </template>
+      <template v-slot:item.last_name="{ item }">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, props }">
+            <span v-bind="props" v-on="on">
+              {{ truncateText(item.last_name, 10) }}
+            </span>
+          </template>
+          <span>{{ item.last_name }}</span>
+        </v-tooltip>
+      </template>
+      <template v-slot:item.Line_id="{ item }">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, props }">
+            <span v-bind="props" v-on="on">
+              {{ truncateText(item.Line_id, 10) }}
+            </span>
+          </template>
+          <span>{{ item.Line_id }}</span>
+        </v-tooltip>
+      </template>
+      <template v-slot:item.Facebook="{ item }">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, props }">
+            <span v-bind="props" v-on="on">
+              {{ truncateText(item.Facebook, 15) }}
+            </span>
+          </template>
+          <span>{{ item.Facebook }}</span>
+        </v-tooltip>
+      </template>
+      <template v-slot:item.address="{ item }">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, props }">
+            <span v-bind="props" v-on="on">
+              {{ truncateText(item.address, 20) }}
+            </span>
+          </template>
+          <span>{{ item.address }}</span>
+        </v-tooltip>
+      </template>
+      <template v-slot:item.province="{ item }">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, props }">
+            <span v-bind="props" v-on="on">
+              {{ truncateText(item.province, 10) }}
+            </span>
+          </template>
+          <span>{{ item.province }}</span>
+        </v-tooltip>
+      </template>
+      <template v-slot:item.district="{ item }">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, props }">
+            <span v-bind="props" v-on="on">
+              {{ truncateText(item.district, 10) }}
+            </span>
+          </template>
+          <span>{{ item.district }}</span>
+        </v-tooltip>
+      </template>
+      <template v-slot:item.subdistrict="{ item }">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, props }">
+            <span v-bind="props" v-on="on">
+              {{ truncateText(item.subdistrict, 10) }}
+            </span>
+          </template>
+          <span>{{ item.subdistrict }}</span>
+        </v-tooltip>
+      </template>
+      <template v-slot:item.postal_code="{ item }">
+        <span>{{ item.postal_code }}</span>
+      </template>
 
-        <template v-slot:item.actions="{ item }">
-          <v-icon class="me-2" size="small" @click="editItem(item)">
-            mdi-pencil
-          </v-icon>
-          <v-icon size="small" @click="deleteItem(item)">mdi-delete</v-icon>
-        </template>
-        <template v-slot:no-data>
-          <v-btn color="primary" @click="fetchUserList">รีเซ็ต</v-btn>
-        </template>
-      </v-data-table>
-    </div>
-    <v-dialog v-model="dialogEdit" max-width="1200px">
-      <v-card>
-        <v-card-text>
-          <EditUser :userData="editedItem" @updateuser="onEditUpdate" />
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="closeEdit">ยกเลิก</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-
-    <v-dialog v-model="dialogDelete" max-width="500px">
-      <v-card>
-        <v-card-title class="text-h5">
-          คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลนี้?
-        </v-card-title>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue-darken-1" variant="text" @click="closeDelete">
-            ยกเลิก
-          </v-btn>
-          <v-btn
-            color="blue-darken-1"
-            variant="text"
-            @click="deleteItemConfirm"
-          >
-            ตกลง
-          </v-btn>
-          <v-spacer></v-spacer>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+      <template v-slot:item.actions="{ item }">
+        <v-icon class="me-2" size="small" @click="editItem(item)">
+          mdi-pencil
+        </v-icon>
+        <v-icon size="small" @click="deleteItem(item)">mdi-delete</v-icon>
+      </template>
+      <template v-slot:no-data>
+        <v-btn color="primary" @click="fetchUserList">รีเซ็ต</v-btn>
+      </template>
+    </v-data-table>
   </div>
+  <v-dialog v-model="dialogEdit" max-width="1200px">
+    <v-card>
+      <v-card-text>
+        <EditUser :userData="editedItem" @updateuser="onEditUpdate" />
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="blue darken-1" text @click="closeEdit">ยกเลิก</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+
+  <v-dialog v-model="dialogDelete" max-width="500px">
+    <v-card>
+      <v-card-title class="text-h5">
+        คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลนี้?
+      </v-card-title>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="blue-darken-1" variant="text" @click="closeDelete">
+          ยกเลิก
+        </v-btn>
+        <v-btn color="blue-darken-1" variant="text" @click="deleteItemConfirm">
+          ตกลง
+        </v-btn>
+        <v-spacer></v-spacer>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script>

@@ -76,7 +76,7 @@
                       <template v-if="animal.status === 'หาย'">
                         <NuxtLink
                           :to="{
-                            name: 'lost_pet-detail-id',
+                            name: 'user-lost_pet-detail-id',
                             params: { id: animal.id },
                           }"
                         >
@@ -94,7 +94,7 @@
                       <template v-if="animal.status === 'กำลังหาเจ้าของ'">
                         <NuxtLink
                           :to="{
-                            name: 'find_owner-detail-id',
+                            name: 'user-find_owner-detail-id',
                             params: { id: animal.id },
                           }"
                         >
@@ -112,7 +112,7 @@
                       <template v-if="animal.status === 'กำลังหาบ้าน'">
                         <NuxtLink
                           :to="{
-                            name: 'adopt_pet-detail-id',
+                            name: 'user-adopt_pet-detail-id',
                             params: { id: animal.id },
                           }"
                         >

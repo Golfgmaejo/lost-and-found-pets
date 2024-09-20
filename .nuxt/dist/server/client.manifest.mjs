@@ -1,1 +1,1 @@
-export { default } from "file:///D:/project/lostandfoundpets-nuxt3/node_modules/@nuxt/vite-builder/dist/runtime/client.manifest.mjs"
+export { default } from "file:///D:/projectrepositories/lostandfoundpets/node_modules/@nuxt/vite-builder/dist/runtime/client.manifest.mjs"

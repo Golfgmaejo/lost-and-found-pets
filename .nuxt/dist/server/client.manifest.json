@@ -7,12 +7,12 @@
     "module": true,
     "resourceType": "script"
   },
-  "D:/project/lostandfoundpets-nuxt3/node_modules/nuxt/dist/app/entry.js": {
+  "D:/projectrepositories/lostandfoundpets/node_modules/nuxt/dist/app/entry.js": {
     "resourceType": "script",
     "module": true,
     "prefetch": true,
     "preload": true,
     "isEntry": true,
-    "file": "D:/project/lostandfoundpets-nuxt3/node_modules/nuxt/dist/app/entry.js"
+    "file": "D:/projectrepositories/lostandfoundpets/node_modules/nuxt/dist/app/entry.js"
   }
 }

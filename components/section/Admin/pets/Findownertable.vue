@@ -42,7 +42,7 @@
           {{ item.user.username || "ไม่พบผู้ใช้" }}
         </v-chip>
         <div v-if="item.user">
-          <div>เบอร์: {{ item.user.phone }}</div>
+          <div>Tel: {{ item.user.phone }}</div>
           <div>FB: {{ item.user.Facebook }}</div>
           <div>Line: {{ item.user.Line_id }}</div>
         </div>

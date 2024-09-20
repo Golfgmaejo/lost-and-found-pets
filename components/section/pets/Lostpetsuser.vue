@@ -56,7 +56,7 @@
                     <template v-if="animal.status === 'หาย'">
                       <NuxtLink
                         :to="{
-                          name: 'lost_pet-detail-id',
+                          name: 'user-lost_pet-detail-id',
                           params: { id: animal.id },
                         }"
                       >
