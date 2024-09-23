@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-layout >
+    <v-layout>
       <v-navigation-drawer expand-on-hover rail app class="background-image">
         <v-list class="my-16">
           <v-list-item
@@ -108,7 +108,7 @@
           <v-list-item
             prepend-icon="mdi-logout"
             title="Logout"
-            to="/"
+            @click="logout"
           ></v-list-item>
         </v-list>
       </v-navigation-drawer>
@@ -120,11 +120,36 @@
   </v-card>
 </template>
 
-<script>
-export default {
-  layout: 'admin',
+<script setup>
+import { useRouter } from "vue-router";
+import { watchEffect, ref } from "vue";
+import { useAuthStore } from "~/stores/auth";
+
+const router = useRouter();
+const authStore = useAuthStore();
+const isLoggedIn = ref(authStore.isLoggedIn());
+const user = ref(authStore.user);
+const isAdmin = ref(authStore.isAdmin);
+
+watchEffect(() => {
+  isLoggedIn.value = authStore.isLoggedIn();
+  user.value = authStore.user;
+  isAdmin.value = authStore.isAdmin;
+});
+
+const logout = () => {
+  authStore.logout();
+  router.push("/");
 };
+
+defineProps({
+  layout: {
+    type: String,
+    default: "admin",
+  },
+});
 </script>
+
 
 <style scoped>
 .main-content {
@@ -136,8 +161,8 @@ export default {
 .v-navigation-drawer--rail:hover ~ .main-content {
   margin-left: 256px;
 }
-.background-image {   
-  background-image: url('public/images/logos/bg-pets.png');
+.background-image {
+  background-image: url("public/images/logos/bg-admin.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

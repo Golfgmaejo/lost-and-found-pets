@@ -2,8 +2,16 @@
   <v-container>
     <div class="text-center mb-4">
       <v-col class="d-flex justify-end">
-        <v-btn color="red" @click="() => $router.push('/register')" class="mb-4">
-          ประกาศสัตว์หาย
+        <v-btn
+          v-if="!isLoggedIn"
+          color="red"
+          @click="() => $router.push('/register')"
+          class="mb-4"
+        >
+          ประกาศสัตว์เลี้ยงหาย
+        </v-btn>
+        <v-btn v-else color="red" @click="openDialog" class="mb-4">
+          ประกาศสัตว์เลี้ยงหาย
         </v-btn>
       </v-col>
       <div>
@@ -32,8 +40,8 @@
                 class="d-flex align-center justify-center"
                 style="min-height: 250px"
               >
-                <v-img :src="animal.image_url" height="310" contain></v-img
-              ></v-col>
+                <v-img :src="animal.image_url" height="310" contain></v-img>
+              </v-col>
               <v-col cols="12" md="7">
                 <v-card-text>
                   <div class="text-h5 font-weight-semibold mb-2">
@@ -84,70 +92,89 @@
         ></v-pagination>
       </div>
     </v-container>
+    <v-dialog v-model="isDialogOpen" max-width="1200px" persistent>
+      <v-card>
+        <v-card-text>
+          <Noticelostpets @addlostpet="closeDialog" />
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" text @click="closeDialog">ยกเลิก</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
-<script>
-import { ref, computed } from "vue";
+<script setup>
+import { ref, computed, onMounted, watchEffect } from "vue";
+import { useAuthStore } from "~/stores/auth";
 import axios from "axios";
 import PetButtons from "./PetButtons.vue";
+import Noticelostpets from "../Admin/pets/Noticelostpets.vue";
 
-export default {
-  components: {
-    PetButtons,
-  },
-  data() {
-    return {
-      lostpetsList: [],
-      pageTitle: "ประกาศสัตว์เลี้ยงหาย",
-      isDialogOpen: false,
-      itemsPerPage: 8, // Number of items to show per page
-      page: 1, // Current page
-    };
-  },
-  computed: {
-    pageCount() {
-      return Math.ceil(this.lostpetsList.length / this.itemsPerPage);
-    },
-    paginatedLostpets() {
-      const start = (this.page - 1) * this.itemsPerPage;
-      const end = start + this.itemsPerPage;
-      return this.lostpetsList.slice(start, end);
-    },
-  },
-  created() {
-    this.fetchLostpets();
-  },
-  methods: {
-    async fetchLostpets() {
-      const url = `http://localhost:5000/api/lost_pet/getAll_lost_pets`;
-      try {
-        const response = await axios.get(url);
-        this.lostpetsList = response.data.data;
-        useLocalsStorage.setItem("lostpetsList", JSON.stringify(this.lostpetsList));
-      } catch (error) {
-        console.error("Error fetching lost pets:", error);
-      }
-    },
-    formatCurrency(value) {
-      const formattedValue = new Intl.NumberFormat("th-TH", {
-        currency: "THB",
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
-      }).format(value);
-      return `${formattedValue} บาท`;
-    },
-    openDialog() {
-      this.isDialogOpen = true;
-    },
-    closeDialog() {
-      this.isDialogOpen = false;
-    },
-  },
-  mounted() {
-    this.fetchLostpets();
-  },
+const lostpetsList = ref([]);
+const pageTitle = ref("ประกาศสัตว์เลี้ยงหาย");
+const itemsPerPage = ref(8);
+const page = ref(1);
+
+const isDialogOpen = ref(false);
+const authStore = useAuthStore();
+const isLoggedIn = ref(authStore.isLoggedIn());
+const user = ref(authStore.user);
+const isAdmin = ref(authStore.isAdmin);
+watchEffect(() => {
+  isLoggedIn.value = authStore.isLoggedIn();
+  user.value = authStore.user;
+  isAdmin.value = authStore.isAdmin;
+});
+
+const pageCount = computed(() => {
+  return Math.ceil(lostpetsList.value.length / itemsPerPage.value);
+});
+
+const paginatedLostpets = computed(() => {
+  const start = (page.value - 1) * itemsPerPage.value;
+  const end = start + itemsPerPage.value;
+  return lostpetsList.value.slice(start, end);
+});
+
+const fetchLostpets = async () => {
+  const url = "http://localhost:5000/api/lost_pet/getAll_lost_pets";
+  try {
+    const response = await axios.get(url);
+    lostpetsList.value = response.data.data;
+    localStorage.setItem("lostpetsList", JSON.stringify(lostpetsList.value));
+  } catch (error) {
+    console.error("Error fetching lost pets:", error);
+  }
 };
+
+const formatCurrency = (value) => {
+  const formattedValue = new Intl.NumberFormat("th-TH", {
+    currency: "THB",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(value);
+  return `${formattedValue} บาท`;
+};
+
+const openDialog = () => {
+  isDialogOpen.value = true;
+};
+
+const closeDialog = () => {
+  isDialogOpen.value = false;
+  fetchLostpets();
+};
+
+const updatePage = (newPage) => {
+  page.value = newPage;
+};
+
+onMounted(() => {
+  fetchLostpets();
+});
 </script>
 
 <style scoped>
@@ -182,11 +209,11 @@ export default {
   transform: translate(-100%, -50%) rotate(-45deg);
   background-color: rgba(17, 255, 0, 0.85);
   color: white;
-  padding: 10px 80px; /* Increased padding for a larger ribbon */
-  font-size: 32px; /* Increased font size */
+  padding: 10px 80px;
+  font-size: 32px;
   font-weight: bold;
   white-space: nowrap;
   z-index: 1;
-  border-radius: 30px; /* Optional: adds rounded corners */
+  border-radius: 30px;
 }
 </style>

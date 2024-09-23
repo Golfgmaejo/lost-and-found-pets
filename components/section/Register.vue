@@ -1,5 +1,5 @@
 <template>
-  <v-container class="my-16">
+  <v-container>
     <h1 class="text-portfolio-title mt-10">สมัครสมาชิก</h1>
     <h5 class="mt-2">
       กรุณากรอกข้อมูลที่ใช้งานจริง เพื่อความสะดวกในกรณีที่ต้องมีการติดต่อ
@@ -8,10 +8,10 @@
     <h5 class="text-red">
       *ข้อมูลจะถูกเปิดเผยกรณีที่อนุญาติให้ติดต่อในการลงประกาศ
     </h5>
+
     <v-form v-model="valid" ref="form" class="my-5">
       <v-row>
-        
-        <v-col cols="12" md="12">
+        <v-col cols="12" md="6">
           <h5 class="text-red">*กรุณากรอก</h5>
           <v-select
             label="คำนำหน้า"
@@ -19,29 +19,11 @@
             :items="prefixOptions"
             :rules="[rules.required]"
             variant="outlined"
+            class="mb-4"
           ></v-select>
         </v-col>
 
-        <v-col cols="12" md="6">
-          <h5 class="text-red">*</h5>
-          <v-text-field
-            label="ชื่อจริง"
-            v-model="firstName"
-            :rules="[rules.required]"
-            variant="outlined"
-          />
-        </v-col>
-        
-        <v-col cols="12" md="6">
-          <h5 class="text-red">*</h5>
-          <v-text-field
-            label="นามสกุล"
-            v-model="lastName"
-            :rules="[rules.required]"
-            variant="outlined"
-          />
-        </v-col>
-        <v-col cols="12" md="6">
+        <v-col cols="12" md="6" class="mb-4">
           <h5 class="text-red">*</h5>
           <v-text-field
             label="เบอร์โทรศัพท์"
@@ -50,26 +32,54 @@
             variant="outlined"
           />
         </v-col>
-        <v-col cols="12" md="6">
+      </v-row>
+      <V-row>
+        <v-col cols="12" md="6" class="mb-4">
+          <h5 class="text-red">*</h5>
+          <v-text-field
+            label="ชื่อจริง"
+            v-model="firstName"
+            :rules="[rules.required]"
+            variant="outlined"
+          />
+        </v-col>
+        <v-col cols="12" md="6" class="mb-4">
+          <h5 class="text-red">*</h5>
+          <v-text-field
+            label="นามสกุล"
+            v-model="lastName"
+            :rules="[rules.required]"
+            variant="outlined"
+          /> </v-col
+      ></V-row>
+      <v-row
+        ><v-col cols="12" md="6" class="mb-4">
           <v-text-field
             label="Facebook"
             v-model="Facebook"
             variant="outlined"
           />
         </v-col>
-        <v-col cols="12" md="6">
-          <v-text-field label="Line ID" v-model="Line_id" variant="outlined" />
-        </v-col>
-        <v-col cols="12">
+        <v-col cols="12" md="6" class="mb-4">
+          <v-text-field
+            label="Line ID"
+            v-model="Line_id"
+            variant="outlined"
+          /> </v-col
+      ></v-row>
+      <v-row
+        ><v-col cols="12" class="mb-4">
           <h5 class="text-red">*</h5>
           <v-text-field
             label="ที่อยู่"
             v-model="address"
             :rules="[rules.required]"
             variant="outlined"
-          />
-        </v-col>
-        <v-col cols="12" md="4">
+          /> </v-col
+      ></v-row>
+
+      <v-row>
+        <v-col cols="12" md="4" class="mb-4">
           <h5 class="text-red">*</h5>
           <v-autocomplete
             label="จังหวัด"
@@ -79,7 +89,8 @@
             variant="outlined"
           ></v-autocomplete>
         </v-col>
-        <v-col cols="12" md="4">
+
+        <v-col cols="12" md="4" class="mb-4">
           <h5 class="text-red">*</h5>
           <v-autocomplete
             label="อำเภอ"
@@ -89,7 +100,8 @@
             variant="outlined"
           ></v-autocomplete>
         </v-col>
-        <v-col cols="12" md="4">
+
+        <v-col cols="12" md="4" class="mb-4">
           <h5 class="text-red">*</h5>
           <v-autocomplete
             label="ตำบล"
@@ -99,7 +111,8 @@
             variant="outlined"
           ></v-autocomplete>
         </v-col>
-        <v-col cols="12" md="4">
+
+        <v-col cols="12" md="4" class="mb-4">
           <h5 class="text-red">*</h5>
           <v-autocomplete
             label="รหัสไปรษณีย์"
@@ -107,10 +120,11 @@
             :items="postalcodes"
             :rules="[rules.required]"
             variant="outlined"
-          ></v-autocomplete>
-        </v-col>
-        <v-col md="6"></v-col>
-        <v-col cols="12">
+          ></v-autocomplete> </v-col
+      ></v-row>
+
+      <v-row
+        ><v-col cols="12" md="6" class="mb-4">
           <h5 class="text-red">*</h5>
           <v-text-field
             label="Email address"
@@ -119,50 +133,60 @@
             variant="outlined"
           />
         </v-col>
-        <v-col cols="12" md="6">
+
+        <v-col cols="12" md="6" class="mb-4">
           <h5 class="text-red">*</h5>
           <v-text-field
             label="Password"
             v-model="password"
             :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
             :type="visible ? 'text' : 'password'"
-            :rules="[rules.required]"
+            :rules="passwordRules"
             variant="outlined"
             @click:append-inner="visible = !visible"
           />
         </v-col>
-        <v-col cols="12" md="6">
+
+        <v-col cols="12" md="6" class="mb-4">
           <h5 class="text-red">*</h5>
           <v-text-field
             label="Confirm password"
             v-model="confirmPassword"
             :type="'password'"
-            :rules="[rules.required, rules.matchPassword]"
+            :rules="confirmPasswordRules"
             variant="outlined"
           />
         </v-col>
-        <v-col cols="12" style="display: flex; justify-content: space-evenly">
-          <v-checkbox
-            v-model="agree"
-            :rules="[rules.requiredAgreement]"
-            label="ฉันเห็นด้วยกับข้อกำหนดและเงื่อนไข"
-          />
-        </v-col>
-        <v-alert v-if="emailError" type="error" class="mt-3">
-          {{ emailError }}
-        </v-alert>
-        <v-alert v-if="success" type="success" class="mt-3" >สมัครสมาชิกสำเร็จ!</v-alert>
-        <v-col cols="12" style="display: flex; justify-content: space-evenly">
-          <v-btn color="primary" :disabled="!valid" @click="submit">สมัครสมาชิก</v-btn>
-        </v-col>
       </v-row>
+
+      <v-col cols="12" class="d-flex justify-center mb-4">
+        <v-checkbox
+          v-model="agree"
+          :rules="[rules.requiredAgreement]"
+          label="ฉันเห็นด้วยกับข้อกำหนดและเงื่อนไข"
+        />
+      </v-col>
+
+      <!-- Alerts -->
+      <v-alert v-if="emailError" type="error" class="mt-3 text-center">
+        {{ emailError }}
+      </v-alert>
+
+      <v-alert v-if="success" type="success" class="mt-3 text-center">
+        สมัครสมาชิกสำเร็จ!
+      </v-alert>
+
+      <!-- Submit Button -->
+      <v-col cols="12" class="d-flex justify-center">
+        <v-btn color="primary" :disabled="!valid" @click="submit">
+          สมัครสมาชิก
+        </v-btn>
+      </v-col>
     </v-form>
   </v-container>
 </template>
-
 <script>
 import axios from "axios";
-//import authApi from "../../api/auth"
 
 export default {
   data() {
@@ -198,10 +222,28 @@ export default {
         email: (value) => /.+@.+\..+/.test(value) || "อีเมลต้องถูกต้อง",
         phone: (value) =>
           /^\d{10}$/.test(value) || "หมายเลขโทรศัพท์ต้องเป็น 10 หลัก",
+        passwordComplexity: (value) => {
+          const regex =
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_.#^+\-=])[A-Za-z\d@$!%*?&_.#^+\-=]{8,}$/;
+          return (
+            regex.test(value) ||
+            "รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร มีตัวพิมพ์ใหญ่ ตัวพิมพ์เล็ก ตัวเลข และอักขระพิเศษ"
+          );
+        },
         matchPassword: (value) =>
           value === this.password || "รหัสผ่านต้องตรงกัน",
       },
     };
+  },
+  computed: {
+    passwordRules() {
+      return this.password.length > 0 ? [this.rules.passwordComplexity] : [];
+    },
+    confirmPasswordRules() {
+      return this.confirmPassword.length > 0
+        ? [this.rules.required, this.rules.matchPassword]
+        : [];
+    },
   },
   created() {
     this.fetchProvinces();
@@ -289,9 +331,11 @@ export default {
         axios
           .post("http://localhost:5000/api/user/create", data)
           .then((response) => {
-            console.log("Form submitted successfully!", response);
             this.emailError = "";
             this.success = true;
+            setTimeout(() => {
+              this.$router.push("/login");
+            }, 2000);
           })
           .catch((error) => {
             if (error.response) {
@@ -307,11 +351,17 @@ export default {
             }
           });
       } else {
-        console.log("Form validation failed!");
       }
     },
   },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.text-red {
+  color: red;
+}
+.text-portfolio-title {
+  font-size: 2rem;
+}
+</style>

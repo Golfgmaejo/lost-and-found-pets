@@ -3,7 +3,7 @@
     <v-app-bar class="app-header img">
       <v-container class="auto-height">
         <v-toolbar class="d-flex align-center">
-          <LcLogoPetsLogo />
+          <LcLogoLafpLogo/>
           <div class="ml-auto">
             <ul class="navbar-nav d-flex" min-height="auto">
               <v-btn class="text-nav" to="/"> หน้าหลัก </v-btn>
@@ -36,7 +36,6 @@
         <v-btn class="text-nav" to="/register">สมัครสมาชิก</v-btn>
       </div>
       <div v-else>
-        
         <v-menu>
           <template v-slot:activator="{ props }">
             <v-btn class="text-nav" v-bind="props">
@@ -56,7 +55,6 @@
           </v-list>
         </v-menu>
         <v-btn class="text-nav" color="red" @click="logout">ออกจากระบบ</v-btn>
-
       </div>
     </v-app-bar>
   </div>
@@ -64,7 +62,7 @@
 
 <script setup>
 import { watchEffect } from 'vue';
-import { useAuthStore } from '~/store/authStore';
+import { useAuthStore } from '~/stores/auth';
 import { ref } from 'vue';
 
 const authStore = useAuthStore();
@@ -81,7 +79,15 @@ const pages = [
   { title: "หาเจ้าของ", to: "/find_owner" },
   { title: "หาบ้าน", to: "/adopt_pet" },
 ];
-
+const userpages = [
+  { title: "แก้ไขข้อมูลส่วนตัว", to: "/edituser" },
+  { title: "ประวัติประกาศ", to: "/userpets" },
+];
+const logout = () => {
+  const authStore = useAuthStore();
+  authStore.logout();
+  this.$router.push('/');
+};
 </script>
 
 <style scoped>

@@ -1,11 +1,11 @@
 <script setup >
 import { ref } from 'vue';
-import PetsLogo from '/images/logos/pets-logo.png';
+import LafpLogo from '/images/logos/Lafplogotext.png';
 </script>
 
 <template>
     <NuxtLink to="/" class="d-flex">
-        <img class="pets" :src="PetsLogo" alt="logo"/>
+        <img class="pets" :src="LafpLogo" alt="logo"/>
     </NuxtLink>
 </template>
 <style scoped> 

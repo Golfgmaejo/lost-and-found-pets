@@ -254,12 +254,11 @@ const submit = async () => {
     };
     try {
       const response = await axios.post('https://3hpsqzbj-5000.asse.devtunnels.ms/api/user/update', data);
-      console.log(response);
     } catch (error) {
       console.error('Error updating profile:', error);
     }
   } else {
-    console.log('Form validation failed!');
+    console.error('Form is not valid');
   }
 };
 </script>

@@ -2,10 +2,18 @@
   <v-container>
     <div class="text-center mb-4">
       <v-col class="d-flex justify-end">
-        <v-btn color="red" @click="() => $router.push('/register')" class="mb-4">
+          <v-btn
+            v-if="!isLoggedIn"
+            color="red"
+            @click="() => $router.push('/register')"
+            class="mb-4"
+          >
           ประกาศหาบ้าน
-        </v-btn>
-      </v-col>
+          </v-btn>
+          <v-btn v-else color="red" @click="openDialog" class="mb-4">
+            ประกาศหาบ้าน
+          </v-btn>
+        </v-col>
       <div>
         <PetButtons />
       </div>
@@ -43,9 +51,7 @@
                     วันที่ประกาศ: {{ animal.adopt_date }}
                     {{ animal.adopt_time }}
                   </div>
-                  <div class="mb-4">
-                    สถานที่พบ: {{ animal.adopt_place }}
-                  </div>
+                  <div class="mb-4">สถานที่พบ: {{ animal.adopt_place }}</div>
                   <div>
                     <template v-if="animal.status === 'กำลังหาบ้าน'">
                       <NuxtLink
@@ -82,7 +88,7 @@
     <v-dialog v-model="isDialogOpen" max-width="1200px" persistent>
       <v-card>
         <v-card-text>
-          <Noticeadoptpet />
+          <Noticeadoptpet @addadoptpet="closeDialog"/>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -93,55 +99,66 @@
   </v-container>
 </template>
 
-<script>
-import { ref, computed } from "vue";
+<script setup>
+import { ref, computed, onMounted, watchEffect } from "vue";
+import { useAuthStore } from "~/stores/auth";
 import axios from "axios";
 import PetButtons from "./PetButtons.vue";
+import Noticeadoptpet from "../Admin/pets/Noticeadoptpet.vue";
 
-export default {
-  components: {
-    PetButtons,
-  },
-  data() {
-    return {
-      adoptpetList: [],
-      pageTitle: "ประกาศหาบ้าน",
-      isDialogOpen: false,
-      itemsPerPage: 8, 
-      page: 1,
-    };
-  },
-  computed: {
-    pageCount() {
-      return Math.ceil(this.adoptpetList.length / this.itemsPerPage);
-    },
-    paginatedAdoptpet() {
-      const start = (this.page - 1) * this.itemsPerPage;
-      const end = start + this.itemsPerPage;
-      return this.adoptpetList.slice(start, end);
-    },
-  },
-  created() {
-    this.fetchAdoptpet();
-  },
-  methods: {
-    async fetchAdoptpet() {
-      const url = `http://localhost:5000/api/adopt_pet/getAll_adopt_pet`;
-      try {
-        const response = await axios.get(url);
-        this.adoptpetList = response.data.data;
-      } catch (error) {
-        console.error("Error fetching adopt pets:", error);
-      }
-    },
-    openDialog() {
-      this.isDialogOpen = true;
-    },
-    closeDialog() {
-      this.isDialogOpen = false;
-    },
-  },
+const pageTitle = ref("ประกาศหาบ้าน");
+const adoptpetList = ref([]);
+const isDialogOpen = ref(false);
+const itemsPerPage = ref(8);
+const page = ref(1);
+
+const authStore = useAuthStore();
+const isLoggedIn = ref(authStore.isLoggedIn());
+const user = ref(authStore.user);
+const isAdmin = ref(authStore.isAdmin);
+
+watchEffect(() => {
+  isLoggedIn.value = authStore.isLoggedIn();
+  user.value = authStore.user;
+  isAdmin.value = authStore.isAdmin;
+});
+
+const openDialog = () => {
+  isDialogOpen.value = true;
 };
+
+const closeDialog = () => {
+  isDialogOpen.value = false;
+  fetchAdoptpet();
+};
+
+const updatePage = (newPage) => {
+  page.value = newPage;
+};
+
+const pageCount = computed(() => {
+  return Math.ceil(adoptpetList.value.length / itemsPerPage.value);
+});
+
+const paginatedAdoptpet = computed(() => {
+  const start = (page.value - 1) * itemsPerPage.value;
+  const end = start + itemsPerPage.value;
+  return adoptpetList.value.slice(start, end);
+});
+
+const fetchAdoptpet = async () => {
+  const url = `http://localhost:5000/api/adopt_pet/getAll_adopt_pet`;
+  try {
+    const response = await axios.get(url);
+    adoptpetList.value = response.data.data;
+  } catch (error) {
+    console.error("Error fetching adopt pets:", error);
+  }
+};
+
+onMounted(() => {
+  fetchAdoptpet();
+});
 </script>
 
 <style scoped>
@@ -176,11 +193,11 @@ export default {
   transform: translate(-100%, -50%) rotate(-45deg);
   background-color: rgba(17, 255, 0, 0.85);
   color: white;
-  padding: 10px 50px; /* Increased padding for a larger ribbon */
-  font-size: 32px; /* Increased font size */
+  padding: 10px 50px;
+  font-size: 32px;
   font-weight: bold;
   white-space: nowrap;
   z-index: 1;
-  border-radius: 30px; /* Optional: adds rounded corners */
+  border-radius: 30px;
 }
 </style>

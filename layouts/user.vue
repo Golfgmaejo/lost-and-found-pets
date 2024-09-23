@@ -3,7 +3,7 @@
     <v-app-bar class="app-header img">
       <v-container class="auto-height">
         <v-toolbar class="d-flex align-center">
-          <LcLogoPetsLogo />
+          <LcLogoLafpLogo />
           <div class="ml-auto">
             <ul class="navbar-nav d-flex" min-height="auto">
               <v-btn class="text-nav" to="/user"> หน้าหลัก </v-btn>
@@ -59,7 +59,7 @@
   </v-app>
 </template>
 <script>
-import { useAuthStore } from '~/store/authStore';
+import { useAuthStore } from '~/stores/auth';
 export default {
   layout: 'user',
   data() {
@@ -70,8 +70,8 @@ export default {
         { title: "หาบ้าน", to: "/user/adopt_pet" },
       ],
       userpages: [
-        { title: "แก้ไขข้อมูลส่วนตัว", to: "/user/edituser" },
-        { title: "ประวัติประกาศ", to: "/user/userpets" },
+        { title: "แก้ไขข้อมูลส่วนตัว", to: "/edituser" },
+        { title: "ประวัติประกาศ", to: "/userpets" },
       ],
     };
   },

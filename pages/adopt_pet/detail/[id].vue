@@ -1,4 +1,5 @@
 <template>
+
   <v-container fluid>
     <v-main>
       <v-container class="mt-16">
@@ -196,6 +197,7 @@
       </v-dialog>
     </v-main>
   </v-container>
+
 </template>
 <script>
 import axios from "axios";
@@ -224,7 +226,6 @@ export default {
       axios
         .get(url)
         .then((response) => {
-          console.log(response.data);
           this.adoptpetbyid = response.data.data;
           this.postedBy = response.data.data.user;
         })

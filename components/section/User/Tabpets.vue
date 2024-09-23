@@ -82,6 +82,6 @@ export default {
   width: 100%;
 }
 .background-image {
-  background-image: url('public/images/logos/bg-pets.png');
+  background-image: url('public/images/logos/bg-admin.png');
 }
 </style>

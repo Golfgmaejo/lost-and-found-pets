@@ -1,88 +1,84 @@
 <template>
-  <div>
-    <div class="portfolio-component mini-spacer">
-      <v-container>
-        <v-row justify="center">
-          <v-col cols="12" sm="10" md="9" lg="7">
-            <div class="text-center">
-              <h2 class="text-portfolio-title">สินค้าสัตว์เลี้ยง</h2>
-              <p class="text-portfolio">
-                สินค้าสัตว์เลี้ยงคุณภาพสูงครบครันสำหรับการดูแลและพัฒนาสุขภาพของสัตว์เลี้ยงที่คุณรักให้มีชีวิตที่มีความสุขและสุขภาพดี.
-              </p>
-            </div>
-          </v-col>
-        </v-row>
-        <SortButtons @filter="fetchProduct" />
-        <v-row class="mt-8">
-          <v-col
-            v-for="product in paginatedProductList"
-            :key="product.id"
-            cols="12"
-            md="4"
-            sm="6"
+  <v-container>
+    <v-row justify="center">
+      <v-col cols="12" sm="10" md="9" lg="7">
+        <div class="text-center">
+          <h2 class="text-portfolio-title">สินค้าสัตว์เลี้ยง</h2>
+          <p class="text-portfolio">
+            สินค้าสัตว์เลี้ยงคุณภาพสูงครบครันสำหรับการดูแลและพัฒนาสุขภาพของสัตว์เลี้ยงที่คุณรักให้มีชีวิตที่มีความสุขและสุขภาพดี.
+          </p>
+        </div>
+      </v-col>
+    </v-row>
+    <SortButtons @filter="fetchProduct" />
+    <v-row class="mt-8">
+      <v-col
+        v-for="product in paginatedProductList"
+        :key="product.id"
+        cols="12"
+        md="4"
+        sm="6"
+      >
+        <v-card class="portfolio-card overflow-hidden card-shadow">
+          <div
+            class="portfolio-img"
+            style="
+              display: flex;
+              justify-content: space-around;
+              position: relative;
+            "
           >
-            <v-card class="portfolio-card overflow-hidden card-shadow">
-              <div
-                class="portfolio-img"
-                style="
-                  display: flex;
-                  justify-content: space-around;
-                  position: relative;
-                "
+            <div v-if="product.isBestSeller" class="best-seller-ribbon">
+              Best seller
+            </div>
+            <img :src="product.image_url" class="img-fluid" />
+          </div>
+          <v-card-text class="pa-5">
+            <p class="text-card-subtext">สำหรับ{{ product.type }}</p>
+            <p class="text-card-title">{{ product.truncatedName }}</p>
+            <p class="text-card-subtext-title">
+              {{ product.truncatedDetails }}
+            </p>
+            <div class="btn-sty">
+              <v-btn
+                :disabled="!product.link_Shopee"
+                variant="tonal"
+                class="d-flex"
+                style="margin-right: 12px"
+                color="#ee4d2d"
               >
-                <div v-if="product.isBestSeller" class="best-seller-ribbon">
-                  Best seller
-                </div>
-                <img :src="product.image_url" class="img-fluid" />
-              </div>
-              <v-card-text class="pa-5">
-                <p class="text-card-subtext">สำหรับ{{ product.type }}</p>
-                <p class="text-card-title">{{ product.truncatedName }}</p>
-                <p class="text-card-subtext-title">
-                  {{ product.truncatedDetails }}
-                </p>
-                <div class="btn-sty">
-                  <v-btn
-                    :disabled="!product.link_Shopee"
-                    variant="tonal"
-                    class="d-flex"
-                    style="margin-right: 12px"
-                    color="#ee4d2d"
-                  >
-                    <a
-                      :href="product.link_Shopee"
-                      class="text-theme-Shopee linking text-decoration-none d-flex align-center"
-                    >
-                      Shopee
-                    </a>
-                  </v-btn>
-                  <v-btn
-                    :disabled="!product.link_Lazada"
-                    variant="tonal"
-                    class="d-flex"
-                    color="#151b69"
-                  >
-                    <a
-                      :href="product.link_Lazada || '#'"
-                      class="text-theme-Lazada linking text-decoration-none d-flex align-center"
-                    >
-                      Lazada
-                    </a>
-                  </v-btn>
-                </div>
-              </v-card-text>
-            </v-card>
-          </v-col>
-        </v-row>
-        <v-pagination
-          v-model="page"
-          :length="pageCount"
-          rounded="circle"
-          @input="updatePage"
-        ></v-pagination>
-      </v-container>
-    </div>
-  </div>
+                <a
+                  :href="product.link_Shopee"
+                  class="text-theme-Shopee linking text-decoration-none d-flex align-center"
+                >
+                  Shopee
+                </a>
+              </v-btn>
+              <v-btn
+                :disabled="!product.link_Lazada"
+                variant="tonal"
+                class="d-flex"
+                color="#151b69"
+              >
+                <a
+                  :href="product.link_Lazada || '#'"
+                  class="text-theme-Lazada linking text-decoration-none d-flex align-center"
+                >
+                  Lazada
+                </a>
+              </v-btn>
+            </div>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-pagination
+      v-model="page"
+      :length="pageCount"
+      rounded="circle"
+      @input="updatePage"
+    ></v-pagination>
+  </v-container>
 </template>
 
 <script>
@@ -141,14 +137,16 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+.v-btn {
+  border-radius: 30px;
+}
 .text-portfolio-title {
   font-family: "Prompt", sans-serif;
   color: #582e2c;
-  font-size: 36px;
+  font-size: 28px;
   font-weight: 700;
-  letter-spacing: 1.5px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 .text-portfolio {
   font-family: "Prompt", sans-serif;
@@ -161,7 +159,7 @@ export default {
 .text-card-title {
   font-family: "Prompt", sans-serif;
   color: #e97931;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
   margin-bottom: 8px;
   transition: color 0.3s ease;
@@ -245,5 +243,8 @@ export default {
   font-weight: bold;
   border-radius: 30px;
   z-index: 1;
+}
+.team-component {
+  background-color: #faf6f0;
 }
 </style>

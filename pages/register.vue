@@ -4,7 +4,8 @@ import Register from "~/components/section/Register.vue";
 </script>
 
 <template>
-  <div>
+  <br>
+  <br>
+  <br>
     <Register />
-  </div>
 </template>

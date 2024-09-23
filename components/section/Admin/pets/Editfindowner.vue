@@ -276,7 +276,7 @@ export default {
         formData.append("image", this.newImage);
         formData.append("old_image_url", this.form.image_url || "");
         const response = await axios.put(
-          `http://localhost:5000/api/image/update_images_pets`,
+          `http://localhost:5000/api/image/update_images_find_owner`,
           formData,
           {
             headers: {

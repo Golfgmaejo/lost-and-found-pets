@@ -224,12 +224,20 @@
       </v-row>
     </v-form>
   </v-container>
+  <v-snackbar
+  v-model="snackbar.show"
+  :timeout="2000"
+  :color="snackbar.color"
+  elevation="24"
+>
+  {{ snackbar.message }}
+</v-snackbar>
 </template>
 
 <script>
 import axios from "axios";
 import { computed } from "vue";
-import { useAuthStore } from '~/store/authStore';
+import { useAuthStore } from '~/stores/auth';
 import { ref } from "vue";
 
 export default {
@@ -261,6 +269,11 @@ export default {
       center: [18.895811354244756, 99.0130001306534],
       genders: ["ผู้", "เมีย", "ไม่ระบุ"],
       statuses: ["หาย", "เจอแล้ว"],
+      snackbar: {
+        show: false,
+        message: '',
+        color: 'green',
+      },
       rules: {
         required: (value) => {
           return value && value.trim() ? true : "จำเป็นต้องกรอก";
@@ -315,7 +328,7 @@ export default {
           (value) => value === "" || value === null
         );
         if (isFormIncomplete) {
-          alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+          this.showSnackbar("กรุณากรอกข้อมูลให้ครบถ้วน", 'red'); 
           return;
         }
         let imageUrl = "default";
@@ -325,7 +338,7 @@ export default {
             imageData.append("file", this.form.image);
             imageData.append("user_id", userId);
             const response = await axios.post(
-              "http://localhost:5000/api/image/upload_images_pets",
+              "http://localhost:5000/api/image/upload_images_lostpets",
               imageData,
               {
                 headers: {
@@ -336,7 +349,7 @@ export default {
             imageUrl = response.data.data.url;
           } catch (error) {
             console.error("Image upload failed:", error);
-            alert("มีข้อผิดพลาดในการอัปโหลดรูปภาพ");
+            this.showSnackbar("มีข้อผิดพลาดในการอัปโหลดรูปภาพ");
             return;
           }
         }
@@ -358,18 +371,16 @@ export default {
           color: this.form.color,
           status: this.form.status,
         };
-        console.log("Form data:", data);
 
         try {
           const response = await axios.post(
             "http://localhost:5000/api/lost_pet/add_lost_pets",
             data
           );
-          alert("ประกาศสัตว์เลี้ยงหายแล้ว");
+          this.showSnackbar("ประกาศสัตว์เลี้ยงหายแล้ว" , 'green');
           this.$emit("addlostpet");
-          this.clearForm();
         } catch (error) {
-          alert("มีข้อผิดพลาดในการบันทึกข้อมูล");
+          this.showSnackbar("มีข้อผิดพลาดในการบันทึกข้อมูล" , 'red');
         }
       }
     },
@@ -426,6 +437,12 @@ export default {
         localStorage.setItem("markerCoords", JSON.stringify({ lat, lng }));
       }
     },
+    showSnackbar(message, color) {
+  this.snackbar.message = message;
+  this.snackbar.color = color;
+  this.snackbar.show = true;
+},
+
   },
 };
 </script>

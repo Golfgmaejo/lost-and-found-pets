@@ -1,12 +1,16 @@
 <script setup >
 import { ref } from 'vue';
-import LostPets from '/images/pets/lostpets.png';
+import Lostpets from '/images/pets/lost-pets.png';
 </script>
 
 <template>
-  <img class="lotspets" :src="LostPets" alt="logo"/>
+  <img class="petscat" :src="Lostpets" alt="logo"/>
 </template>
 <style scoped>
+.petscat {
+  height: 300px;
+  width: 300px;
+}
 .lotspets {
   height: 90px;
   width: 90px;

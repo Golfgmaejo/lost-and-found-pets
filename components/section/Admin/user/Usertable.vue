@@ -269,7 +269,7 @@ export default {
   font-family: "Prompt", sans-serif;
 }
 ::v-deep thead th {
-  background-image: url("public/images/logos/bg-pets.png") !important;
+  background-image: url("public/images/logos/bg-admin.png") !important;
   color: black !important; /* สีตัวอักษร */
 }
 </style>

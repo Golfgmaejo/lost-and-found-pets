@@ -303,14 +303,12 @@ export default {
           color: this.form.color,
           status: this.form.status,
         };
-        console.log(data, "data");
 
         try {
           // const response = await axios.post(
           //   "http://localhost:5000/api/lost_pet/add_lost_pets",
           //   data
           // );
-          // console.log(response);
         } catch (error) {
           console.error("Form submission error:", error);
         }

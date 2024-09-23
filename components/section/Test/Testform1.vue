@@ -283,14 +283,10 @@ export default {
             "http://localhost:5000/api/lost_pet/add_lost_pets",
             data
           );
-          console.log(response);
         } catch (error) {
           console.error("Form submission error:", error);
         }
-
-        console.log("Form submitted!");
       } else {
-        console.log("Form validation failed!");
       }
     },
     clearForm() {

@@ -1,4 +1,5 @@
 <template>
+
   <v-container fluid>
     <v-main>
       <v-container class="mt-16">
@@ -214,6 +215,7 @@
       </v-dialog>
     </v-main>
   </v-container>
+
 </template>
 
 <script>
@@ -245,7 +247,6 @@ export default {
       axios
         .get(url)
         .then((response) => {
-          console.log(response.data.data);
           this.lostpetsbyid = response.data.data;
           this.postedBy = response.data.data.user;
         })

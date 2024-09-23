@@ -4,8 +4,12 @@
       <v-row class="py-6 py-sm-7">
         <v-col cols="12" md="6" sm="6" class="px-0">
           <div class="d-flex align-center">
-            <LcLogoFooterPets />
-            <p class="text-footer-h3">LostAndFoundPets</p>
+            <LcLogoLogofooter />
+            <p class="text-footer-h3">
+              <span class="color-lost">Lost</span>
+              <span class="color-and">And</span>
+              <span class="color-foundpets">FoundPets</span>
+            </p>
           </div>
           <p class="text-footer">
             ระบบช่วยตามหาสัตว์เลี้ยงหาย ที่ช่วยกระจายประกาศผ่านทางออนไลน์
@@ -62,16 +66,21 @@
   </v-footer>
 </template>
 
-<script setup>
-</script>
-
 <style scoped>
 .text-footer-h3 {
   font-family: "Prompt", sans-serif;
-  color: #794940;
   font-size: 20px;
   font-weight: 600;
   margin-bottom: 10px;
+}
+.color-lost {
+  color: #dd7b39;
+}
+.color-and {
+  color: #5f534c;
+}
+.color-foundpets {
+  color: #a9594c; /* สีเขียวสำหรับ Found */
 }
 .text-footer {
   font-family: "Prompt", sans-serif;
@@ -83,7 +92,7 @@
   position: relative;
   background-position: bottom;
   background-repeat: no-repeat;
-  background-image: url("/images/logos/footers-pets.png");
+  background-image: url("/images/logos/footers-bg.png");
   width: 100%;
 }
 .social-icons {

@@ -15,17 +15,18 @@ export const useAuthStore = defineStore("auth", {
           password,
         });
         const { token, data } = response.data;
-
         localStorage.setItem("token", data.id);
         this.token = data;
         this.user = data;
         this.isAdmin = data.is_admin;
 
-        // if (data.is_admin) {
-        //   router.push("/admin");
-        // } else {
-        //   router.push("/user");
-        // }
+        setTimeout(() => {
+          if (data.is_admin) {
+            router.push("/admin");
+          } else {
+            router.push("/");
+          }
+        }, 2000); 
 
         return { success: true };
       } catch (error) {
@@ -45,7 +46,7 @@ export const useAuthStore = defineStore("auth", {
       }
     },
     logout() {
-      localStorage.removeItem("token"); // Remove token from localStorage
+      localStorage.removeItem("token");
       this.token = null;
       this.user = null;
       this.isAdmin = false;
@@ -53,5 +54,6 @@ export const useAuthStore = defineStore("auth", {
     isLoggedIn() {
       return !!this.token;
     },
+    
   },
 });

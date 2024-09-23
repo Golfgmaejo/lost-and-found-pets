@@ -104,6 +104,7 @@
 import axios from "axios";
 import Noticelostpets from "~/components/section/Admin/pets/Noticelostpets.vue";
 import Editlostpets from "~/components/section/Admin/pets/Editlostpets.vue";
+import { se } from "date-fns/locale";
 
 export default {
   components: { Noticelostpets, Editlostpets },
@@ -144,20 +145,20 @@ export default {
         : text;
     },
     onAddlostpet() {
-      this.fetchPetList();
-      this.dialog = false;
+      setTimeout(() => {
+        this.fetchPetList();
+        this.dialog = false;
+      }, 2000);
     },
     editItem(item) {
       this.editedItem = { ...item };
       this.dialogEdit = true;
-      console.log(
-        "Form data before validation:",
-        JSON.stringify(item, null, 2)
-      );
     },
     onEditUpdate() {
-      this.fetchPetList();
-      this.dialogEdit = false;
+      setTimeout(() => {
+        this.fetchPetList();
+        this.dialogEdit = false;
+      }, 2000);
     },
     deleteItem(item) {
       this.editedItem = item;
@@ -211,7 +212,7 @@ export default {
 </script>
 <style scoped>
 .background-image {
-  background-image: url("public/images/logos/bg-pets.png");
+  background-image: url("public/images/logos/bg-admin.png");
 }
 
 .btn-style {
@@ -223,7 +224,7 @@ export default {
   font-family: "Prompt", sans-serif;
 }
 ::v-deep thead th {
-  background-image: url("public/images/logos/bg-pets.png") !important;
+  background-image: url("public/images/logos/bg-admin.png") !important;
   color: black !important; /* สีตัวอักษร */
 }
 </style>

@@ -1,10 +1,10 @@
 <script setup >
 import { ref } from 'vue';
-import TargetPets from '/images/pets/found-home.png';
+import Dogproduct from '/images/product/dogproduct.png';
 </script>
 
 <template>
-  <img class="petscat" :src="TargetPets" alt="logo"/>
+  <img class="petscat" :src="Dogproduct" alt="logo"/>
 </template>
 <style scoped>
 .petscat {

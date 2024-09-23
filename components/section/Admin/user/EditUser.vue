@@ -248,14 +248,12 @@ export default {
         axios
           .put(`http://localhost:5000/api/user/update_user/${userId}`, data)
           .then((response) => {
-            console.log("User updated successfully!", response);
             this.$emit('updateuser');
           })
           .catch((error) => {
             console.error("Error updating user:", error);
           });
       } else {
-        console.log("Form validation failed!");
       }
     },
   },

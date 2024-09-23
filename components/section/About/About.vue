@@ -105,7 +105,7 @@ export default {
 .text-portfolio-title {
   font-family: "Prompt", sans-serif;
   color: #582e2c;
-  font-size: 36px;
+  font-size: 28px;
   font-weight: 700;
   letter-spacing: 1.5px;
   margin-bottom: 20px;

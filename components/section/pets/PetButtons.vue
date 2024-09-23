@@ -1,4 +1,3 @@
-
 <template>
   <div>
     <v-row class="d-flex justify-center align-center">
@@ -14,8 +13,8 @@
 
 <script>
 export default {
-  name: 'PetButtons'
-}
+  name: "PetButtons",
+};
 </script>
 
 <style scoped>

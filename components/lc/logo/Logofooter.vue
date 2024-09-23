@@ -1,11 +1,12 @@
 <script setup >
 import { ref } from 'vue';
-import FooterPets from '/images/logos/footerpets.png';
+import Logofooter from 'public/images/logos/Lafplogo.png';
+
 </script>
 
 <template>
     <NuxtLink to="/" class="d-flex">
-        <img class="footpets" :src="FooterPets" alt="logo"/>
+        <img class="footpets" :src="Logofooter" alt="logo"/>
     </NuxtLink>
 </template>
 <style scoped>

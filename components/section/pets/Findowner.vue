@@ -2,10 +2,18 @@
   <v-container>
     <div class="text-center mb-4">
       <v-col class="d-flex justify-end">
-        <v-btn color="red" @click="() => $router.push('/register')" class="mb-4">
+          <v-btn
+            v-if="!isLoggedIn"
+            color="red"
+            @click="() => $router.push('/register')"
+            class="mb-4"
+          >
           ประกาศหาเจ้าของ
-        </v-btn>
-      </v-col>
+          </v-btn>
+          <v-btn v-else color="red" @click="openDialog" class="mb-4">
+            ประกาศหาเจ้าของ
+          </v-btn>
+        </v-col>
       <div>
         <PetButtons />
       </div>
@@ -78,61 +86,82 @@
         ></v-pagination>
       </div>
     </v-container>
+    <v-dialog v-model="isDialogOpen" max-width="1200px" persistent>
+        <v-card>
+          <v-card-text>
+            <Noticefindowner @addfindownerpet="closeDialog" />
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" text @click="closeDialog"
+              >ยกเลิก</v-btn
+            >
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
   </v-container>
 </template>
 
-<script>
-import { ref, computed } from "vue";
-import axios from "axios";
-import PetButtons from "./PetButtons.vue";
+<script setup>
+import { ref, computed, onMounted, watchEffect  } from 'vue';
+import { useAuthStore } from "~/stores/auth";
+import axios from 'axios';
+import PetButtons from './PetButtons.vue';
+import Noticefindowner from '../Admin/pets/Noticefindowner.vue';
 
-export default {
-  components: {
-    PetButtons,
-  },
-  data() {
-    return {
-      findownersList: [],
-      pageTitle: "ประกาศหาเจ้าของ",
-      isDialogOpen: false,
-      itemsPerPage: 8,
-      page: 1,
-    };
-  },
-  computed: {
-    pageCount() {
-      return Math.ceil(this.findownersList.length / this.itemsPerPage);
-    },
-    paginatedFindowner() {
-      const start = (this.page - 1) * this.itemsPerPage;
-      const end = start + this.itemsPerPage;
-      return this.findownersList.slice(start, end);
-    },
-  },
-  created() {
-    this.fetchFindowners();
-  },
-  methods: {
-    async fetchFindowners() {
-      const url = `http://localhost:5000/api/find_owner/getAll_find_owner`;
-      try {
-        const response = await axios.get(url);
-        this.findownersList = response.data.data;
-      } catch (error) {
-        console.error("Error fetching find owners:", error);
-      }
-    },
-    openDialog() {
-      this.isDialogOpen = true;
-    },
-    closeDialog() {
-      this.isDialogOpen = false;
-    },
-  },
-  mounted() {
-    this.fetchFindowners();
-  },
+const findownersList = ref([]);
+const pageTitle = ref('ประกาศหาเจ้าของ');
+const itemsPerPage = ref(8);
+const page = ref(1);
+const isDialogOpen = ref(false);
+
+const authStore = useAuthStore();
+const isLoggedIn = ref(authStore.isLoggedIn());
+const user = ref(authStore.user);
+const isAdmin = ref(authStore.isAdmin);
+
+watchEffect(() => {
+  isLoggedIn.value = authStore.isLoggedIn();
+  user.value = authStore.user;
+  isAdmin.value = authStore.isAdmin;
+});
+
+const openDialog = () => {
+  isDialogOpen.value = true;
 };
+
+const closeDialog = () => {
+  isDialogOpen.value = false;
+  fetchFindowners();
+};
+
+const updatePage = (newPage) => {
+  page.value = newPage;
+};
+
+const pageCount = computed(() => {
+  return Math.ceil(findownersList.value.length / itemsPerPage.value);
+});
+
+const paginatedFindowner = computed(() => {
+  const start = (page.value - 1) * itemsPerPage.value;
+  const end = start + itemsPerPage.value;
+  return findownersList.value.slice(start, end);
+});
+
+const fetchFindowners = async () => {
+  const url = 'http://localhost:5000/api/find_owner/getAll_find_owner';
+  try {
+    const response = await axios.get(url);
+    findownersList.value = response.data.data;
+  } catch (error) {
+    console.error('Error fetching find owners:', error);
+  }
+};
+
+onMounted(() => {
+  fetchFindowners();
+});
 </script>
 
 <style scoped>

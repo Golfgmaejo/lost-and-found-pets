@@ -155,7 +155,6 @@ export default {
           image_url: imageUrl,
           isBestSeller: this.form.isBestSeller,
         };
-        console.log("Form data:", data);
         try {
           const response = await axios.post(
             "http://localhost:5000/api/product/add_product",

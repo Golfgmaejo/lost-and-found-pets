@@ -172,7 +172,6 @@ export default {
       axios
         .get(url)
         .then((response) => {
-          console.log(response.data.data);
           this.lostpetsList = response.data.data.map((animal) => ({
             ...animal,
             lat: parseFloat(animal.lat),

@@ -289,7 +289,6 @@ export default {
         axios
           .post("http://localhost:5000/api/user/create", data)
           .then((response) => {
-            console.log("Form submitted successfully!", response);
             this.emailError = "";
             this.success = true;
           })
@@ -307,7 +306,6 @@ export default {
             }
           });
       } else {
-        console.log("Form validation failed!");
       }
     },
   },

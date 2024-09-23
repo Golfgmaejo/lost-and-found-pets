@@ -6,7 +6,6 @@ import AllHome from "~/components/section/AllHome.vue";
 </script>
 
 <template>
-  
   <div>
     <Gallery />
     <AllHome />

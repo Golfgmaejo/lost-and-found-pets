@@ -191,6 +191,7 @@
 
 <script>
 import axios from "axios";
+import { useAuthStore } from '~/stores/auth';
 
 export default {
   data() {
@@ -227,9 +228,46 @@ export default {
       },
     };
   },
+  
+  computed: {
+    formattedAdoptDate() {
+      if (this.form.adoptDate) {
+        const date = new Date(this.form.adoptDate);
+        const day = date.getDate().toString().padStart(2, "0");
+        const month = (date.getMonth() + 1).toString().padStart(2, "0");
+        const year = date.getFullYear() + 543;
+        return `${day}/${month}/${year}`;
+      }
+      return "";
+    },
+  },
+  created() {
+    if (process.client) {
+      const storedCoords = localStorage.getItem("markerCoords");
+      if (storedCoords) {
+        const { lat, lng } = JSON.parse(storedCoords);
+        this.center = [lat, lng];
+        this.markerLatLng = { lat, lng };
+      }
+    }
+  },
+  mounted() {
+    if (process.client && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const { latitude, longitude } = position.coords;
+        this.center = [latitude, longitude];
+        this.markerLatLng = { lat: latitude, lng: longitude };
+        localStorage.setItem(
+          "markerCoords",
+          JSON.stringify({ lat: latitude, lng: longitude })
+        );
+      });
+    }
+  },
   methods: {
     async submit() {
-      // console.log("Form data before validation:", JSON.stringify(this.form, null, 2));
+      const authStore = useAuthStore();
+      const userId = authStore.user.id;
       if (this.$refs.form.validate()) {
         const isFormIncomplete = Object.values(this.form).some(
           (value) => value === "" || value === null
@@ -243,9 +281,9 @@ export default {
           try {
             const imageData = new FormData();
             imageData.append("file", this.form.image);
-            imageData.append("user_id", "e969bea8-5469-499a-baf8-6c896c556e50"); // replace with actual user_id
+            imageData.append("user_id", userId);
             const response = await axios.post(
-              "http://localhost:5000/api/image/upload_images_pets",
+              "http://localhost:5000/api/image/upload_images_adopt_pet",
               imageData,
               {
                 headers: {
@@ -261,7 +299,7 @@ export default {
           }
         }
         const data = {
-          user_id: "e969bea8-5469-499a-baf8-6c896c556e50",
+          user_id: userId,
           adopt_date: this.formattedAdoptDate,
           adopt_time: this.form.adoptTime,
           adopt_place: this.form.adoptPlace,
@@ -274,7 +312,6 @@ export default {
           color: this.form.color,
           status: this.form.status,
         };
-        console.log("Form data:", data);
 
         try {
           const response = await axios.post(
@@ -338,41 +375,6 @@ export default {
         localStorage.setItem("markerCoords", JSON.stringify({ lat, lng }));
       }
     },
-  },
-  computed: {
-    formattedAdoptDate() {
-      if (this.form.adoptDate) {
-        const date = new Date(this.form.adoptDate);
-        const day = date.getDate().toString().padStart(2, "0");
-        const month = (date.getMonth() + 1).toString().padStart(2, "0");
-        const year = date.getFullYear() + 543;
-        return `${day}/${month}/${year}`;
-      }
-      return "";
-    },
-  },
-  created() {
-    if (process.client) {
-      const storedCoords = localStorage.getItem("markerCoords");
-      if (storedCoords) {
-        const { lat, lng } = JSON.parse(storedCoords);
-        this.center = [lat, lng];
-        this.markerLatLng = { lat, lng };
-      }
-    }
-  },
-  mounted() {
-    if (process.client && navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        const { latitude, longitude } = position.coords;
-        this.center = [latitude, longitude];
-        this.markerLatLng = { lat: latitude, lng: longitude };
-        localStorage.setItem(
-          "markerCoords",
-          JSON.stringify({ lat: latitude, lng: longitude })
-        );
-      });
-    }
   },
 };
 </script>
