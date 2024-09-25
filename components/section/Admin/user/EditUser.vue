@@ -1,15 +1,22 @@
 <template>
   <v-container>
     <h1 class="text-portfolio-title">แก้ไขข้อมูลส่วนตัว</h1>
-    <h5 class="mt-2">
-      กรุณากรอกข้อมูลที่ใช้งานจริง เพื่อความสะดวกในกรณีที่ต้องมีการติดต่อ
+    <h5 class="text-portfolio">
+      ข้อมูลจะถูกเปิดเผยกรณีที่อนุญาติให้ติดต่อในการลงประกาศ
+      โปรดกรอกข้อมูลที่ใช้งานจริง เพื่อความสะดวกในกรณีที่ต้องมีการติดต่อ
+      และการประกาศช่วยตามหา
     </h5>
-    <v-form v-model="valid" ref="form" class="my-5">
+    <h5 class="text-red">*กรุณากรอก</h5>
+
+    <v-form v-model="valid" ref="form" class="text-form my-5">
       <v-row>
-        <v-col cols="12" md="12">
+        <v-col cols="12" md="6">
+          <div class="text-subtitle-1 mb-2">
+            คำนำหน้า&nbsp;<span class="text-red">*</span>
+          </div>
           <v-select
-            label="คำนำหน้า"
-            v-model="prefix"
+            placeholder="คำนำหน้า"
+            v-model="form.prefix"
             :items="prefixOptions"
             :rules="[rules.required]"
             variant="outlined"
@@ -17,100 +24,156 @@
         </v-col>
 
         <v-col cols="12" md="6">
+          <div class="text-subtitle-1 mb-2">
+            เบอร์โทรศัพท์&nbsp;<span class="text-red">*</span>
+          </div>
           <v-text-field
-            label="ชื่อจริง"
-            v-model="firstName"
-            :rules="[rules.required]"
-            variant="outlined"
-          />
-        </v-col>
-        <v-col cols="12" md="6">
-          <v-text-field
-            label="นามสกุล"
-            v-model="lastName"
-            :rules="[rules.required]"
-            variant="outlined"
-          />
-        </v-col>
-        <v-col cols="12" md="6">
-          <v-text-field
-            label="เบอร์โทรศัพท์"
-            v-model="phone"
+            placeholder="เบอร์โทรศัพท์"
+            v-model="form.phone"
             :rules="[rules.required, rules.phone]"
             variant="outlined"
           />
         </v-col>
+      </v-row>
+      <V-row>
         <v-col cols="12" md="6">
-          <v-text-field label="Facebook" v-model="facebook" variant="outlined" />
-        </v-col>
-        <v-col cols="12" md="6">
-          <v-text-field label="Line ID" v-model="lineId" variant="outlined" />
-        </v-col>
-        <v-col cols="12">
+          <div class="text-subtitle-1 mb-2">
+            ชื่อ&nbsp;<span class="text-red">*</span>
+          </div>
           <v-text-field
-            label="ที่อยู่"
-            v-model="address"
+            placeholder="ชื่อจริง"
+            v-model="form.first_name"
             :rules="[rules.required]"
             variant="outlined"
           />
         </v-col>
+        <v-col cols="12" md="6">
+          <div class="text-subtitle-1 mb-2">
+            นามสกุล&nbsp;<span class="text-red">*</span>
+          </div>
+          <v-text-field
+            placeholder="นามสกุล"
+            v-model="form.last_name"
+            :rules="[rules.required]"
+            variant="outlined"
+          /> </v-col
+      ></V-row>
+      <v-row
+        ><v-col cols="12" md="6">
+          <div class="text-subtitle-1 mb-2">
+            Facebook
+          </div>
+          <v-text-field
+            placeholder="Facebook"
+            v-model="form.Facebook"
+            variant="outlined"
+          />
+        </v-col>
+        <v-col cols="12" md="6">
+          <div class="text-subtitle-1 mb-2">
+            Line ID
+          </div>
+          <v-text-field
+            placeholder="Line ID"
+            v-model="form.Line_id"
+            variant="outlined"
+          /> </v-col
+      ></v-row>
+      <v-row
+        ><v-col cols="12">
+          <div class="text-subtitle-1 mb-2">
+            ที่อยู่&nbsp;<span class="text-red">*</span>
+          </div>
+          <v-text-field
+            placeholder="ที่อยู่"
+            v-model="form.address"
+            :rules="[rules.required]"
+            variant="outlined"
+          /> </v-col
+      ></v-row>
+
+      <v-row>
         <v-col cols="12" md="4">
+          <div class="text-subtitle-1 mb-2">
+            จังหวัด&nbsp;<span class="text-red">*</span>
+          </div>
           <v-autocomplete
-            label="จังหวัด"
-            v-model="province"
+            placeholder="จังหวัด"
+            v-model="form.province"
             :items="provinces"
             :rules="[rules.required]"
             variant="outlined"
           ></v-autocomplete>
         </v-col>
+
         <v-col cols="12" md="4">
+          <div class="text-subtitle-1 mb-2">
+            อำเภอ&nbsp;<span class="text-red">*</span>
+          </div>
           <v-autocomplete
-            label="อำเภอ"
-            v-model="district"
+            placeholder="อำเภอ"
+            v-model="form.district"
             :items="districts"
             :rules="[rules.required]"
             variant="outlined"
           ></v-autocomplete>
         </v-col>
+
         <v-col cols="12" md="4">
+          <div class="text-subtitle-1 mb-2">
+            ตำบล&nbsp;<span class="text-red">*</span>
+          </div>
           <v-autocomplete
-            label="ตำบล"
-            v-model="subdistrict"
+            placeholder="ตำบล"
+            v-model="form.subdistrict"
             :items="subdistricts"
             :rules="[rules.required]"
             variant="outlined"
           ></v-autocomplete>
         </v-col>
+
         <v-col cols="12" md="4">
+          <div class="text-subtitle-1 mb-2">
+            รหัสไปรษณีย์&nbsp;<span class="text-red">*</span>
+          </div>
           <v-autocomplete
-            label="รหัสไปรษณีย์"
-            v-model="postalCode"
+            placeholder="รหัสไปรษณีย์"
+            v-model="form.postal_code"
             :items="postalcodes"
             :rules="[rules.required]"
             variant="outlined"
-          ></v-autocomplete>
-        </v-col>
+          ></v-autocomplete> </v-col
+      ></v-row>
 
-        <v-col cols="12">
+      <v-row
+        ><v-col cols="12">
+          <div class="text-subtitle-1 mb-2">
+            Email address&nbsp;<span class="text-red">*</span>
+          </div>
           <v-text-field
-            label="Email address"
-            v-model="email"
+            placeholder="Email address"
+            v-model="form.email"
             :rules="[rules.required, rules.email]"
             variant="outlined"
             disabled
           />
         </v-col>
-
-        <v-col cols="12" style="display: flex; justify-content: space-evenly">
-          <v-btn color="primary" :disabled="!valid" @click="updateUser">บันทึกข้อมูล</v-btn>
-        </v-col>
       </v-row>
+
+      <v-col cols="12" class="d-flex justify-center">
+        <v-btn color="primary" :disabled="!valid" @click="updateUser"
+          >บันทึกข้อมูล</v-btn
+        >
+        <v-btn color="secondary" class="ml-4" @click="confirmResetForm"
+          >คืนค่าข้อมูล</v-btn
+        >
+      </v-col>
     </v-form>
   </v-container>
 </template>
-
 <script>
 import axios from "axios";
+import { toast } from "vue3-toastify";
 
 export default {
   props: {
@@ -118,19 +181,24 @@ export default {
   },
   data() {
     return {
+      autoCloseTime: 3000,
       valid: false,
-      prefix: "",
-      firstName: "",
-      lastName: "",
-      phone: "",
-      facebook: "",
-      lineId: "",
-      address: "",
-      province: null,
-      district: null,
-      subdistrict: null,
-      postalCode: null,
-      email: "",
+      form: this.userData
+        ? { ...this.userData }
+        : {
+            prefix: null,
+            first_name: "",
+            last_name: "",
+            phone: "",
+            Facebook: "",
+            Line_id: "",
+            address: "",
+            province: null,
+            district: null,
+            subdistrict: null,
+            postal_code: null,
+            email: "",
+          },
       prefixOptions: ["นาย", "นาง", "นางสาว"],
       provinces: [],
       districts: [],
@@ -138,31 +206,27 @@ export default {
       postalcodes: [],
       rules: {
         required: (value) => !!value || "จำเป็นต้องกรอก",
+        requiredAgreement: (value) =>
+          !!value || "กรุณายินยอมเห็นด้วยกับข้อกำหนดและเงื่อนไข",
         email: (value) => /.+@.+\..+/.test(value) || "อีเมลต้องถูกต้อง",
         phone: (value) =>
           /^\d{10}$/.test(value) || "หมายเลขโทรศัพท์ต้องเป็น 10 หลัก",
+        passwordComplexity: (value) => {
+          const regex =
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_.#^+\-=])[A-Za-z\d@$!%*?&_.#^+\-=]{8,}$/;
+          return (
+            regex.test(value) ||
+            "รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร มีตัวพิมพ์ใหญ่ ตัวพิมพ์เล็ก ตัวเลข และอักขระพิเศษ"
+          );
+        },
+        matchPassword: (value) =>
+          value === this.password || "รหัสผ่านต้องตรงกัน",
       },
     };
   },
   watch: {
-    userData: {
-      immediate: true,
-      handler(newVal) {
-        if (newVal) {
-          this.prefix = newVal.prefix;
-          this.firstName = newVal.first_name;
-          this.lastName = newVal.last_name;
-          this.phone = newVal.phone;
-          this.facebook = newVal.facebook || "";
-          this.lineId = newVal.line_id || "";
-          this.address = newVal.address;
-          this.province = newVal.province;
-          this.district = newVal.district;
-          this.subdistrict = newVal.subdistrict;
-          this.postalCode = newVal.postal_code;
-          this.email = newVal.email;
-        }
-      },
+    userData(newData) {
+      this.form = newData ? { ...newData } : {};
     },
   },
   created() {
@@ -180,6 +244,7 @@ export default {
         .then((response) => {
           this.provinces = response.data.map((province) => province.name_th);
         })
+
         .catch((error) => {
           console.error("Error fetching provinces:", error);
         });
@@ -229,33 +294,71 @@ export default {
           console.error("Error fetching postalcodes:", error);
         });
     },
-    updateUser() {
-      if (this.$refs.form.validate()) {
-        const data = {
-          prefix: this.prefix,
-          first_name: this.firstName,
-          last_name: this.lastName,
-          phone: this.phone,
-          facebook: this.facebook || "",
-          line_id: this.lineId || "",
-          address: this.address,
-          province: this.province,
-          district: this.district,
-          subdistrict: this.subdistrict,
-          postal_code: this.postalCode,
-        };
-        const userId = this.$route.params.id;
-        axios
-          .put(`http://localhost:5000/api/user/update_user/${userId}`, data)
-          .then((response) => {
-            this.$emit('updateuser');
-          })
-          .catch((error) => {
-            console.error("Error updating user:", error);
+    async updateUser() {
+      this.$refs.form.validate();
+      if (this.valid) {
+        try {
+          await axios.put(
+            `http://localhost:5000/api/user/update_user/${this.userData.id}`,
+            this.form
+          );
+          toast.success("อัปเดตข้อมูลผู้ใช้สำเร็จ", {
+            autoClose: this.autoCloseTime,
           });
+          this.$emit("updateuser");
+        } catch (error) {
+          console.error("Error updating user:", error);
+          toast.error("เกิดข้อผิดพลาดในการอัปเดตข้อมูล", {
+            autoClose: this.autoCloseTime,
+          });
+        }
       } else {
+        toast.warning("กรุณากรอกข้อมูลให้ครบถ้วน", {
+          autoClose: this.autoCloseTime,
+        });
+      }
+    },
+    confirmResetForm() {
+      if (confirm("คุณแน่ใจที่จะคืนค่าข้อมูลหรือไม่?")) {
+        this.form = this.userData ? { ...this.userData } : {};
       }
     },
   },
 };
 </script>
+
+<style scoped>
+.text-form {
+  font-family: "Prompt", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+}
+.v-btn {
+  font-family: "Prompt", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+}
+.text-red {
+  color: red;
+  font-family: "Prompt", sans-serif;
+}
+.text-portfolio {
+  font-family: "Prompt", sans-serif;
+  color: #777;
+  font-size: 15.9px;
+  font-weight: 400;
+}
+.text-portfolio-title {
+  font-family: "Prompt", sans-serif;
+  color: #582e2c;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.text-subtitle-1 {
+  font-family: "Prompt", sans-serif;
+  color: #582e2c;
+  font-size: 16px !important;
+  font-weight: 500;
+}
+</style>

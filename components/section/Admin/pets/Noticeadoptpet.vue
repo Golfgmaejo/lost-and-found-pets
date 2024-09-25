@@ -1,42 +1,68 @@
 <template>
   <v-container>
-    <h1 class="text-portfolio-title mt-10">ประกาศหาบ้าน</h1>
-    <h5 class="mt-2">
-      กรุณากรอกข้อมูลให้ครบถ้วนเพื่อให้ผู้ที่พบสัตว์เลี้ยงของคุณสามารถติดต่อกลับได้
+    <h1 class="text-portfolio-title">ประกาศหาบ้าน</h1>
+    <h5 class="text-portfolio">
+      กรุณากรอกข้อมูลให้ครบถ้วนเพื่อให้ผู้ที่สนใจสัตว์เลี้ยงจะสามารถติดต่อกลับได้
     </h5>
     <h5 class="text-red">*กรุณากรอกข้อมูล</h5>
-    <v-form v-model="valid" ref="form" class="my-5">
+    <v-form v-model="valid" ref="form" class="text-form my-5">
       <v-row>
         <v-col cols="12" sm="6">
+          <div class="text-subtitle-1 mb-2">
+            เพศ&nbsp;<span class="text-red">*</span>
+          </div>
           <v-select
             v-model="form.gender"
             :items="genders"
-            label="เพศ"
+            placeholder="เพศ"
             variant="outlined"
             :rules="[rules.required]"
           ></v-select>
         </v-col>
         <v-col cols="12" sm="6">
+          <div class="text-subtitle-1 mb-2">
+            ประเภทสัตว์&nbsp;<span class="text-red">*</span>
+          </div>
+          <v-select
+            v-model="form.types"
+            :items="types"
+            placeholder="ประเภทสัตว์"
+            variant="outlined"
+            :rules="[rules.required]"
+          />
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col cols="12" sm="6">
+          <div class="text-subtitle-1 mb-2">
+            สายพันธุ์&nbsp;<span class="text-red">*</span>
+          </div>
           <v-text-field
             v-model="form.breed"
-            label="*สายพันธุ์"
+            placeholder="สายพันธุ์"
             variant="outlined"
             :rules="[rules.required]"
           ></v-text-field>
         </v-col>
-      </v-row>
-      <v-row>
         <v-col cols="12" sm="6">
+          <div class="text-subtitle-1 mb-2">
+            สี&nbsp;<span class="text-red">*</span>
+          </div>
           <v-text-field
             v-model="form.color"
-            label="*สี"
+            placeholder="สี"
             variant="outlined"
             :rules="[rules.required, rules.noNumbers]"
           ></v-text-field>
         </v-col>
       </v-row>
+
       <v-row>
         <v-col cols="12" sm="6">
+          <div class="text-subtitle-1 mb-2">
+            วันที่ประกาศ&nbsp;<span class="text-red">*</span>
+          </div>
           <v-menu
             v-model="menuDate"
             :close-on-content-click="false"
@@ -48,7 +74,7 @@
             <template v-slot:activator="{ on, props }">
               <v-text-field
                 :value="formattedAdoptDate"
-                label="*วันที่ประกาศ"
+                placeholder="วันที่ประกาศ"
                 prepend-icon="mdi-calendar"
                 v-bind="props"
                 v-on="on"
@@ -66,6 +92,9 @@
           </v-menu>
         </v-col>
         <v-col cols="12" sm="6">
+          <div class="text-subtitle-1 mb-2">
+            เวลาประกาศ&nbsp;<span class="text-red">*</span>
+          </div>
           <v-menu
             v-model="menuTime"
             :close-on-content-click="false"
@@ -76,7 +105,7 @@
             <template v-slot:activator="{ on, props }">
               <v-text-field
                 v-model="form.adoptTime"
-                label="*เวลาประกาศ"
+                placeholder="เวลาประกาศ"
                 prepend-icon="mdi-clock"
                 readonly
                 v-bind="props"
@@ -95,16 +124,21 @@
           </v-menu>
         </v-col>
       </v-row>
+
       <v-row>
         <v-col cols="12">
+          <div class="text-subtitle-1 mb-2">
+            สถานที่พบ&nbsp;<span class="text-red">*</span>
+          </div>
           <v-text-field
             v-model="form.adoptPlace"
-            label="*สถานที่พบ"
+            placeholder="สถานที่พบ"
             variant="outlined"
             :rules="[rules.required]"
           ></v-text-field>
         </v-col>
       </v-row>
+
       <v-row>
         <v-alert type="info"> สามารถย้ายหมุดได้ </v-alert>
         <LMap
@@ -127,29 +161,39 @@
           />
         </LMap>
         <v-col cols="12" sm="6">
+          <div class="text-subtitle-1 mb-2">
+            ละติจูด
+          </div>
           <v-text-field
             v-model="markerLatLng.lat"
-            label="ละติจูด"
+            placeholder="ละติจูด"
             variant="outlined"
             readonly
             :rules="[rules.required]"
           ></v-text-field>
         </v-col>
         <v-col cols="12" sm="6">
+          <div class="text-subtitle-1 mb-2">
+            ลองจิจูด
+          </div>
           <v-text-field
             v-model="markerLatLng.lng"
-            label="ลองจิจูด"
+            placeholder="ลองจิจูด"
             variant="outlined"
             readonly
             :rules="[rules.required]"
           ></v-text-field>
         </v-col>
       </v-row>
+
       <v-row>
         <v-col cols="12">
+          <div class="text-subtitle-1 mb-2">
+            รายละเอียดของสัตว์&nbsp;<span class="text-red">*</span>
+          </div>
           <v-textarea
             v-model="form.details"
-            label="รายละเอียดของสัตว์"
+            placeholder="รายละเอียดของสัตว์"
             variant="outlined"
             :rules="[rules.required]"
           ></v-textarea>
@@ -157,10 +201,13 @@
       </v-row>
       <v-row>
         <v-col cols="12">
+          <div class="text-subtitle-1 mb-2">
+            อัปโหลดรูปภาพ&nbsp;<span class="text-red">*</span>
+          </div>
           <v-file-input
             v-model="form.image"
             prepend-icon="mdi-camera"
-            label="อัปโหลดรูปภาพ"
+            placeholder="อัปโหลดรูปภาพ"
             accept="image/*"
             show-size
             variant="outlined"
@@ -170,17 +217,20 @@
       </v-row>
       <v-row>
         <v-col cols="12" sm="6">
+          <div class="text-subtitle-1 mb-2">
+            สถานะ&nbsp;<span class="text-red">*</span>
+          </div>
           <v-select
             v-model="form.status"
             :items="statuses"
-            label="*สถานะ"
+            placeholder="สถานะ"
             variant="outlined"
             :rules="[rules.required]"
           ></v-select>
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols="12" sm="6">
+        <v-col cols="12" class="d-flex justify-center">
           <v-btn color="primary" @click="submit">ประกาศ</v-btn>
           <v-btn color="secondary" class="ml-4" @click="confirmClearForm">ล้างข้อมูล</v-btn>
         </v-col>
@@ -192,6 +242,7 @@
 <script>
 import axios from "axios";
 import { useAuthStore } from '~/stores/auth';
+import { toast } from 'vue3-toastify';
 
 export default {
   data() {
@@ -199,8 +250,9 @@ export default {
       menuDate: false,
       menuTime: false,
       valid: false,
+      autoCloseTime: 3000,
       form: {
-        gender: "",
+        gender: null,
         breed: "",
         color: "",
         adoptDate: null,
@@ -208,7 +260,8 @@ export default {
         adoptPlace: "",
         details: "",
         image: null,
-        status: "",
+        status: null,
+        types: null,
       },
       markerLatLng: {
         lat: "",
@@ -218,6 +271,7 @@ export default {
       center: [18.895811354244756, 99.0130001306534],
       genders: ["ผู้", "เมีย", "ไม่ระบุ"],
       statuses: ["กำลังหาบ้าน", "ได้บ้านแล้ว"],
+      types: ["สุนัข", "แมว", "สัตว์เลี้ยงอื่นๆ"],
       rules: {
         required: (value) => {
           return value && value.trim() ? true : "จำเป็นต้องกรอก";
@@ -273,7 +327,7 @@ export default {
           (value) => value === "" || value === null
         );
         if (isFormIncomplete) {
-          alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+          toast.warning('กรุณากรอกข้อมูลให้ครบถ้วน',{autoClose: this.autoCloseTime});
           return;
         }
         let imageUrl = "default";
@@ -293,8 +347,7 @@ export default {
             );
             imageUrl = response.data.data.url;
           } catch (error) {
-            console.error("Image upload failed:", error);
-            alert("มีข้อผิดพลาดในการอัปโหลดรูปภาพ");
+            toast.error("เกิดข้อผิดพลาดในการอัปโหลดรูปภาพ", { autoClose: this.autoCloseTime });
             return;
           }
         }
@@ -311,6 +364,7 @@ export default {
           gender: this.form.gender,
           color: this.form.color,
           status: this.form.status,
+          types: this.form.types,
         };
 
         try {
@@ -318,11 +372,10 @@ export default {
             "http://localhost:5000/api/adopt_pet/add_adopt_pet",
             data
           );
-          alert("ประกาศสัตว์เลี้ยงหาบ้านแล้ว");
+          toast.success("ประกาศสัตว์หาบ้านแล้ว", { autoClose: this.autoCloseTime });
           this.$emit("addadoptpet");
-          this.clearForm();
         } catch (error) {
-          alert("มีข้อผิดพลาดในการบันทึกข้อมูล");
+          toast.error("เกิดข้อผิดพลาดในการบันทึกข้อมูล", { autoClose: this.autoCloseTime });
         }
       }
     },
@@ -333,7 +386,7 @@ export default {
     },
     clearForm() {
       this.form = {
-        gender: "",
+        gender: null,
         breed: "",
         color: "",
         adoptDate: null,
@@ -341,7 +394,8 @@ export default {
         adoptPlace: "",
         details: "",
         image: null,
-        status: "",
+        status: null,
+        types: null,
       };
       this.markerLatLng = {
         lat: "18.895811354244756",
@@ -358,7 +412,7 @@ export default {
           );
         });
       } else {
-        alert("ไม่สามารถดึงข้อมูลตำแหน่งได้");
+        toast.error("ไม่สามารถดึงข้อมูลตำแหน่งได้", { autoClose: this.autoCloseTime });
       }
       this.$refs.form.resetValidation();
     },
@@ -378,5 +432,38 @@ export default {
   },
 };
 </script>
-
-<style scoped></style>
+<style scoped>
+.text-form {
+  font-family: "Prompt", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+}
+.v-btn {
+  font-family: "Prompt", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+}
+.text-red {
+  color: red;
+  font-family: "Prompt", sans-serif;
+}
+.text-portfolio {
+  font-family: "Prompt", sans-serif;
+  color: #777;
+  font-size: 16px;
+  font-weight: 400;
+}
+.text-portfolio-title {
+  font-family: "Prompt", sans-serif;
+  color: #582e2c;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.text-subtitle-1 {
+  font-family: "Prompt", sans-serif;
+  color: #582e2c;
+  font-size: 16px !important;
+  font-weight: 500;
+}
+</style>

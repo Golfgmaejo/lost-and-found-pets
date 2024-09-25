@@ -143,20 +143,16 @@ export default {
       }
     },
     onAddfindownerpet() {
-      setTimeout(() => {
-        this.fetchPetList();
-        this.dialog = false;
-      }, 2000);
+      this.dialog = false;
+      this.fetchPetList();
     },
     editItem(item) {
       this.editedItem = { ...item };
       this.dialogEdit = true;
     },
     onEditUpdate() {
-      setTimeout(() => {
-        this.fetchPetList();
-        this.dialogEdit = false;
-      }, 2000);
+      this.dialogEdit = false;
+      this.fetchPetList();
     },
     deleteItem(item) {
       this.editedItem = item;
@@ -214,6 +210,12 @@ export default {
 };
 </script>
 <style scoped>
+.v-btn {
+  font-family: "Prompt", sans-serif;
+}
+.v-btn {
+  font-family: "Prompt", sans-serif;
+}
 .background-image {
   background-image: url("public/images/logos/bg-admin.png");
 }
@@ -227,6 +229,6 @@ export default {
 }
 ::v-deep thead th {
   background-image: url("public/images/logos/bg-admin.png") !important;
-  color: black !important; /* สีตัวอักษร */
+  color: black !important; 
 }
 </style>

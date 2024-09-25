@@ -7,7 +7,7 @@ import Productspage from "~/components/section/Product/Productspage.vue";
 
 <template>
   <div>
-    <Gallery />
+    <!-- <Gallery /> -->
     <Productspage />
   </div>
 </template>

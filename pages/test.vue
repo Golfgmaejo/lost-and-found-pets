@@ -7,6 +7,7 @@ import Noticeadoptpet from "~/components/section/Admin/pets/Noticeadoptpet.vue";
 import Mappin from "~/components/section/Mappin.vue";
 import Testallpets from "~/components/section/Test/Testallpets.vue";
 import Testnotice from "~/components/section/Test/Testnotice.vue";
+import Testproduct from "~/components/section/Test/testproduct.vue";
 </script>
 
 <template>
@@ -14,7 +15,8 @@ import Testnotice from "~/components/section/Test/Testnotice.vue";
   <br />
   <br />
   <br />
-  <Testnotice/>
+<Testproduct/>
+  <!-- <Testnotice/> -->
   <!-- <Testallpets/> -->
   <!-- <Noticelostpets/> -->
   <!-- <Testform1 /> -->

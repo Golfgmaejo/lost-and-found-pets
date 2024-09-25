@@ -1,42 +1,68 @@
 <template>
   <v-container>
-    <h1 class="text-portfolio-title mt-10">แก้ไขข้อมูลสัตว์เลี้ยง</h1>
-    <h5 class="mt-2">
-      กรุณากรอกข้อมูลให้ครบถ้วนเพื่อให้ผู้ที่พบสัตว์เลี้ยงของคุณสามารถติดต่อกลับได้
+    <h1 class="text-portfolio-title mb-5">แก้ไขข้อมูลสัตว์เลี้ยง</h1>
+    <h5 class="text-portfolio">
+      กรุณากรอกข้อมูลให้ครบถ้วนเพื่อให้ผู้ที่สนใจสัตว์เลี้ยงจะสามารถติดต่อกลับได้
     </h5>
     <h5 class="text-red">*กรุณากรอกข้อมูล</h5>
-    <v-form v-model="valid" ref="form" class="my-5">
+    <v-form v-model="valid" ref="form" class="text-form my-5">
       <v-row>
         <v-col cols="12" sm="6">
+          <div class="text-subtitle-1 mb-2">
+            เพศ&nbsp;<span class="text-red">*</span>
+          </div>
           <v-select
             v-model="form.gender"
             :items="genders"
-            label="เพศ"
+            placeholder="เพศ"
             variant="outlined"
             :rules="[rules.required]"
           ></v-select>
         </v-col>
         <v-col cols="12" sm="6">
+          <div class="text-subtitle-1 mb-2">
+            ประเภทสัตว์&nbsp;<span class="text-red">*</span>
+          </div>
+          <v-select
+            v-model="form.types"
+            :items="types"
+            placeholder="ประเภทสัตว์"
+            variant="outlined"
+            :rules="[rules.required]"
+          />
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col cols="12" sm="6">
+          <div class="text-subtitle-1 mb-2">
+            สายพันธุ์&nbsp;<span class="text-red">*</span>
+          </div>
           <v-text-field
             v-model="form.breed"
-            label="*สายพันธุ์"
+            placeholder="สายพันธุ์"
             variant="outlined"
             :rules="[rules.required]"
           ></v-text-field>
         </v-col>
-      </v-row>
-      <v-row>
         <v-col cols="12" sm="6">
+          <div class="text-subtitle-1 mb-2">
+            สี&nbsp;<span class="text-red">*</span>
+          </div>
           <v-text-field
             v-model="form.color"
-            label="*สี"
+            placeholder="สี"
             variant="outlined"
             :rules="[rules.required, rules.noNumbers]"
           ></v-text-field>
         </v-col>
       </v-row>
+
       <v-row>
         <v-col cols="12" sm="6">
+          <div class="text-subtitle-1 mb-2">
+            วันที่ประกาศ&nbsp;<span class="text-red">*</span>
+          </div>
           <v-menu
             v-model="menuDate"
             :close-on-content-click="false"
@@ -48,7 +74,7 @@
             <template v-slot:activator="{ on, props }">
               <v-text-field
                 :value="formattedAdoptDate"
-                label="*วันที่ประกาศ"
+                placeholder="วันที่ประกาศ"
                 prepend-icon="mdi-calendar"
                 v-bind="props"
                 v-on="on"
@@ -66,6 +92,9 @@
           </v-menu>
         </v-col>
         <v-col cols="12" sm="6">
+          <div class="text-subtitle-1 mb-2">
+            เวลาประกาศ&nbsp;<span class="text-red">*</span>
+          </div>
           <v-menu
             v-model="menuTime"
             :close-on-content-click="false"
@@ -76,7 +105,7 @@
             <template v-slot:activator="{ on, props }">
               <v-text-field
                 :value="formattedAdoptTime"
-                label="*เวลาประกาศ"
+                placeholder="เวลาประกาศ"
                 prepend-icon="mdi-clock"
                 readonly
                 v-bind="props"
@@ -95,16 +124,21 @@
           </v-menu>
         </v-col>
       </v-row>
+
       <v-row>
         <v-col cols="12">
+          <div class="text-subtitle-1 mb-2">
+            สถานที่หาย&nbsp;<span class="text-red">*</span>
+          </div>
           <v-text-field
             v-model="form.adopt_place"
-            label="*สถานที่หาย"
+            placeholder="สถานที่หาย"
             variant="outlined"
             :rules="[rules.required]"
           ></v-text-field>
         </v-col>
       </v-row>
+
       <v-row>
         <v-alert type="info"> สามารถย้ายหมุดได้ </v-alert>
         <LMap
@@ -126,31 +160,40 @@
             @moveend="onMarkerMoveEnd"
           />
         </LMap>
-
         <v-col cols="12" sm="6">
+          <div class="text-subtitle-1 mb-2">
+            ละติจูด
+          </div>
           <v-text-field
             v-model="markerLatLng.lat"
-            label="ละติจูด"
+            placeholder="ละติจูด"
             variant="outlined"
             readonly
             :rules="[rules.required]"
           ></v-text-field>
         </v-col>
         <v-col cols="12" sm="6">
+          <div class="text-subtitle-1 mb-2">
+            ลองจิจูด
+          </div>
           <v-text-field
             v-model="markerLatLng.lng"
-            label="ลองจิจูด"
+            placeholder="ลองจิจูด"
             variant="outlined"
             readonly
             :rules="[rules.required]"
           ></v-text-field>
         </v-col>
       </v-row>
+
       <v-row>
         <v-col cols="12">
+          <div class="text-subtitle-1 mb-2">
+            รายละเอียดของสัตว์&nbsp;<span class="text-red">*</span>
+          </div>
           <v-textarea
             v-model="form.detail"
-            label="รายละเอียดของสัตว์"
+            placeholder="รายละเอียดของสัตว์"
             variant="outlined"
             :rules="[rules.required]"
           ></v-textarea>
@@ -165,30 +208,36 @@
             max-height="250"
             class="mb-4"
           ></v-img>
+          <div class="text-subtitle-1 mb-2">
+            อัปโหลดรูปภาพใหม่&nbsp;<span class="text-red">*</span>
+          </div>
           <v-file-input
+            ref="fileInput"
             v-model="newImage"
             prepend-icon="mdi-camera"
-            label="อัปโหลดรูปภาพใหม่"
+            placeholder="อัปโหลดรูปภาพใหม่"
             accept="image/*"
             show-size
             variant="outlined"
-            @change="handleFileUpload"
           ></v-file-input>
         </v-col>
       </v-row>
       <v-row>
         <v-col cols="12" sm="6">
+          <div class="text-subtitle-1 mb-2">
+            สถานะ&nbsp;<span class="text-red">*</span>
+          </div>
           <v-select
             v-model="form.status"
             :items="statuses"
-            label="*สถานะ"
+            placeholder="สถานะ"
             variant="outlined"
             :rules="[rules.required]"
           ></v-select>
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols="12" sm="6">
+        <v-col cols="12" class="d-flex justify-center">
           <v-btn color="primary" @click="submit">บันทึก</v-btn>
           <v-btn color="secondary" class="ml-4" @click="confirmResetForm"
             >คืนค่าข้อมูล</v-btn
@@ -201,6 +250,7 @@
 
 <script>
 import axios from "axios";
+import { toast } from 'vue3-toastify';
 
 export default {
   props: {
@@ -211,6 +261,7 @@ export default {
       menuDate: false,
       menuTime: false,
       valid: false,
+      autoCloseTime: 3000,
       selectedDate: this.formatDate(this.petData?.adopt_date) || null,
       form: this.petData
         ? { ...this.petData }
@@ -224,6 +275,7 @@ export default {
             detail: "",
             image_url: null,
             status: "",
+            types: "",
           },
       newImage: null,
       markerLatLng: {
@@ -237,6 +289,7 @@ export default {
       ],
       genders: ["ผู้", "เมีย", "ไม่ระบุ"],
       statuses: ["กำลังหาบ้าน", "ได้บ้านแล้ว"],
+      types: ["สุนัข", "แมว", "สัตว์เลี้ยงอื่นๆ"],
       rules: {
         required: (value) => {
           return value && value.trim() ? true : "จำเป็นต้องกรอก";
@@ -261,105 +314,12 @@ export default {
             detail: "",
             image_url: null,
             status: "",
+            types: "",
           };
       this.selectedDate = this.formatDate(newData?.adopt_date) || null;
       this.markerLatLng.lat = newData?.lat || 18.895811354244756;
       this.markerLatLng.lng = newData?.lng || 99.0130001306534;
       this.center = [this.markerLatLng.lat, this.markerLatLng.lng];
-    },
-  },
-  methods: {
-    async handleFileUpload() {
-      if (!this.newImage) return;
-      try {
-        const formData = new FormData();
-        formData.append("image", this.newImage);
-        formData.append("old_image_url", this.form.image_url || "");
-        const response = await axios.put(
-          `http://localhost:5000/api/image/update_images_adopt_pet`,
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-        this.form.image_url = response.data.data.url;
-        this.newImage = null;
-        alert("รูปภาพอัปเดตสำเร็จ");
-      } catch (error) {
-        console.error("Error uploading image:", error);
-        alert("เกิดข้อผิดพลาดในการอัปโหลดรูปภาพ");
-      }
-    },
-    submit() {
-      this.$refs.form.validate();
-      if (this.valid) {
-        const data = {
-          ...this.form,
-          adopt_time: this.formattedAdoptTime,
-          adopt_date: this.formattedAdoptDate,
-          lat: this.markerLatLng.lat.toString(),
-          lng: this.markerLatLng.lng.toString(),
-          image_url: this.form.image_url,
-        };
-        axios
-          .put(
-            `http://localhost:5000/api/adopt_pet/update_adopt_pet/${this.petData.id}`,
-            data
-          )
-          .then((response) => {
-            alert("อัปเดตข้อมูลสำเร็จ");
-            this.$emit("updateadoptpet");
-          })
-          .catch((error) => {
-            console.error(error);
-            alert("เกิดข้อผิดพลาดในการอัปเดตข้อมูล");
-          });
-      } else {
-        alert("กรุณากรอกข้อมูลให้ครบถ้วน");
-      }
-    },
-    confirmResetForm() {
-      if (confirm("คุณแน่ใจหรือว่าต้องการคืนค่าข้อมูลทั้งหมด?")) {
-        this.resetForm();
-      }
-    },
-    resetForm() {
-      this.form = this.petData ? { ...this.petData } : {};
-      this.markerLatLng.lat = this.petData?.lat || 18.895811354244756;
-      this.markerLatLng.lng = this.petData?.lng || 99.0130001306534;
-      this.center = [this.markerLatLng.lat, this.markerLatLng.lng];
-      this.selectedDate = this.formatDate(this.petData?.adopt_date) || null;
-      this.form.adopt_time = this.petData?.adopt_time || null;
-      this.form.image_url = this.petData?.image_url || null;
-    },
-    updateAdoptTime(time) {
-      this.form.adopt_time = time;
-      this.menuTime = false;
-    },
-    updateAdoptDate() {
-      if (this.selectedDate) {
-        this.form.adopt_date = this.formattedAdoptDate;
-        this.menuDate = false;
-      }
-    },
-    formatDate(dateStr) {
-      if (dateStr) {
-        const [day, month, year] = dateStr.split("/").map(Number);
-        const gregorianYear = year - 543;
-        return new Date(
-          `${gregorianYear}-${month.toString().padStart(2, "0")}-${day
-            .toString()
-            .padStart(2, "0")}`
-        );
-      }
-      return null;
-    },
-    onMarkerMoveEnd(event) {
-      const latLng = event.target.getLatLng();
-      this.markerLatLng.lat = latLng.lat;
-      this.markerLatLng.lng = latLng.lng;
     },
   },
   computed: {
@@ -395,15 +355,151 @@ export default {
       );
     }
   },
+  methods: {
+    
+    async handleFileUpload() {
+      if (!this.newImage) return;
+      try {
+        const formData = new FormData();
+        formData.append("image", this.newImage);
+        formData.append("old_image_url", this.form.image_url || "");
+        const response = await axios.put(
+          `http://localhost:5000/api/image/update_images_adopt_pet`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        this.form.image_url = response.data.data.url;
+        this.newImage = null;
+        return true;
+      } catch (error) {
+        console.error("Error uploading image:", error);
+        toast.error("เกิดข้อผิดพลาดในการอัปโหลดรูปภาพ", {
+          autoClose: this.autoCloseTime,
+        });
+        return false;
+      }
+    },
+    async submit() {
+      this.$refs.form.validate();
+      if (this.valid) {
+        if (this.newImage) {
+          const uploadSuccess = await this.handleFileUpload();
+          if (!uploadSuccess) {
+            return;
+          }
+        }
+
+        const data = {
+          ...this.form,
+          adopt_time: this.formattedAdoptTime,
+          adopt_date: this.formattedAdoptDate,
+          lat: this.markerLatLng.lat.toString(),
+          lng: this.markerLatLng.lng.toString(),
+          image_url: this.form.image_url,
+        };
+        axios
+          .put(
+            `http://localhost:5000/api/adopt_pet/update_adopt_pet/${this.petData.id}`,
+            data
+          )
+          .then((response) => {
+            toast.success("อัปเดตข้อมูลสำเร็จ", { autoClose: this.autoCloseTime });
+            this.$emit("updateadoptpet");
+          })
+          .catch((error) => {
+            console.error(error);
+            toast.error("เกิดข้อผิดพลาดในการอัปเดตข้อมูล", { autoClose: this.autoCloseTime });
+          });
+      } else {
+        toast.warning('กรุณากรอกข้อมูลให้ครบถ้วน',{autoClose: this.autoCloseTime});
+      }
+    },
+    confirmResetForm() {
+      if (confirm("คุณแน่ใจหรือว่าต้องการคืนค่าข้อมูลทั้งหมด?")) {
+        this.resetForm();
+      }
+    },
+    resetForm() {
+      this.form = this.petData ? { ...this.petData } : {};
+      this.markerLatLng.lat = this.petData?.lat || 18.895811354244756;
+      this.markerLatLng.lng = this.petData?.lng || 99.0130001306534;
+      this.center = [this.markerLatLng.lat, this.markerLatLng.lng];
+      this.selectedDate = this.formatDate(this.petData?.adopt_date) || null;
+      this.form.adopt_time = this.petData?.adopt_time || null;
+      this.form.image_url = this.petData?.image_url || null;
+      this.newImage = null;
+      if (this.$refs.fileInput) {
+        this.$refs.fileInput.reset();
+      }
+    },
+    updateAdoptTime(time) {
+      this.form.adopt_time = time;
+      this.menuTime = false;
+    },
+    updateAdoptDate() {
+      if (this.selectedDate) {
+        this.form.adopt_date = this.formattedAdoptDate;
+        this.menuDate = false;
+      }
+    },
+    formatDate(dateStr) {
+      if (dateStr) {
+        const [day, month, year] = dateStr.split("/").map(Number);
+        const gregorianYear = year - 543;
+        return new Date(
+          `${gregorianYear}-${month.toString().padStart(2, "0")}-${day
+            .toString()
+            .padStart(2, "0")}`
+        );
+      }
+      return null;
+    },
+    onMarkerMoveEnd(event) {
+      const latLng = event.target.getLatLng();
+      this.markerLatLng.lat = latLng.lat;
+      this.markerLatLng.lng = latLng.lng;
+    },
+  },
+
 };
 </script>
 
 <style scoped>
-.text-portfolio-title {
-  font-size: 2rem;
-  font-weight: bold;
+.text-form {
+  font-family: "Prompt", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+}
+.v-btn {
+  font-family: "Prompt", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
 }
 .text-red {
   color: red;
+  font-family: "Prompt", sans-serif;
+}
+.text-portfolio {
+  font-family: "Prompt", sans-serif;
+  color: #777;
+  font-size: 16px;
+  font-weight: 400;
+}
+.text-portfolio-title {
+  font-family: "Prompt", sans-serif;
+  color: #582e2c;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.text-subtitle-1 {
+  font-family: "Prompt", sans-serif;
+  color: #582e2c;
+  font-size: 16px !important;
+  font-weight: 500;
 }
 </style>

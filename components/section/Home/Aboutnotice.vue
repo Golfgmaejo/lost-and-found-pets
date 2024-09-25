@@ -1,8 +1,9 @@
 <template>
+  <div class="bg-color">
   <v-container>
     <v-row justify="center">
       <v-col cols="12" sm="10" md="9" lg="7">
-        <div class="text-center mini-spacer">
+        <div class="text-center">
           <h2 class="text-portfolio-title">ประกาศของเรามีอะไรบ้าง?</h2>
           <p class="text-portfolio">
             ประกาศทั้งหมดนี้ถูกจัดทำขึ้นเพื่อช่วยเหลือสัตว์เลี้ยงและเจ้าของในการหากันและกัน
@@ -15,7 +16,7 @@
       <v-col class="content-col">
         <nuxt-link to="/lost_pet" class="no-underline link-container">
           <div class="icon-container">
-            <LcLogoLostpets />
+            <LcLogoLostPets />
             <div>
               <p class="text-portfolio-h">ประกาศสัตว์เลี้ยงหาย</p>
               <p class="text-center text-portfolio">
@@ -59,6 +60,7 @@
       </v-col>
     </v-row>
   </v-container>
+  </div>
 </template>
 
 <style scoped>
@@ -76,6 +78,7 @@
   font-size: 28px;
   font-weight: 700;
   margin-bottom: 16px;
+  margin-top: 16px;
 }
 
 .text-portfolio {

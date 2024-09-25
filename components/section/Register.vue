@@ -1,32 +1,34 @@
 <template>
   <v-container>
-    <h1 class="text-portfolio-title mt-10">สมัครสมาชิก</h1>
-    <h5 class="mt-2">
-      กรุณากรอกข้อมูลที่ใช้งานจริง เพื่อความสะดวกในกรณีที่ต้องมีการติดต่อ
+    <h1 class="text-portfolio-title">สมัครสมาชิก</h1>
+    <h5 class="text-portfolio">
+      ข้อมูลจะถูกเปิดเผยกรณีที่อนุญาติให้ติดต่อในการลงประกาศ
+      โปรดกรอกข้อมูลที่ใช้งานจริง เพื่อความสะดวกในกรณีที่ต้องมีการติดต่อ
       และการประกาศช่วยตามหา
     </h5>
-    <h5 class="text-red">
-      *ข้อมูลจะถูกเปิดเผยกรณีที่อนุญาติให้ติดต่อในการลงประกาศ
-    </h5>
+    <h5 class="text-red">*กรุณากรอก</h5>
 
-    <v-form v-model="valid" ref="form" class="my-5">
+    <v-form v-model="valid" ref="form" class="text-form my-5">
       <v-row>
         <v-col cols="12" md="6">
-          <h5 class="text-red">*กรุณากรอก</h5>
-          <v-select
-            label="คำนำหน้า"
+          <div class="text-subtitle-1 mb-2">
+            คำนำหน้า&nbsp;<span class="text-red">*</span>
+          </div>
+          <v-autocomplete
+            placeholder="กรุณากรอกคำนำหน้า"
             v-model="prefix"
             :items="prefixOptions"
             :rules="[rules.required]"
             variant="outlined"
-            class="mb-4"
-          ></v-select>
+          ></v-autocomplete>
         </v-col>
 
-        <v-col cols="12" md="6" class="mb-4">
-          <h5 class="text-red">*</h5>
+        <v-col cols="12" md="6">
+          <div class="text-subtitle-1 mb-2">
+            เบอร์โทรศัพท์&nbsp;<span class="text-red">*</span>
+          </div>
           <v-text-field
-            label="เบอร์โทรศัพท์"
+            placeholder="กรุณากรอกเบอร์โทรศัพท์"
             v-model="phone"
             :rules="[rules.required, rules.phone]"
             variant="outlined"
@@ -34,44 +36,52 @@
         </v-col>
       </v-row>
       <V-row>
-        <v-col cols="12" md="6" class="mb-4">
-          <h5 class="text-red">*</h5>
+        <v-col cols="12" md="6">
+          <div class="text-subtitle-1 mb-2">
+            ชื่อ&nbsp;<span class="text-red">*</span>
+          </div>
           <v-text-field
-            label="ชื่อจริง"
+            placeholder="กรุณากรอกชื่อ"
             v-model="firstName"
             :rules="[rules.required]"
             variant="outlined"
           />
         </v-col>
-        <v-col cols="12" md="6" class="mb-4">
-          <h5 class="text-red">*</h5>
+        <v-col cols="12" md="6">
+          <div class="text-subtitle-1 mb-2">
+            นามสกุล&nbsp;<span class="text-red">*</span>
+          </div>
           <v-text-field
-            label="นามสกุล"
+            placeholder="กรุณากรอกนามสกุล"
             v-model="lastName"
             :rules="[rules.required]"
             variant="outlined"
           /> </v-col
       ></V-row>
       <v-row
-        ><v-col cols="12" md="6" class="mb-4">
+        ><v-col cols="12" md="6">
+          <div class="text-subtitle-1 mb-2">Facebook</div>
           <v-text-field
-            label="Facebook"
+            placeholder="Facebook"
             v-model="Facebook"
             variant="outlined"
           />
         </v-col>
-        <v-col cols="12" md="6" class="mb-4">
+        <v-col cols="12" md="6">
+          <div class="text-subtitle-1 mb-2">Line ID</div>
           <v-text-field
-            label="Line ID"
+            placeholder="Line ID"
             v-model="Line_id"
             variant="outlined"
           /> </v-col
       ></v-row>
       <v-row
-        ><v-col cols="12" class="mb-4">
-          <h5 class="text-red">*</h5>
+        ><v-col cols="12">
+          <div class="text-subtitle-1 mb-2">
+            ที่อยู่&nbsp;<span class="text-red">*</span>
+          </div>
           <v-text-field
-            label="ที่อยู่"
+            placeholder="กรุณากรอกที่อยู่"
             v-model="address"
             :rules="[rules.required]"
             variant="outlined"
@@ -79,10 +89,12 @@
       ></v-row>
 
       <v-row>
-        <v-col cols="12" md="4" class="mb-4">
-          <h5 class="text-red">*</h5>
+        <v-col cols="12" md="4">
+          <div class="text-subtitle-1 mb-2">
+            จังหวัด&nbsp;<span class="text-red">*</span>
+          </div>
           <v-autocomplete
-            label="จังหวัด"
+            placeholder="กรุณากรอกจังหวัด"
             v-model="province"
             :items="provinces"
             :rules="[rules.required]"
@@ -90,10 +102,12 @@
           ></v-autocomplete>
         </v-col>
 
-        <v-col cols="12" md="4" class="mb-4">
-          <h5 class="text-red">*</h5>
+        <v-col cols="12" md="4">
+          <div class="text-subtitle-1 mb-2">
+            อำเภอ&nbsp;<span class="text-red">*</span>
+          </div>
           <v-autocomplete
-            label="อำเภอ"
+            placeholder="กรุณากรอกอำเภอ"
             v-model="district"
             :items="districts"
             :rules="[rules.required]"
@@ -101,10 +115,12 @@
           ></v-autocomplete>
         </v-col>
 
-        <v-col cols="12" md="4" class="mb-4">
-          <h5 class="text-red">*</h5>
+        <v-col cols="12" md="4">
+          <div class="text-subtitle-1 mb-2">
+            ตำบล&nbsp;<span class="text-red">*</span>
+          </div>
           <v-autocomplete
-            label="ตำบล"
+            placeholder="กรุณากรอกตำบล"
             v-model="subdistrict"
             :items="subdistricts"
             :rules="[rules.required]"
@@ -112,10 +128,12 @@
           ></v-autocomplete>
         </v-col>
 
-        <v-col cols="12" md="4" class="mb-4">
-          <h5 class="text-red">*</h5>
+        <v-col cols="12" md="4">
+          <div class="text-subtitle-1 mb-2">
+            รหัสไปรษณีย์&nbsp;<span class="text-red">*</span>
+          </div>
           <v-autocomplete
-            label="รหัสไปรษณีย์"
+            placeholder="กรุณากรอกรหัสไปรษณีย์"
             v-model="postalCode"
             :items="postalcodes"
             :rules="[rules.required]"
@@ -124,20 +142,24 @@
       ></v-row>
 
       <v-row
-        ><v-col cols="12" md="6" class="mb-4">
-          <h5 class="text-red">*</h5>
+        ><v-col cols="12" md="6">
+          <div class="text-subtitle-1 mb-2">
+            Email address&nbsp;<span class="text-red">*</span>
+          </div>
           <v-text-field
-            label="Email address"
+            placeholder="กรุณากรอก Email address"
             v-model="email"
             :rules="[rules.required, rules.email]"
             variant="outlined"
           />
         </v-col>
 
-        <v-col cols="12" md="6" class="mb-4">
-          <h5 class="text-red">*</h5>
+        <v-col cols="12" md="6">
+          <div class="text-subtitle-1 mb-2">
+            Password&nbsp;<span class="text-red">*</span>
+          </div>
           <v-text-field
-            label="Password"
+            placeholder="กรุณากรอก Password"
             v-model="password"
             :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
             :type="visible ? 'text' : 'password'"
@@ -147,10 +169,12 @@
           />
         </v-col>
 
-        <v-col cols="12" md="6" class="mb-4">
-          <h5 class="text-red">*</h5>
+        <v-col cols="12" md="6">
+          <div class="text-subtitle-1 mb-2">
+            Confirm password&nbsp;<span class="text-red">*</span>
+          </div>
           <v-text-field
-            label="Confirm password"
+            placeholder="กรุณากรอก Confirm password"
             v-model="confirmPassword"
             :type="'password'"
             :rules="confirmPasswordRules"
@@ -167,16 +191,6 @@
         />
       </v-col>
 
-      <!-- Alerts -->
-      <v-alert v-if="emailError" type="error" class="mt-3 text-center">
-        {{ emailError }}
-      </v-alert>
-
-      <v-alert v-if="success" type="success" class="mt-3 text-center">
-        สมัครสมาชิกสำเร็จ!
-      </v-alert>
-
-      <!-- Submit Button -->
       <v-col cols="12" class="d-flex justify-center">
         <v-btn color="primary" :disabled="!valid" @click="submit">
           สมัครสมาชิก
@@ -187,13 +201,15 @@
 </template>
 <script>
 import axios from "axios";
+import { toast } from "vue3-toastify";
 
 export default {
   data() {
     return {
+      autoCloseTime: 3000,
       visible: false,
       valid: false,
-      prefix: "",
+      prefix: null,
       firstName: "",
       lastName: "",
       phone: "",
@@ -333,18 +349,25 @@ export default {
           .then((response) => {
             this.emailError = "";
             this.success = true;
+            toast.success("สมัครสมาชิกสำเร็จ", {
+              autoClose: this.autoCloseTime,
+            });
             setTimeout(() => {
               this.$router.push("/login");
-            }, 2000);
+            }, 4000);
           })
           .catch((error) => {
             if (error.response) {
               console.error("Error response from server:", error.response.data);
 
               if (error.response.data.error === "Email already exists") {
-                this.emailError = "อีเมลนี้มีอยู่ในระบบแล้ว";
+                toast.error("อีเมลนี้มีผู้ใช้งานแล้ว", {
+                  autoClose: this.autoCloseTime,
+                });
               } else {
-                this.emailError = "เกิดข้อผิดพลาดในการสมัครสมาชิก";
+                toast.error("เกิดข้อผิดพลาดในการสมัครสมาชิก", {
+                  autoClose: this.autoCloseTime,
+                });
               }
             } else {
               console.error("Error submitting form:", error);
@@ -358,10 +381,37 @@ export default {
 </script>
 
 <style scoped>
+.text-form {
+  font-family: "Prompt", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+}
+.v-btn {
+  font-family: "Prompt", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+}
 .text-red {
   color: red;
+  font-family: "Prompt", sans-serif;
+}
+.text-portfolio {
+  font-family: "Prompt", sans-serif;
+  color: #777;
+  font-size: 16px;
+  font-weight: 400;
 }
 .text-portfolio-title {
-  font-size: 2rem;
+  font-family: "Prompt", sans-serif;
+  color: #582e2c;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.text-subtitle-1 {
+  font-family: "Prompt", sans-serif;
+  color: #582e2c;
+  font-size: 16px !important;
+  font-weight: 500;
 }
 </style>

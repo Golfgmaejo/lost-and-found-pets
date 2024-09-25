@@ -7,8 +7,8 @@ import Findowner from '@/components/section/pets/Findowner.vue'
 
 <template>
     <div>
-        <Gallery />
-        <Findownerpage/>
+        <!-- <Gallery /> -->
+        <!-- <Findownerpage/> -->
         <Findowner/>
     </div>
 </template>

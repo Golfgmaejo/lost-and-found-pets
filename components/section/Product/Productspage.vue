@@ -1,193 +1,242 @@
 <template>
-  <v-container>
-    <v-row justify="center">
-      <v-col cols="12" sm="10" md="9" lg="7">
-        <div class="text-center">
-          <h2 class="text-portfolio-title">สินค้าสัตว์เลี้ยง</h2>
-          <p class="text-portfolio">
-            สินค้าสัตว์เลี้ยงคุณภาพสูงครบครันสำหรับการดูแลและพัฒนาสุขภาพของสัตว์เลี้ยงที่คุณรักให้มีชีวิตที่มีความสุขและสุขภาพดี.
-          </p>
+  <v-container style="margin-top: 95px">
+    <v-row>
+      <v-col style="display: flex">
+        <v-img
+          :width="1050"
+          aspect-ratio="16/9"
+          cover
+          src="/images/pets/สินค้า.png"
+          class="rounded-img"
+          style="border: 10px solid rgba(233, 121, 49, 0.1)"
+        ></v-img>
+      </v-col>
+      <v-col cols="12">
+        <v-tabs
+          v-model="tab"
+          hide-slider
+          height="50"
+          class="custom-tabs"
+          grow
+          show-arrows
+        >
+          <v-tab
+            v-for="type in productTypes"
+            :key="type.value"
+            :value="type.value"
+            :class="{
+              [`tab-${type.value}`]: true,
+              'active-tab': tab === type.value,
+            }"
+            style="margin-left: 10px; margin-right: 10px"
+          >
+            <span class="text-portfolio-tab">{{ type.label }}</span>
+          </v-tab>
+        </v-tabs>
+
+        <v-tabs-window v-model="tab">
+          <v-tabs-window-item
+            v-for="(type, index) in productTypes"
+            :key="index"
+            :value="type.value"
+          >
+            <div style="margin-top: 32px">
+              <p class="centered-text-with-lines">สินค้า{{ type.label }}</p>
+            </div>
+            <v-row class="mt-8">
+              <v-col
+                v-for="product in paginatedProducts"
+                :key="product.id"
+                cols="12"
+                md="4"
+                sm="6"
+              >
+                <v-card class="portfolio-card overflow-hidden card-shadow">
+                  <div
+                    class="portfolio-img"
+                    style="
+                      display: flex;
+                      justify-content: space-around;
+                      position: relative;
+                    "
+                  >
+                    <div v-if="product.isBestSeller" class="best-seller-ribbon">
+                      Best seller
+                    </div>
+                    <img :src="product.image_url" class="img-fluid" />
+                  </div>
+                  <v-card-text class="pa-5">
+                    <p class="text-card-subtext">สำหรับ {{ product.type }}</p>
+                    <p class="text-card-title">{{ product.truncatedName }}</p>
+                    <p class="text-card-subtext-title">
+                      {{ product.truncatedDetails }}
+                    </p>
+                    <div class="btn-sty">
+                      <v-btn
+                        :disabled="!product.link_Shopee"
+                        variant="tonal"
+                        style="margin-right: 12px"
+                        color="#ee4d2d"
+                      >
+                        <a
+                          :href="product.link_Shopee"
+                          class="text-theme-Shopee linking text-decoration-none d-flex align-center"
+                          >Shopee</a
+                        >
+                      </v-btn>
+                      <v-btn
+                        :disabled="!product.link_Lazada"
+                        variant="tonal"
+                        color="#151b69"
+                      >
+                        <a
+                          :href="product.link_Lazada || '#'"
+                          class="text-theme-Lazada linking text-decoration-none d-flex align-center"
+                          >Lazada</a
+                        >
+                      </v-btn>
+                    </div>
+                  </v-card-text>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-tabs-window-item>
+        </v-tabs-window>
+
+        <v-divider
+          :thickness="3"
+          color="#582e2c"
+          style="margin: 22px 0"
+        ></v-divider>
+
+        <div class="text-center mt-4">
+          <v-pagination
+            v-model="page"
+            :length="pageCount"
+            next-icon="mdi-menu-right"
+            prev-icon="mdi-menu-left"
+            active-color="#e97931"
+            rounded="circle"
+            @input="updatePage"
+          ></v-pagination>
         </div>
       </v-col>
     </v-row>
-    <SortButtons @filter="fetchProduct" />
-    <v-row class="mt-8">
-      <v-col
-        v-for="product in paginatedProductList"
-        :key="product.id"
-        cols="12"
-        md="4"
-        sm="6"
-      >
-        <v-card class="portfolio-card overflow-hidden card-shadow">
-          <div
-            class="portfolio-img"
-            style="
-              display: flex;
-              justify-content: space-around;
-              position: relative;
-            "
-          >
-            <div v-if="product.isBestSeller" class="best-seller-ribbon">
-              Best seller
-            </div>
-            <img :src="product.image_url" class="img-fluid" />
-          </div>
-          <v-card-text class="pa-5">
-            <p class="text-card-subtext">สำหรับ{{ product.type }}</p>
-            <p class="text-card-title">{{ product.truncatedName }}</p>
-            <p class="text-card-subtext-title">
-              {{ product.truncatedDetails }}
-            </p>
-            <div class="btn-sty">
-              <v-btn
-                :disabled="!product.link_Shopee"
-                variant="tonal"
-                class="d-flex"
-                style="margin-right: 12px"
-                color="#ee4d2d"
-              >
-                <a
-                  :href="product.link_Shopee"
-                  class="text-theme-Shopee linking text-decoration-none d-flex align-center"
-                >
-                  Shopee
-                </a>
-              </v-btn>
-              <v-btn
-                :disabled="!product.link_Lazada"
-                variant="tonal"
-                class="d-flex"
-                color="#151b69"
-              >
-                <a
-                  :href="product.link_Lazada || '#'"
-                  class="text-theme-Lazada linking text-decoration-none d-flex align-center"
-                >
-                  Lazada
-                </a>
-              </v-btn>
-            </div>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
-    <v-pagination
-      v-model="page"
-      :length="pageCount"
-      rounded="circle"
-      @input="updatePage"
-    ></v-pagination>
   </v-container>
 </template>
 
-<script>
+<script setup>
+import { ref, computed, onMounted, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
-import SortButtons from "./SortButtons.vue";
 
-export default {
-  components: {
-    SortButtons,
-  },
-  data() {
-    return {
-      productList: [],
-      itemsPerPage: 9,
-      page: 1,
-    };
-  },
-  created() {
-    this.fetchProduct();
-  },
-  computed: {
-    pageCount() {
-      return Math.ceil(this.productList.length / this.itemsPerPage);
-    },
-    paginatedProductList() {
-      const start = (this.page - 1) * this.itemsPerPage;
-      const end = start + this.itemsPerPage;
-      return this.productList.slice(start, end);
-    },
-  },
-  methods: {
-    fetchProduct(type = "") {
-      const url = "http://localhost:5000/api/product/getAll_product";
-      axios
-        .get(url)
-        .then((response) => {
-          let products = response.data.data;
-          if (type) {
-            products = products.filter((product) => product.type === type);
-          }
-          products = products.sort((a, b) => b.isBestSeller - a.isBestSeller);
-          this.productList = products.map((product) => ({
-            ...product,
-            truncatedName: this.truncateText(product.name, 30),
-            truncatedDetails: this.truncateText(product.details, 40),
-          }));
-        })
-        .catch((error) => {
-          console.error("Error fetching product:", error);
-        });
-    },
-    truncateText(text, maxLength) {
-      return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
-    },
-  },
+const productList = ref([]);
+const productTypes = ref([
+  { value: "สุนัข", label: "สุนัข" },
+  { value: "แมว", label: "แมว" },
+  { value: "สัตว์เลี้ยงอื่นๆ", label: "สัตว์เลี้ยงอื่นๆ" },
+  { value: "", label: "ทั้งหมด" },
+]);
+const itemsPerPage = ref(6);
+const page = ref(1);
+const tab = ref(productTypes.value[0].value);
+
+const route = useRoute();
+const router = useRouter();
+
+const fetchProduct = async () => {
+  const url = "http://localhost:5000/api/product/getAll_product";
+  try {
+    const response = await axios.get(url);
+    let products = response.data.data;
+    products = products.sort((a, b) => b.isBestSeller - a.isBestSeller);
+    productList.value = products.map((product) => ({
+      ...product,
+      truncatedName: truncateText(product.name, 30),
+      truncatedDetails: truncateText(product.details, 40),
+    }));
+  } catch (error) {
+    console.error("Error fetching product:", error);
+  }
 };
+
+const truncateText = (text, maxLength) => {
+  return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+};
+
+const filteredProducts = (type) => {
+  return type
+    ? productList.value.filter((product) => product.type === type)
+    : productList.value;
+};
+
+const paginatedProducts = computed(() => {
+  const products = filteredProducts(tab.value);
+  const start = (page.value - 1) * itemsPerPage.value;
+  return products.slice(start, start + itemsPerPage.value);
+});
+
+const pageCount = computed(() => {
+  return Math.ceil(filteredProducts(tab.value).length / itemsPerPage.value);
+});
+
+const updatePage = (newPage) => {
+  page.value = newPage;
+};
+
+watch(tab, () => {
+  page.value = 1;
+});
+
+onMounted(() => {
+  fetchProduct();
+  if (route.query.tab) {
+    const foundType = productTypes.value.find(
+      (type) => type.value === route.query.tab
+    );
+    if (foundType) {
+      tab.value = foundType.value;
+    }
+  }
+});
+
+watch(route, (newRoute) => {
+  if (newRoute.query.tab) {
+    const foundType = productTypes.value.find(
+      (type) => type.value === newRoute.query.tab
+    );
+    if (foundType) {
+      tab.value = foundType.value;
+    }
+  }
+});
 </script>
 
-<style>
-.v-btn {
-  border-radius: 30px;
-}
+<style scoped>
 .text-portfolio-title {
   font-family: "Prompt", sans-serif;
   color: #582e2c;
-  font-size: 28px;
+  font-size: 32px;
   font-weight: 700;
-  margin-bottom: 10px;
 }
-.text-portfolio {
+.text-portfolio-tab {
   font-family: "Prompt", sans-serif;
-  color: #444;
+  color: #582e2c;
   font-size: 18px;
-  line-height: 1.6;
-  max-width: 700px;
-  margin: 0 auto;
+  font-weight: 500;
 }
 .text-card-title {
   font-family: "Prompt", sans-serif;
   color: #e97931;
   font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 8px;
-  transition: color 0.3s ease;
+  font-weight: 500;
+  /* margin: 5px; */
 }
-.text-card-title:hover {
-  color: #d9534f;
-}
-.text-card-subtext,
-.text-card-subtext-title {
+.text-card-subtext {
   font-family: "Prompt", sans-serif;
   color: #777;
   font-size: 16px;
-}
-.portfolio-card {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.portfolio-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-}
-.portfolio-img img {
-  border-radius: 8px;
-  max-width: 100%;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
-.portfolio-img:hover img {
-  transform: scale(1.05);
-  opacity: 0.9;
+  font-weight: 400;
 }
 .text-theme-Shopee {
   font-family: "Prompt", sans-serif;
@@ -205,31 +254,55 @@ export default {
   margin-top: 12px;
   display: flex;
 }
-.btn-sty a {
-  font-size: 16px;
-  font-weight: 600;
-  text-transform: uppercase;
-  padding: 8px 20px;
+.text-card-subtext-title {
+  font-family: "Prompt", sans-serif;
+  color: #777;
+  font-size: 14px;
+  /* font-weight: 400; */
 }
-.v-btn {
-  box-shadow: none;
+.v-tab.v-tab.v-btn {
+  border-radius: 45px;
+  min-width: 90px;
+}
+.v-slide-group__container {
+  background-color: #faf6f0;
   border-radius: 50px;
-  transition: background-color 0.3s ease, transform 0.3s ease;
 }
-.v-btn:hover {
-  background-color: #ddd;
-  transform: scale(1.05);
+.custom-tabs {
+  background-color: #faf6f0;
+  border-radius: 40px;
 }
-.v-pagination {
-  margin-top: 20px;
-  justify-content: center;
+
+.active-tab {
+  background-color: #ffca7a;
+  box-shadow: 0px 2px 4px 0 rgba(96, 97, 112, 0.16),
+    0px 0px 1px 0 rgba(40, 41, 61, 0.04);
 }
-.v-pagination .v-btn {
-  border-radius: 50%;
-  background-color: #f8f9fa;
+.text-tab-dog {
+  font-family: "Prompt", sans-serif;
+  color: #777;
+  font-size: 16px;
+  font-weight: 400;
 }
-.v-pagination .v-btn:hover {
-  background-color: #f0f0f0;
+.centered-text {
+  text-align: center;
+}
+.centered-text-with-lines {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  font-family: "Prompt", sans-serif;
+  color: #e48245;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.centered-text-with-lines::before,
+.centered-text-with-lines::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #ccc; /* เปลี่ยนสีและความหนาของเส้นได้ตามต้องการ */
+  margin: 0 10px; /* ระยะห่างระหว่างเส้นกับข้อความ */
 }
 .best-seller-ribbon {
   position: absolute;
@@ -243,8 +316,5 @@ export default {
   font-weight: bold;
   border-radius: 30px;
   z-index: 1;
-}
-.team-component {
-  background-color: #faf6f0;
 }
 </style>

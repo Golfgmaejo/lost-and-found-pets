@@ -7,8 +7,7 @@ import Lostpets from "~/components/section/pets/Lostpets.vue";
 
 <template>
   <div>
-    <Gallery />
-    <Bannerlostpets />
+    <!-- <Gallery /> -->
     <Lostpets />
   </div>
 </template>

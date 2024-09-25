@@ -80,7 +80,7 @@
   color: #5f534c;
 }
 .color-foundpets {
-  color: #a9594c; /* สีเขียวสำหรับ Found */
+  color: #a9594c; 
 }
 .text-footer {
   font-family: "Prompt", sans-serif;

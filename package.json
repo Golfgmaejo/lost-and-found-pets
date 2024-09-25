@@ -25,6 +25,7 @@
     "sass-loader": "^14.2.1",
     "vue": "^3.4.30",
     "vue3-leaflet": "^1.0.48",
+    "vue3-toastify": "^0.2.3",
     "webpack": "^5.92.1"
   },
   "devDependencies": {

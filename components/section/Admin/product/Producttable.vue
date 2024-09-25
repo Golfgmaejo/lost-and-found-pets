@@ -7,21 +7,27 @@
       <v-spacer></v-spacer>
       <v-col cols="12" lg="auto">
         <v-dialog v-model="dialog" max-width="1200px">
-            <template v-slot:activator="{ on, props }">
-              <v-btn class="mb-2 btn-style" color="#e97931" dark v-bind="props" v-on="on">
-                เพิ่มสินค้า
-              </v-btn>
-            </template>
-            <v-card>
-              <v-card-text>
-                <Addproduct @addproduct="onAddProduct" />
-              </v-card-text>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="close">ยกเลิก</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
+          <template v-slot:activator="{ on, props }">
+            <v-btn
+              class="mb-2 btn-style"
+              color="#e97931"
+              dark
+              v-bind="props"
+              v-on="on"
+            >
+              เพิ่มสินค้า
+            </v-btn>
+          </template>
+          <v-card>
+            <v-card-text>
+              <Addproduct @addproduct="onAddProduct" />
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" text @click="close">ยกเลิก</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </v-col>
     </v-row>
     <v-data-table
@@ -66,42 +72,37 @@
       </template>
     </v-data-table>
     <v-dialog v-model="dialogEdit" max-width="1200px">
-            <v-card>
-              <v-card-text>
-                <Editproduct
-                  :productData="editedItem"
-                  @updateproduct="onEditUpdate"
-                />
-              </v-card-text>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="closeEdit"
-                  >ยกเลิก</v-btn
-                >
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
+      <v-card>
+        <v-card-text>
+          <Editproduct
+            :productData="editedItem"
+            @updateproduct="onEditUpdate"
+          />
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" text @click="closeEdit">ยกเลิก</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
-          <v-dialog v-model="dialogDelete" max-width="500px">
-            <v-card>
-              <v-card-title class="text-h5">
-                คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลนี้?
-              </v-card-title>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="blue-darken-1" variant="text" @click="closeDelete"
-                  >ยกเลิก</v-btn
-                >
-                <v-btn
-                  color="blue-darken-1"
-                  variant="text"
-                  @click="deleteItemConfirm"
-                  >ตกลง</v-btn
-                >
-                <v-spacer></v-spacer>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
+    <v-dialog v-model="dialogDelete" max-width="500px">
+      <v-card>
+        <v-card-title class="text-h5">
+          คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลนี้?
+        </v-card-title>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue-darken-1" variant="text" @click="closeDelete"
+            >ยกเลิก</v-btn
+          >
+          <v-btn color="blue-darken-1" variant="text" @click="deleteItemConfirm"
+            >ตกลง</v-btn
+          >
+          <v-spacer></v-spacer>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -155,16 +156,16 @@ export default {
       return link.length > 20 ? link.slice(0, 20) + "..." : link;
     },
     onAddProduct() {
-      this.fetchProductList();
       this.dialog = false;
+      this.fetchProductList();
     },
     editItem(item) {
       this.editedItem = { ...item };
       this.dialogEdit = true;
     },
     onEditUpdate() {
-      this.fetchProductList();
       this.dialogEdit = false;
+      this.fetchProductList();
     },
     deleteItem(item) {
       this.editedItem = item;
@@ -207,19 +208,22 @@ export default {
 };
 </script>
 <style scoped>
+.v-btn {
+  font-family: "Prompt", sans-serif;
+}
 .background-image {
   background-image: url("public/images/logos/bg-admin.png");
 }
 .btn-style {
   font-family: "Prompt", sans-serif;
-    font-size: 16px;
-    font-weight: 400;
+  font-size: 16px;
+  font-weight: 400;
 }
 .table-style {
   font-family: "Prompt", sans-serif;
 }
 ::v-deep thead th {
-  background-image: url('public/images/logos/bg-admin.png') !important;
-  color: black !important; /* สีตัวอักษร */
+  background-image: url("public/images/logos/bg-admin.png") !important;
+  color: black !important; 
 }
 </style>

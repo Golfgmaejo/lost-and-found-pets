@@ -53,21 +53,25 @@
       <template v-slot:item.image_url="{ item }">
         <v-img :src="item.image_url" max-height="100" max-width="100"></v-img>
       </template>
-      <template v-slot:item.actions="{ item }">
-        <v-icon class="me-2" size="small" @click="editItem(item)"
-          >mdi-pencil</v-icon
-        >
-        <v-icon size="small" @click="deleteItem(item)">mdi-delete</v-icon>
+      <template v-slot:item.reward="{ item }">
+        <div>{{ item.reward !== "" ? item.reward : 0 }}</div>
       </template>
       <template v-slot:item.status="{ item }">
         <v-chip :color="getStatusColor(item.status)" text-color="white">
           {{ item.status }}
         </v-chip>
       </template>
+      <template v-slot:item.actions="{ item }">
+        <v-icon class="me-2" size="small" @click="editItem(item)"
+          >mdi-pencil</v-icon
+        >
+        <v-icon size="small" @click="deleteItem(item)">mdi-delete</v-icon>
+      </template>
       <template v-slot:no-data>
         <v-btn color="primary" @click="fetchPetList">รีเซ็ต</v-btn>
       </template>
     </v-data-table>
+
     <v-dialog v-model="dialogEdit" max-width="1200px">
       <v-card>
         <v-card-text>
@@ -104,7 +108,6 @@
 import axios from "axios";
 import Noticelostpets from "~/components/section/Admin/pets/Noticelostpets.vue";
 import Editlostpets from "~/components/section/Admin/pets/Editlostpets.vue";
-import { se } from "date-fns/locale";
 
 export default {
   components: { Noticelostpets, Editlostpets },
@@ -145,20 +148,16 @@ export default {
         : text;
     },
     onAddlostpet() {
-      setTimeout(() => {
-        this.fetchPetList();
-        this.dialog = false;
-      }, 2000);
+      this.dialog = false;
+      this.fetchPetList();
     },
     editItem(item) {
       this.editedItem = { ...item };
       this.dialogEdit = true;
     },
     onEditUpdate() {
-      setTimeout(() => {
-        this.fetchPetList();
-        this.dialogEdit = false;
-      }, 2000);
+      this.dialogEdit = false;
+      this.fetchPetList();
     },
     deleteItem(item) {
       this.editedItem = item;
@@ -211,6 +210,12 @@ export default {
 };
 </script>
 <style scoped>
+.v-btn {
+  font-family: "Prompt", sans-serif;
+}
+.v-btn {
+  font-family: "Prompt", sans-serif;
+}
 .background-image {
   background-image: url("public/images/logos/bg-admin.png");
 }
@@ -225,6 +230,6 @@ export default {
 }
 ::v-deep thead th {
   background-image: url("public/images/logos/bg-admin.png") !important;
-  color: black !important; /* สีตัวอักษร */
+  color: black !important; 
 }
 </style>

@@ -7,7 +7,7 @@ import Articlepage from '@/components/section/Article/Articlepage.vue'
 
 <template>
     <div>
-        <Gallery />
+        <!-- <Gallery /> -->
         <Articlepage/> 
     </div>
 </template>

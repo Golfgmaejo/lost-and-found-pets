@@ -1,56 +1,65 @@
 <template>
-  <div>
-    <div>
-      <v-container>
-        <v-divider class="border-opacity-100" color="#E97931"></v-divider>
-        <v-row justify="center">
-          <v-col cols="12" sm="10" md="9" lg="7">
-            <div class="text-center mini-spacer">
-              <h2 class="text-portfolio-title">บทความ</h2>
-              <p class="text-portfolio">
-                บทความเรื่องน่ารู้เกี่ยวกับสัตว์เลี้ยงให้ข้อมูลที่สำคัญเกี่ยวกับพฤติกรรม
-                การฝึกฝน และความต้องการเฉพาะของสัตว์เลี้ยงแต่ละประเภท
-                การเข้าใจสัตว์เลี้ยงอย่างลึกซึ้งช่วยสร้างความสัมพันธ์ที่แข็งแกร่งและเพิ่มคุณภาพชีวิตทั้งของสัตว์เลี้ยงและเจ้าของ
-              </p>
-            </div>
-          </v-col>
-        </v-row>
-        <v-row style="justify-content: flex-end">
+  <div class="bg-color">
+    <v-container>
+      <v-row justify="center">
+        <v-col cols="12" sm="10" md="9" lg="7">
+          <div class="text-center">
+            <h2 class="text-portfolio-title">บทความ</h2>
+            <p class="text-portfolio">
+              บทความเรื่องน่ารู้เกี่ยวกับสัตว์เลี้ยงให้ข้อมูลที่สำคัญเกี่ยวกับพฤติกรรม
+              การฝึกฝน และความต้องการเฉพาะของสัตว์เลี้ยงแต่ละประเภท
+              การเข้าใจสัตว์เลี้ยงอย่างลึกซึ้งช่วยสร้างความสัมพันธ์ที่แข็งแกร่งและเพิ่มคุณภาพชีวิตทั้งของสัตว์เลี้ยงและเจ้าของ
+            </p>
+          </div>
+        </v-col>
+      </v-row>
+      <v-row style="justify-content: flex-end; margin-top: 0px">
+        <v-col style="display: flex; justify-content: flex-end">
           <v-btn
-            class="float-right text-feature"
-            color="accent"
+            class="btn-view-all"
+            color="#fedc8b"
             to="/article"
-            style="font-weight: 500"
-            >ดูเพิ่มเติม</v-btn
+            size="small"
           >
-        </v-row>
-        <v-row class="mt-13">
-          <v-col v-for="article in displayedArticles" :key="article.id" cols="12" md="3" sm="6">
-            <v-card elevation="1" class="team-card mb-7">
-              <div class="overflow-hidden card-image-wrapper">
-                <img :src="article.image_url" class="img-fluid card-image" />
-              </div>
-              <div class="card-content">
-                <h5 class="title">{{ formatName(article.name) }}</h5>
-                <p class="subtitle">{{ formatDetails(article.details) }}</p>
-              </div>
+            ดูเพิ่มเติม
+          </v-btn>
+        </v-col>
+        <v-divider class="border-opacity-100" color="#E0E0E0"></v-divider>
+      </v-row>
+      <v-row class="mt-13">
+        <v-col
+          v-for="article in displayedArticles"
+          :key="article.id"
+          cols="12"
+          md="3"
+          sm="6"
+        >
+          <v-card width="280px" elevation="0" class="team-card mb-7">
+            <div class="overflow-hidden card-image-wrapper">
+              <img :src="article.image_url" class="img-fluid card-image" />
+            </div>
+            <div class="card-content">
+              <h5 class="title">{{ formatName(article.name) }}</h5>
+              <p class="subtitle">{{ formatDetails(article.details) }}</p>
+            </div>
+            <div style="margin-left: 12px">
               <a
                 :href="article.link"
                 class="text-subtitle linking text-decoration-none d-flex align-center"
-                style="margin-top: 12px;"
+                style="margin-top: 12px"
               >
                 อ่านเพิ่มเติม <i class="mdi mdi-arrow-right"></i>
               </a>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-container>
-    </div>
+            </div>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   data() {
@@ -61,7 +70,7 @@ export default {
   computed: {
     displayedArticles() {
       return this.articles.slice(0, 4);
-    }
+    },
   },
   created() {
     this.fetchArticles();
@@ -69,11 +78,13 @@ export default {
   methods: {
     async fetchArticles() {
       try {
-        const response = await axios.get('http://localhost:5000/api/article/getAll_article');
+        const response = await axios.get(
+          "http://localhost:5000/api/article/getAll_article"
+        );
         this.articles = response.data.data;
       } catch (error) {
-        console.error('Error fetching article list:', error);
-        alert('ไม่สามารถดึงข้อมูลบทความได้');
+        console.error("Error fetching article list:", error);
+        alert("ไม่สามารถดึงข้อมูลบทความได้");
       }
     },
     formatName(name) {
@@ -81,20 +92,15 @@ export default {
     },
     formatDetails(details) {
       return details.length > 35 ? details.slice(0, 35) + "..." : details;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped>
-.mini-spacer {
-  padding: 40px 0;
+.bg-color {
+  background-color: #f9f5ef;
 }
-.team-component {
-  background-color: #faf6f0;
-  padding: 60px 0;
-}
-
 .text-portfolio-title {
   font-family: "Prompt", sans-serif;
   color: #582e2c;
@@ -113,7 +119,7 @@ export default {
   font-size: 16px;
   color: #fff;
   text-transform: none;
-  background-color: #E97931;
+  background-color: #e97931;
   transition: background-color 0.3s ease;
 }
 .text-feature:hover {
@@ -121,22 +127,24 @@ export default {
 }
 .title {
   font-family: "Prompt", sans-serif;
-  color: #E97931;
+  color: #e97931;
   font-size: 16px;
   font-weight: 600;
-  margin-bottom: 10px;
 }
 .subtitle {
   font-family: "Prompt", sans-serif;
   color: #777;
   font-size: 14px;
   font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .text-subtitle {
   font-family: "Prompt", sans-serif;
-  color: #E97931;
-  font-size: 14px;
-  font-weight: 400;
+  color: #582e2c;
+  font-size: 16px;
+  font-weight: 500;
 }
 .card-image-wrapper {
   max-height: 200px;
@@ -153,18 +161,35 @@ export default {
 }
 .card-content {
   margin-top: 10px;
-  text-align: center;
-}
-.team-card {
-  border-radius: 15px;
-  background-color: #fff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease;
+  margin-left: 10px;
 }
 .team-card:hover {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
+.text-title-lost {
+  font-family: "Prompt", sans-serif;
+  color: #582e2c;
+  font-size: 28px;
+  font-weight: 700;
+}
+.team-card {
+  background-color: #fff7f3;
+  border-radius: 16px;
+  border: 4px solid rgba(233, 121, 49, 0.1);
+  padding: 2px;
+  border-radius: 8px;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
+}
+.btn-view-all {
+  font-family: "Prompt", sans-serif;
+  font-size: 16px;
+  color: #582e2c !important;
+  height: 35px !important;
+  font-weight: 500;
+}
 .v-btn {
-  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

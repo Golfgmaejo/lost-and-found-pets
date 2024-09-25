@@ -25,7 +25,7 @@
                 <v-list-item
                   prepend-icon="mdi-image-multiple"
                   v-bind="props"
-                  title="แกลอรี่"
+                  title="แกลลอรี่"
                   to="/admin/gallery"
                 ></v-list-item>
               </template>

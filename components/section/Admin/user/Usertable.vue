@@ -31,7 +31,6 @@
       </v-col>
     </v-row>
     <v-data-table
-      width="auto"
       :headers="headers"
       :items="userList"
       item-value="id"
@@ -82,7 +81,7 @@
         <v-tooltip bottom>
           <template v-slot:activator="{ on, props }">
             <span v-bind="props" v-on="on">
-              {{ truncateText(item.address, 20) }}
+              {{ truncateText(item.address, 15) }}
             </span>
           </template>
           <span>{{ item.address }}</span>
@@ -121,7 +120,6 @@
       <template v-slot:item.postal_code="{ item }">
         <span>{{ item.postal_code }}</span>
       </template>
-
       <template v-slot:item.actions="{ item }">
         <v-icon class="me-2" size="small" @click="editItem(item)">
           mdi-pencil
@@ -132,36 +130,41 @@
         <v-btn color="primary" @click="fetchUserList">รีเซ็ต</v-btn>
       </template>
     </v-data-table>
-  </div>
-  <v-dialog v-model="dialogEdit" max-width="1200px">
-    <v-card>
-      <v-card-text>
-        <EditUser :userData="editedItem" @updateuser="onEditUpdate" />
-      </v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="blue darken-1" text @click="closeEdit">ยกเลิก</v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
 
-  <v-dialog v-model="dialogDelete" max-width="500px">
-    <v-card>
-      <v-card-title class="text-h5">
-        คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลนี้?
-      </v-card-title>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="blue-darken-1" variant="text" @click="closeDelete">
-          ยกเลิก
-        </v-btn>
-        <v-btn color="blue-darken-1" variant="text" @click="deleteItemConfirm">
-          ตกลง
-        </v-btn>
-        <v-spacer></v-spacer>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
+    <v-dialog v-model="dialogEdit" max-width="1200px">
+      <v-card>
+        <v-card-text>
+          <EditUser :userData="editedItem" @updateuser="onEditUpdate" />
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" text @click="closeEdit">ยกเลิก</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="dialogDelete" max-width="500px">
+      <v-card>
+        <v-card-title class="text-h5">
+          คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลนี้?
+        </v-card-title>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue-darken-1" variant="text" @click="closeDelete">
+            ยกเลิก
+          </v-btn>
+          <v-btn
+            color="blue-darken-1"
+            variant="text"
+            @click="deleteItemConfirm"
+          >
+            ตกลง
+          </v-btn>
+          <v-spacer></v-spacer>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </div>
 </template>
 
 <script>
@@ -181,7 +184,7 @@ export default {
         { title: "ชื่อผู้ใช้", key: "username" },
         { title: "ชื่อ", key: "first_name" },
         { title: "นามสกุล", key: "last_name" },
-        { title: "โทรศัพท์", key: "phone" },
+        { title: "เบอร์โทรศัพท์", key: "phone" },
         { title: "Facebook", key: "Facebook" },
         { title: "Line ID", key: "Line_id" },
         { title: "ที่อยู่", key: "address" },
@@ -210,16 +213,16 @@ export default {
         : text;
     },
     onAddUser() {
-      this.fetchUserList();
       this.dialog = false;
+      this.fetchUserList();
     },
     editItem(item) {
       this.editedItem = { ...item };
       this.dialogEdit = true;
     },
     onEditUpdate() {
-      this.fetchUserList();
       this.dialogEdit = false;
+      this.fetchUserList();
     },
     deleteItem(item) {
       this.editedItem = item;
@@ -260,6 +263,11 @@ export default {
 </script>
 
 <style scoped>
+.v-btn {
+  font-family: "Prompt", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+}
 .btn-style {
   font-family: "Prompt", sans-serif;
   font-size: 16px;
@@ -270,6 +278,6 @@ export default {
 }
 ::v-deep thead th {
   background-image: url("public/images/logos/bg-admin.png") !important;
-  color: black !important; /* สีตัวอักษร */
+  color: black !important; 
 }
 </style>

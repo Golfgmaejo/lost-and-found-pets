@@ -2,7 +2,7 @@
   <div class="ml-6 mt-6 mr-6 mb-2">
     <v-row class="mt-6">
       <v-col cols="12" lg="auto" style="display: flex; align-items: center">
-        <span class="text-h2">แกลอรี่</span>
+        <span class="text-h2">แกลลอรี่</span>
       </v-col>
       <v-spacer></v-spacer>
       <v-col cols="12" lg="auto">
@@ -15,7 +15,7 @@
               v-bind="props"
               v-on="on"
             >
-              เพิ่มแกลอรี่
+              เพิ่มแกลลอรี่
             </v-btn>
           </template>
           <v-card>
@@ -44,7 +44,7 @@
         <v-img :src="item.image_url" max-height="150" max-width="150"></v-img>
       </template>
       <template v-slot:item.status="{ item }">
-        <v-chip v-if="item.status" color="green" dark> แสดงแกลอรี่ </v-chip>
+        <v-chip v-if="item.status" color="green" dark> แสดงแกลลอรี่ </v-chip>
       </template>
       <template v-slot:item.actions="{ item }">
         <v-icon class="me-2" size="small" @click="editItem(item)"
@@ -59,7 +59,10 @@
     <v-dialog v-model="dialogEdit" max-width="1200px">
       <v-card>
         <v-card-text>
-          <Editgallery :galleryData="editedItem" @updategallery="onEditUpdate" />
+          <Editgallery
+            :galleryData="editedItem"
+            @updategallery="onEditUpdate"
+          />
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -67,7 +70,6 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-  
     <v-dialog v-model="dialogDelete" max-width="500px">
       <v-card>
         <v-card-title class="text-h5">
@@ -105,7 +107,7 @@ export default {
       dialogDelete: false,
       editedItem: null,
       headers: [
-        { title: "ชื่อแกลอรี่", key: "name" },
+        { title: "ชื่อแกลลอรี่", key: "name" },
         { title: "รูปภาพ", key: "image_url" },
         { title: "สถานะ", key: "status" },
         { title: "จัดการ", key: "actions", sortable: false },
@@ -127,16 +129,16 @@ export default {
       return name.length > 20 ? name.slice(0, 25) + "..." : name;
     },
     onAddGallery() {
-      this.fetchGalleryList();
       this.dialog = false;
+      this.fetchGalleryList();
     },
     editItem(item) {
       this.editedItem = { ...item };
       this.dialogEdit = true;
     },
     onEditUpdate() {
-      this.fetchGalleryList();
       this.dialogEdit = false;
+      this.fetchGalleryList();
     },
     deleteItem(item) {
       this.editedItem = item;
@@ -189,6 +191,12 @@ export default {
 };
 </script>
 <style scoped>
+.v-btn {
+  font-family: "Prompt", sans-serif;
+}
+.v-btn {
+  font-family: "Prompt", sans-serif;
+}
 .background-image {
   background-image: url("public/images/logos/bg-admin.png");
 }
@@ -202,6 +210,6 @@ export default {
 }
 ::v-deep thead th {
   background-image: url("public/images/logos/bg-admin.png") !important;
-  color: black !important; /* สีตัวอักษร */
+  color: black !important;
 }
 </style>
