@@ -1,13 +1,13 @@
 <template>
-  <v-container style="margin-top: 95px;">
+  <v-container style="margin-top: 95px">
     <v-row>
-      <v-col style="display: flex" >
+      <v-col style="display: flex">
         <v-img
           :width="1050"
           aspect-ratio="16/9"
           cover
           src="/images/pets/หาเจ้าของ.png"
-          class="rounded-img "
+          class="rounded-img"
           style="border: 10px solid rgba(233, 121, 49, 0.1)"
         ></v-img>
       </v-col>
@@ -79,7 +79,7 @@
                   <v-img :src="animal.image_url" height="310" contain></v-img>
                 </div>
               </v-col>
-              
+
               <v-col style="margin: 12px; margin-left: -12px">
                 <div class="text-1">ประกาศหาเจ้าของ</div>
                 <v-divider
@@ -99,7 +99,7 @@
                 </div>
                 <div class="text-2">
                   วันที่ประกาศ:&nbsp;<span class="span-1"
-                    >{{ animal.findowner_date }} ,
+                    >{{ animal.findowner_date }},
                     {{ animal.findowner_time }}</span
                   >
                 </div>
@@ -140,7 +140,6 @@
                       </v-btn>
                     </div>
                   </div>
-                  
                 </div>
               </v-col>
             </v-row>
@@ -149,14 +148,14 @@
       </v-row>
       <div class="text-center mt-4">
         <v-pagination
-            v-model="page"
-            :length="pageCount"
-            next-icon="mdi-menu-right"
-            prev-icon="mdi-menu-left"
-            active-color="#e97931"
-            rounded="circle"
-            @input="updatePage"
-          ></v-pagination>
+          v-model="page"
+          :length="pageCount"
+          next-icon="mdi-menu-right"
+          prev-icon="mdi-menu-left"
+          active-color="#e97931"
+          rounded="circle"
+          @input="updatePage"
+        ></v-pagination>
       </div>
     </v-container>
     <v-dialog v-model="isDialogOpen" max-width="1200px" persistent>
@@ -181,7 +180,6 @@ import PetButtons from "./PetButtons.vue";
 import Noticefindowner from "../Admin/pets/Noticefindowner.vue";
 
 const findownersList = ref([]);
-const pageTitle = ref("ประกาศหาเจ้าของ");
 const itemsPerPage = ref(8);
 const page = ref(1);
 const isDialogOpen = ref(false);
@@ -220,11 +218,25 @@ const paginatedFindowner = computed(() => {
   return findownersList.value.slice(start, end);
 });
 
+const parseTimestamp = (timestamp) => {
+  if (timestamp && typeof timestamp === "object" && "seconds" in timestamp) {
+    return new Date(
+      timestamp.seconds * 1000 + Math.floor(timestamp.nanoseconds / 1000000)
+    );
+  }
+  console.error("Invalid timestamp:", timestamp);
+  return new Date(0);
+};
+
 const fetchFindowners = async () => {
   const url = "http://localhost:5000/api/find_owner/getAll_find_owner";
   try {
     const response = await axios.get(url);
-    findownersList.value = response.data.data;
+    findownersList.value = response.data.data.sort((a, b) => {
+      const dateA = parseTimestamp(a.created_at);
+      const dateB = parseTimestamp(b.created_at);
+      return dateB - dateA;
+    });
   } catch (error) {
     console.error("Error fetching find owners:", error);
   }

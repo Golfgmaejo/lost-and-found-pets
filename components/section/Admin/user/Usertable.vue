@@ -237,8 +237,8 @@ export default {
         await axios.delete(
           `http://localhost:5000/api/user/delete_user/${userId}`
         );
-        this.fetchUserList();
         this.dialogDelete = false;
+        this.fetchUserList();
       } catch (error) {
         console.error("Error deleting user:", error);
       }

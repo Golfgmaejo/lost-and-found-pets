@@ -26,6 +26,7 @@
             v-model="form.details"
             placeholder="รายละเอียดบทความ"
             variant="outlined"
+            :rules="[rules.required]"
           ></v-textarea>
         </v-col>
       </v-row>
@@ -38,7 +39,17 @@
             v-model="form.link"
             placeholder="ลิงก์บทความ"
             variant="outlined"
-            :rules="[rules.urlOptional]"
+            :rules="[rules.urlOptional, rules.required]"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12" sm="6">
+          <div class="text-subtitle-1 mb-2">
+            อ้างอิง&nbsp;<span class="text-red"></span>
+          </div>
+          <v-text-field
+            v-model="form.reference"
+            placeholder="อ้างอิง"
+            variant="outlined"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -58,9 +69,11 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols="12"  class="d-flex justify-center">
+        <v-col cols="12" class="d-flex justify-center">
           <v-btn color="primary" @click="submit">บันทึกบทความ</v-btn>
-          <v-btn color="secondary" class="ml-4" @click="confirmClearForm">ล้างข้อมูล</v-btn>
+          <v-btn color="secondary" class="ml-4" @click="confirmClearForm"
+            >ล้างข้อมูล</v-btn
+          >
         </v-col>
       </v-row>
     </v-form>
@@ -69,7 +82,7 @@
 
 <script>
 import axios from "axios";
-import { toast } from 'vue3-toastify';
+import { toast } from "vue3-toastify";
 import { useAuthStore } from "~/stores/auth";
 
 export default {
@@ -81,6 +94,7 @@ export default {
         name: "",
         details: "",
         link: "",
+        reference: "",
         image: null,
       },
       rules: {
@@ -101,12 +115,14 @@ export default {
       const userId = authStore.user.id;
       if (this.$refs.form.validate()) {
         const isFormIncomplete = Object.keys(this.form).some((key) => {
-          if (key === "link") return false;
+          if (key === "link" || key === "reference") return false;
           return this.form[key] === "" || this.form[key] === null;
         });
 
         if (isFormIncomplete) {
-          toast.warning('กรุณากรอกข้อมูลให้ครบถ้วน',{autoClose: this.autoCloseTime});
+          toast.warning("กรุณากรอกข้อมูลให้ครบถ้วน", {
+            autoClose: this.autoCloseTime,
+          });
           return;
         }
 
@@ -128,7 +144,9 @@ export default {
             imageUrl = response.data.data.url;
           } catch (error) {
             console.error("Image upload failed:", error);
-            toast.error("เกิดข้อผิดพลาดในการอัปโหลดรูปภาพ", { autoClose: this.autoCloseTime });
+            toast.error("เกิดข้อผิดพลาดในการอัปโหลดรูปภาพ", {
+              autoClose: this.autoCloseTime,
+            });
             return;
           }
         }
@@ -138,6 +156,7 @@ export default {
           details: this.form.details,
           link: this.form.link || "",
           image_url: imageUrl,
+          reference: this.form.reference || "",
         };
         try {
           const response = await axios.post(
@@ -147,7 +166,9 @@ export default {
           toast.success("เพิ่มบทความสำเร็จ", { autoClose: this.autoCloseTime });
           this.$emit("addarticle");
         } catch (error) {
-          toast.error("เกิดข้อผิดพลาดในการบันทึกข้อมูล", { autoClose: this.autoCloseTime });
+          toast.error("เกิดข้อผิดพลาดในการบันทึกข้อมูล", {
+            autoClose: this.autoCloseTime,
+          });
         }
       }
     },
@@ -162,6 +183,7 @@ export default {
         details: "",
         link: "",
         image: null,
+        reference: "",
       };
       this.$refs.form.resetValidation();
     },

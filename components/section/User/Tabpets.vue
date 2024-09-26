@@ -25,7 +25,7 @@
         <v-tabs-window-item value="option-1">
           <v-card flat class="full-width">
             <v-card-text>
-              <SectionAdminPetsLostpetstable class="full-width" />
+              <SectionUserUserpetsLostpetstable class="full-width" />
             </v-card-text>
           </v-card>
         </v-tabs-window-item>
@@ -33,7 +33,7 @@
         <v-tabs-window-item value="option-2">
           <v-card flat class="full-width">
             <v-card-text>
-              <SectionAdminPetsFindownertable class="full-width" />
+              <SectionUserUserpetsFindownertable class="full-width" />
             </v-card-text>
           </v-card>
         </v-tabs-window-item>
@@ -41,7 +41,7 @@
         <v-tabs-window-item value="option-3">
           <v-card flat class="full-width">
             <v-card-text>
-              <SectionAdminPetsAdoptpettable class="full-width" />
+              <SectionUserUserpetsAdoptpettable class="full-width" />
             </v-card-text>
           </v-card>
         </v-tabs-window-item>

@@ -166,14 +166,13 @@
       <v-row>
         <v-col cols="12" sm="6">
           <div class="text-subtitle-1 mb-2">
-            รางวัล(บาท)
+            รางวัล(บาท)&nbsp;<span class="text-red"></span>
           </div>
           <v-text-field
             v-model="form.reward"
             placeholder="รางวัล(บาท)"
             variant="outlined"
             :rules="[rules.reward]"
-            class="mt-5"
           />
         </v-col>
         <v-col cols="12" sm="6">

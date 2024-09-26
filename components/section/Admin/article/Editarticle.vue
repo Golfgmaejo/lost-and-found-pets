@@ -26,6 +26,7 @@
             v-model="form.details"
             placeholder="รายละเอียดบทความ"
             variant="outlined"
+            :rules="[rules.required]"
           ></v-textarea>
         </v-col>
       </v-row>
@@ -39,6 +40,16 @@
             placeholder="ลิงก์บทความ"
             variant="outlined"
             :rules="[rules.urlOptional]"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12" sm="6">
+          <div class="text-subtitle-1 mb-2">
+            อ้างอิง&nbsp;<span class="text-red"></span>
+          </div>
+          <v-text-field
+            v-model="form.reference"
+            placeholder="อ้างอิง"
+            variant="outlined"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -96,6 +107,7 @@ export default {
             details: "",
             link: "",
             image_url: null,
+            reference: "",
           },
       newImage: null,
       rules: {
@@ -140,7 +152,7 @@ export default {
       this.$refs.form.validate();
       if (this.valid) {
         const isFormIncomplete = Object.keys(this.form).some((key) => {
-          if (key === "link") return false;
+          if (key === "link" || key === "reference") return false;
           return this.form[key] === "" || this.form[key] === null;
         });
         if (isFormIncomplete) {

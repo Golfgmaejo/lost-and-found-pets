@@ -45,6 +45,9 @@
           <div class="card-content">
             <h5 class="title">{{ formatName(article.name) }}</h5>
             <p class="subtitle">{{ formatDetails(article.details) }}</p>
+            <p class="subtitle">
+              เเหล่งอ้างอิง : {{ formatReference(article.reference ? article.reference : '-') }}
+            </p>
           </div>
           <div style="margin-left: 12px">
             <a
@@ -61,14 +64,14 @@
     <v-row class="mt-5">
       <v-col cols="12" class="text-center">
         <v-pagination
-              v-model="page"
-              :length="pageCount"
-              next-icon="mdi-menu-right"
-              prev-icon="mdi-menu-left"
-              active-color="#e97931"
-              rounded="circle"
-              @input="updatePage"
-            ></v-pagination>
+          v-model="page"
+          :length="pageCount"
+          next-icon="mdi-menu-right"
+          prev-icon="mdi-menu-left"
+          active-color="#e97931"
+          rounded="circle"
+          @input="updatePage"
+        ></v-pagination>
       </v-col>
     </v-row>
   </v-container>
@@ -98,16 +101,34 @@ export default {
       return this.articles.slice(start, end);
     },
   },
+
   methods: {
+    parseTimestamp(timestamp) {
+      if (
+        timestamp &&
+        typeof timestamp === "object" &&
+        "seconds" in timestamp
+      ) {
+        return new Date(
+          timestamp.seconds * 1000 + Math.floor(timestamp.nanoseconds / 1000000)
+        );
+      }
+      console.error("Invalid timestamp:", timestamp);
+      return new Date(0);
+    },
     async fetchArticles() {
       try {
         const response = await axios.get(
           "http://localhost:5000/api/article/getAll_article"
         );
         this.articles = response.data.data;
+        this.articles = response.data.data.sort((a, b) => {
+          const dateA = this.parseTimestamp(a.created_at);
+          const dateB = this.parseTimestamp(b.created_at);
+          return dateB - dateA;
+        });
       } catch (error) {
         console.error("Error fetching article list:", error);
-        alert("ไม่สามารถดึงข้อมูลบทความได้");
       }
     },
     formatName(name) {
@@ -115,6 +136,9 @@ export default {
     },
     formatDetails(details) {
       return details.length > 35 ? details.slice(0, 35) + "..." : details;
+    },
+    formatReference(reference) {
+      return reference.length > 20 ? reference.slice(0, 20) + "..." : reference;
     },
     updatePage(page) {
       this.page = page;

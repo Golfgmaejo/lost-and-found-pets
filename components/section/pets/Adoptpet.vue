@@ -97,7 +97,7 @@
               </div>
               <div class="text-2">
                 วันที่ประกาศ:&nbsp;<span class="span-1"
-                  >{{ animal.adopt_date }} , {{ animal.adopt_time }}</span
+                  >{{ animal.adopt_date }}, {{ animal.adopt_time }}</span
                 >
               </div>
               <div class="text-2">
@@ -176,7 +176,6 @@ import axios from "axios";
 import PetButtons from "./PetButtons.vue";
 import Noticeadoptpet from "../Admin/pets/Noticeadoptpet.vue";
 
-const pageTitle = ref("ประกาศหาบ้าน");
 const adoptpetList = ref([]);
 const isDialogOpen = ref(false);
 const itemsPerPage = ref(8);
@@ -216,11 +215,25 @@ const paginatedAdoptpet = computed(() => {
   return adoptpetList.value.slice(start, end);
 });
 
+const parseTimestamp = (timestamp) => {
+  if (timestamp && typeof timestamp === "object" && "seconds" in timestamp) {
+    return new Date(
+      timestamp.seconds * 1000 + Math.floor(timestamp.nanoseconds / 1000000)
+    );
+  }
+  console.error("Invalid timestamp:", timestamp);
+  return new Date(0);
+};
+
 const fetchAdoptpet = async () => {
   const url = `http://localhost:5000/api/adopt_pet/getAll_adopt_pet`;
   try {
     const response = await axios.get(url);
-    adoptpetList.value = response.data.data;
+    adoptpetList.value = response.data.data.sort((a, b) => {
+      const dateA = parseTimestamp(a.created_at);
+      const dateB = parseTimestamp(b.created_at);
+      return dateB - dateA;
+    });
   } catch (error) {
     console.error("Error fetching adopt pets:", error);
   }

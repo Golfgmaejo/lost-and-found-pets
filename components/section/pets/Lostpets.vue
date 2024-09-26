@@ -1,185 +1,188 @@
 <template>
-    <v-container style="margin-top: 95px">
-      <v-row>
-        <v-col style="display: flex">
-          <v-img
-            :width="1050"
-            aspect-ratio="16/9"
-            cover
-            src="/images/pets/สัตว์เลี้ยงหาย.png"
-            class="rounded-img"
-            style="border: 10px solid rgba(233, 121, 49, 0.1)"
-          ></v-img>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <div style="display: flex; align-items: center">
-            <div
-              style="flex-grow: 2; height: 2px; background-color: #b4511a"
-            ></div>
-            <span
-              class="text-title-lost"
-              style="padding: 0 10px; font-weight: bold"
-              >สัตว์เลี้ยงหาย</span
-            >
-            <div
-              style="flex-grow: 2; height: 2px; background-color: #b4511a"
-            ></div>
-          </div>
-        </v-col>
-      </v-row>
-
-      <v-row class="mt-6 mb-6">
-        <v-col>
-          <div class="text-center">
-            <div>
-              <PetButtons />
-            </div>
-          </div>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="auto" lg="6" style="display: flex; align-items: center">
-          <h1 class="text-title-lost">ประกาศสัตว์เลี้ยงหาย</h1>
-        </v-col>
-        <v-col cols="auto" lg="6" class="d-flex justify-end">
-          <v-btn
-            class="btn-notice"
-            v-if="!isLoggedIn"
-            color="#FF1744"
-            @click="() => $router.push('/register')"
+  <v-container style="margin-top: 95px">
+    <v-row>
+      <v-col style="display: flex">
+        <v-img
+          :width="1050"
+          aspect-ratio="16/9"
+          cover
+          src="/images/pets/สัตว์เลี้ยงหาย.png"
+          class="rounded-img"
+          style="border: 10px solid rgba(233, 121, 49, 0.1)"
+        ></v-img>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <div style="display: flex; align-items: center">
+          <div
+            style="flex-grow: 2; height: 2px; background-color: #b4511a"
+          ></div>
+          <span
+            class="text-title-lost"
+            style="padding: 0 10px; font-weight: bold"
+            >สัตว์เลี้ยงหาย</span
           >
-            ประกาศสัตว์เลี้ยงหาย
-          </v-btn>
-          <v-btn v-else color="#FF1744" @click="openDialog" class="btn-notice">
-            ประกาศสัตว์เลี้ยงหาย
-          </v-btn>
-        </v-col>
-        <v-divider
-          class="border-opacity-100"
-          :thickness="3"
-          color="#ef9b65"
-        ></v-divider>
-      </v-row>
+          <div
+            style="flex-grow: 2; height: 2px; background-color: #b4511a"
+          ></div>
+        </div>
+      </v-col>
+    </v-row>
 
-      <v-row>
-        <v-col
-          v-for="(animal, index) in paginatedLostpets"
-          :key="index"
-          cols="12"
-          md="6"
+    <v-row class="mt-6 mb-6">
+      <v-col>
+        <div class="text-center">
+          <div>
+            <PetButtons />
+          </div>
+        </div>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="auto" lg="6" style="display: flex; align-items: center">
+        <h1 class="text-title-lost">ประกาศสัตว์เลี้ยงหาย</h1>
+      </v-col>
+      <v-col cols="auto" lg="6" class="d-flex justify-end">
+        <v-btn
+          class="btn-notice"
+          v-if="!isLoggedIn"
+          color="#FF1744"
+          @click="() => $router.push('/register')"
         >
-          <v-card class="card-pet-all" elevation="2">
-            <v-row>
-              <v-col>
-                <div width="80px" class="card-img">
-                  <v-img :src="animal.image_url" height="265px" contain style="margin-top: 12px;"></v-img>
-                </div>
-              </v-col>
+          ประกาศสัตว์เลี้ยงหาย
+        </v-btn>
+        <v-btn v-else color="#FF1744" @click="openDialog" class="btn-notice">
+          ประกาศสัตว์เลี้ยงหาย
+        </v-btn>
+      </v-col>
+      <v-divider
+        class="border-opacity-100"
+        :thickness="3"
+        color="#ef9b65"
+      ></v-divider>
+    </v-row>
 
-              <v-col style="margin: 12px; margin-left: -12px">
-                <div class="text-1">{{ animal.name }}</div>
-                <v-divider
-                  class="border-opacity-100"
-                  :thickness="1"
-                  color="#d69d6b"
-                  style="margin-bottom: 8px"
-                ></v-divider>
+    <v-row>
+      <v-col
+        v-for="(animal, index) in paginatedLostpets"
+        :key="index"
+        cols="12"
+        md="6"
+      >
+        <v-card class="card-pet-all" elevation="2">
+          <v-row>
+            <v-col>
+              <div width="80px" class="card-img">
+                <v-img
+                  :src="animal.image_url"
+                  height="265px"
+                  contain
+                  style="margin-top: 12px"
+                ></v-img>
+              </div>
+            </v-col>
 
-                <div class="text-2">
-                  เพศ:&nbsp;<span class="span-1">{{ animal.gender }}</span>
+            <v-col style="margin: 12px; margin-left: -12px">
+              <div class="text-1">{{ animal.name }}</div>
+              <v-divider
+                class="border-opacity-100"
+                :thickness="1"
+                color="#d69d6b"
+                style="margin-bottom: 8px"
+              ></v-divider>
+
+              <div class="text-2">
+                เพศ:&nbsp;<span class="span-1">{{ animal.gender }}</span>
+              </div>
+              <div class="text-2">
+                อายุ:&nbsp;<span class="span-1">{{ animal.age_years }}</span
+                >&nbsp;ปี&nbsp;<span class="span-1"
+                  >{{ animal.age_month }} </span
+                >&nbsp;เดือน
+              </div>
+              <div class="text-2">
+                สายพันธุ์:&nbsp;<span class="span-1">{{ animal.breed }}</span>
+              </div>
+              <div class="text-2">
+                สี:&nbsp;<span class="span-1">{{ animal.color }}</span>
+              </div>
+              <div class="text-2">
+                รางวัล:&nbsp;<span class="span-1">{{
+                  formatCurrency(animal.reward)
+                }}</span>
+              </div>
+              <div class="text-2">
+                หายเมื่อ:&nbsp;<span class="span-1"
+                  >{{ animal.lost_date }}, {{ animal.lost_time }}</span
+                >
+              </div>
+              <div class="text-2">
+                สถานที่หาย:&nbsp;<span class="span-1">{{
+                  animal.lost_place
+                }}</span>
+              </div>
+              <v-divider
+                class="border-opacity-100"
+                :thickness="1"
+                color="#d69d6b"
+                style="margin-bottom: 8px"
+              ></v-divider>
+              <div>
+                <div v-if="animal.status === 'หาย'">
+                  <v-btn
+                    :to="{
+                      name: 'lost_pet-detail-id',
+                      params: { id: animal.id },
+                    }"
+                    color="#f4bb64"
+                    class="btn-1"
+                    >รายละเอียด
+                  </v-btn>
                 </div>
-                <div class="text-2">
-                  อายุ:&nbsp;<span class="span-1">{{ animal.age_years }}</span
-                  >&nbsp;ปี&nbsp;<span class="span-1"
-                    >{{ animal.age_month }} </span
-                  >&nbsp;เดือน
-                </div>
-                <div class="text-2">
-                  สายพันธุ์:&nbsp;<span class="span-1">{{ animal.breed }}</span>
-                </div>
-                <div class="text-2">
-                  สี:&nbsp;<span class="span-1">{{ animal.color }}</span>
-                </div>
-                <div class="text-2">
-                  รางวัล:&nbsp;<span class="span-1">{{
-                    formatCurrency(animal.reward)
-                  }}</span>
-                </div>
-                <div class="text-2">
-                  หายเมื่อ:&nbsp;<span class="span-1"
-                    >{{ animal.lost_date }} , {{ animal.lost_time }}</span
-                  >
-                </div>
-                <div class="text-2">
-                  สถานที่หาย:&nbsp;<span class="span-1">{{
-                    animal.lost_place
-                  }}</span>
-                </div>
-                <v-divider
-                  class="border-opacity-100"
-                  :thickness="1"
-                  color="#d69d6b"
-                  style="margin-bottom: 8px"
-                ></v-divider>
-                <div>
-                  <div v-if="animal.status === 'หาย'">
+                <div v-else>
+                  <div>
+                    <v-btn class="ribbon"> เจอแล้ว </v-btn>
+                  </div>
+                  <div style="display: flex; justify-content: center">
                     <v-btn
-                      :to="{
-                        name: 'lost_pet-detail-id',
-                        params: { id: animal.id },
-                      }"
-                      color="#f4bb64"
-                      class="btn-1"
+                      width="248px"
+                      color="#FAFAFA"
+                      class="btn-disabled"
+                      :disabled="!isDialogOpen"
                       >รายละเอียด
                     </v-btn>
                   </div>
-                  <div v-else>
-                    <div>
-                      <v-btn class="ribbon"> เจอแล้ว </v-btn>
-                    </div>
-                    <div style="display: flex; justify-content: center">
-                      <v-btn
-                        width="248px"
-                        color="#FAFAFA"
-                        class="btn-disabled"
-                        :disabled="!isDialogOpen"
-                        >รายละเอียด
-                      </v-btn>
-                    </div>
-                  </div>
                 </div>
-              </v-col>
-            </v-row>
-          </v-card>
-        </v-col>
-      </v-row>
-      <div class="text-center mt-4">
-        <v-pagination
-            v-model="page"
-            :length="pageCount"
-            next-icon="mdi-menu-right"
-            prev-icon="mdi-menu-left"
-            active-color="#e97931"
-            rounded="circle"
-            @input="updatePage"
-          ></v-pagination>
-      </div>
-      <v-dialog v-model="isDialogOpen" max-width="1200px" persistent>
-        <v-card>
-          <v-card-text>
-            <Noticelostpets @addlostpet="closeDialog" />
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" text @click="closeDialog"
-              >ยกเลิก</v-btn
-            >
-          </v-card-actions>
+              </div>
+            </v-col>
+          </v-row>
         </v-card>
-      </v-dialog>
-    </v-container>
+      </v-col>
+    </v-row>
+    <div class="text-center mt-4">
+      <v-pagination
+        v-model="page"
+        :length="pageCount"
+        next-icon="mdi-menu-right"
+        prev-icon="mdi-menu-left"
+        active-color="#e97931"
+        rounded="circle"
+        @input="updatePage"
+      ></v-pagination>
+    </div>
+    <v-dialog v-model="isDialogOpen" max-width="1200px" persistent>
+      <v-card>
+        <v-card-text>
+          <Noticelostpets @addlostpet="closeDialog" />
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" text @click="closeDialog">ยกเลิก</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </v-container>
 </template>
 
 <script setup>
@@ -190,24 +193,30 @@ import PetButtons from "./PetButtons.vue";
 import Noticelostpets from "../Admin/pets/Noticelostpets.vue";
 
 const lostpetsList = ref([]);
-
 const itemsPerPage = ref(8);
 const page = ref(1);
-
 const isDialogOpen = ref(false);
+
 const authStore = useAuthStore();
 const isLoggedIn = ref(authStore.isLoggedIn());
 const user = ref(authStore.user);
 const isAdmin = ref(authStore.isAdmin);
+
 watchEffect(() => {
   isLoggedIn.value = authStore.isLoggedIn();
   user.value = authStore.user;
   isAdmin.value = authStore.isAdmin;
 });
 
-const pageCount = computed(() => {
-  return Math.ceil(lostpetsList.value.length / itemsPerPage.value);
-});
+const openDialog = () => {
+  isDialogOpen.value = true;
+  fetchLostpets();
+};
+
+const closeDialog = () => {
+  isDialogOpen.value = false;
+  fetchLostpets();
+};
 
 const paginatedLostpets = computed(() => {
   const start = (page.value - 1) * itemsPerPage.value;
@@ -215,15 +224,12 @@ const paginatedLostpets = computed(() => {
   return lostpetsList.value.slice(start, end);
 });
 
-const fetchLostpets = async () => {
-  const url = "http://localhost:5000/api/lost_pet/getAll_lost_pets";
-  try {
-    const response = await axios.get(url);
-    lostpetsList.value = response.data.data;
-    localStorage.setItem("lostpetsList", JSON.stringify(lostpetsList.value));
-  } catch (error) {
-    console.error("Error fetching lost pets:", error);
-  }
+const pageCount = computed(() => {
+  return Math.ceil(lostpetsList.value.length / itemsPerPage.value);
+});
+
+const updatePage = (newPage) => {
+  page.value = newPage;
 };
 
 const formatCurrency = (value) => {
@@ -235,17 +241,29 @@ const formatCurrency = (value) => {
   return `${formattedValue} บาท`;
 };
 
-const openDialog = () => {
-  isDialogOpen.value = true;
+const parseTimestamp = (timestamp) => {
+  if (timestamp && typeof timestamp === "object" && "seconds" in timestamp) {
+    return new Date(
+      timestamp.seconds * 1000 + Math.floor(timestamp.nanoseconds / 1000000)
+    );
+  }
+  console.error("Invalid timestamp:", timestamp);
+  return new Date(0);
 };
 
-const closeDialog = () => {
-  isDialogOpen.value = false;
-  fetchLostpets();
-};
-
-const updatePage = (newPage) => {
-  page.value = newPage;
+const fetchLostpets = async () => {
+  const url = "http://localhost:5000/api/lost_pet/getAll_lost_pets";
+  try {
+    const response = await axios.get(url);
+    lostpetsList.value = response.data.data.sort((a, b) => {
+      const dateA = parseTimestamp(a.created_at);
+      const dateB = parseTimestamp(b.created_at);
+      return dateB - dateA;
+    });
+    localStorage.setItem("lostpetsList", JSON.stringify(lostpetsList.value));
+  } catch (error) {
+    console.error("Error fetching lost pets:", error);
+  }
 };
 
 onMounted(() => {
@@ -313,7 +331,7 @@ onMounted(() => {
   border-radius: 16px;
   border: 3px solid rgba(233, 121, 49, 0.1);
 }
-.card-img{
+.card-img {
   border: 2px solid rgb(233, 120, 49);
   width: 255px;
   height: 300px;

@@ -144,22 +144,6 @@ const tab = ref(productTypes.value[0].value);
 const route = useRoute();
 const router = useRouter();
 
-const fetchProduct = async () => {
-  const url = "http://localhost:5000/api/product/getAll_product";
-  try {
-    const response = await axios.get(url);
-    let products = response.data.data;
-    products = products.sort((a, b) => b.isBestSeller - a.isBestSeller);
-    productList.value = products.map((product) => ({
-      ...product,
-      truncatedName: truncateText(product.name, 30),
-      truncatedDetails: truncateText(product.details, 40),
-    }));
-  } catch (error) {
-    console.error("Error fetching product:", error);
-  }
-};
-
 const truncateText = (text, maxLength) => {
   return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
 };
@@ -184,6 +168,17 @@ const updatePage = (newPage) => {
   page.value = newPage;
 };
 
+watch(route, (newRoute) => {
+  if (newRoute.query.tab) {
+    const foundType = productTypes.value.find(
+      (type) => type.value === newRoute.query.tab
+    );
+    if (foundType) {
+      tab.value = foundType.value;
+    }
+  }
+});
+
 watch(tab, () => {
   page.value = 1;
 });
@@ -200,16 +195,41 @@ onMounted(() => {
   }
 });
 
-watch(route, (newRoute) => {
-  if (newRoute.query.tab) {
-    const foundType = productTypes.value.find(
-      (type) => type.value === newRoute.query.tab
+const parseTimestamp = (timestamp) => {
+  if (timestamp && typeof timestamp === "object" && "seconds" in timestamp) {
+    return new Date(
+      timestamp.seconds * 1000 + Math.floor(timestamp.nanoseconds / 1000000)
     );
-    if (foundType) {
-      tab.value = foundType.value;
-    }
   }
-});
+  console.error("Invalid timestamp:", timestamp);
+  return new Date(0);
+};
+
+const fetchProduct = async () => {
+  const url = "http://localhost:5000/api/product/getAll_product";
+  try {
+    const response = await axios.get(url);
+    let products = response.data.data;
+
+    products = products.map((product) => ({
+      ...product,
+      parsedCreatedAt: parseTimestamp(product.created_at),
+      truncatedName: truncateText(product.name, 30),
+      truncatedDetails: truncateText(product.details, 40),
+    }));
+    products.sort((a, b) => {
+      if (b.isBestSeller !== a.isBestSeller) {
+        return b.isBestSeller - a.isBestSeller;
+      }
+      return b.parsedCreatedAt - a.parsedCreatedAt;
+    });
+
+    productList.value = products;
+  } catch (error) {
+    console.error("Error fetching product:", error);
+  }
+};
+
 </script>
 
 <style scoped>

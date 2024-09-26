@@ -41,6 +41,9 @@
             <div class="card-content">
               <h5 class="title">{{ formatName(article.name) }}</h5>
               <p class="subtitle">{{ formatDetails(article.details) }}</p>
+              <p class="subtitle">
+              เเหล่งอ้างอิง : {{ formatReference(article.reference ? article.reference : '-') }}
+            </p>
             </div>
             <div style="margin-left: 12px">
               <a
@@ -84,7 +87,6 @@ export default {
         this.articles = response.data.data;
       } catch (error) {
         console.error("Error fetching article list:", error);
-        alert("ไม่สามารถดึงข้อมูลบทความได้");
       }
     },
     formatName(name) {
@@ -92,6 +94,9 @@ export default {
     },
     formatDetails(details) {
       return details.length > 35 ? details.slice(0, 35) + "..." : details;
+    },
+    formatReference(reference) {
+      return reference.length > 20 ? reference.slice(0, 20) + "..." : reference;
     },
   },
 };

@@ -169,7 +169,7 @@
       <v-row>
         <v-col cols="12" sm="6">
           <div class="text-subtitle-1 mb-2">
-            รางวัล(บาท)&nbsp;<span class="text-red">*</span>
+            รางวัล(บาท)&nbsp;<span class="text-red"></span>
           </div>
           <v-text-field
             v-model="form.reward"
@@ -302,9 +302,7 @@
 
 <script>
 import axios from "axios";
-import { computed } from "vue";
 import { useAuthStore } from "~/stores/auth";
-import { ref } from "vue";
 import { toast } from "vue3-toastify";
 
 export default {

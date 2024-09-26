@@ -53,7 +53,7 @@
                 </v-list-item>
               </v-list>
             </v-menu>
-            <v-btn class="text-nav" color="red" @click="logout"
+            <v-btn class="text-nav" @click="logout" color="red"
               >ออกจากระบบ</v-btn
             >
           </div>

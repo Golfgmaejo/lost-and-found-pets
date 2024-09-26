@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-layout>
-      <v-navigation-drawer expand-on-hover rail app class="background-image">
+      <v-navigation-drawer expand-on-hover rail app class="background-image text-form">
         <v-list class="my-16">
           <v-list-item
             prepend-avatar="https://static.vecteezy.com/system/resources/thumbnails/009/636/683/small_2x/admin-3d-illustration-icon-png.png"
@@ -105,7 +105,7 @@
         <v-divider></v-divider>
 
         <v-list>
-          <v-list-item
+          <v-list-item 
             prepend-icon="mdi-logout"
             title="Logout"
             @click="logout"
@@ -152,6 +152,35 @@ defineProps({
 
 
 <style scoped>
+.text-form {
+  font-family: "Prompt", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+}
+.v-btn {
+  font-family: "Prompt", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+}
+.text-portfolio {
+  font-family: "Prompt", sans-serif;
+  color: #777;
+  font-size: 16px;
+  font-weight: 400;
+}
+.text-portfolio-title {
+  font-family: "Prompt", sans-serif;
+  color: #582e2c;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.text-subtitle-1 {
+  font-family: "Prompt", sans-serif;
+  color: #582e2c;
+  font-size: 16px !important;
+  font-weight: 500;
+}
 .main-content {
   margin-left: 80px;
   transition: margin-left 0.3s ease;
