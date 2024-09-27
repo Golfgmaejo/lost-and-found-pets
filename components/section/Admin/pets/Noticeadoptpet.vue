@@ -372,7 +372,7 @@ export default {
             "http://localhost:5000/api/adopt_pet/add_adopt_pet",
             data
           );
-          toast.success("ประกาศสัตว์หาบ้านแล้ว", { autoClose: this.autoCloseTime });
+          toast.success("ประกาศสัตว์หาบ้านสำเร็จ", { autoClose: this.autoCloseTime });
           this.$emit("addadoptpet");
         } catch (error) {
           toast.error("เกิดข้อผิดพลาดในการบันทึกข้อมูล", { autoClose: this.autoCloseTime });

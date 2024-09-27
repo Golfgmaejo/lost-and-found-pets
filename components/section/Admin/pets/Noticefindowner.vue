@@ -378,7 +378,7 @@ export default {
             "http://localhost:5000/api/find_owner/add_find_owner",
             data
           );
-          toast.success("ประกาศสัตว์หาเจ้าของแล้ว", {
+          toast.success("ประกาศสัตว์หาเจ้าของสำเร็จ", {
             autoClose: this.autoCloseTime,
           });
           this.$emit("addfindownerpet");

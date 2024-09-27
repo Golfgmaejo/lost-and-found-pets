@@ -34,7 +34,7 @@
       :headers="headers"
       :items="userList"
       item-value="id"
-      :sort-by="[{ key: 'first_name', order: 'asc' }]"
+      :sort-by="[{ key: 'created_at', order: 'asc' }]"
       class="table-style-user"
     >
       <template v-slot:item.first_name="{ item }">
@@ -278,6 +278,6 @@ export default {
 }
 ::v-deep thead th {
   background-image: url("public/images/logos/bg-admin.png") !important;
-  color: black !important; 
+  color: black !important;
 }
 </style>

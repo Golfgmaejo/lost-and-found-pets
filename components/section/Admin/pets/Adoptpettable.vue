@@ -35,7 +35,7 @@
       :headers="headers"
       :items="petList"
       item-value="id"
-      :sort-by="[{ key: 'name', order: 'asc' }]"
+      :sort-by="[{ key: 'created_at', order: 'asc' }]"
       class="table-style"
     >
       <template v-slot:item.user="{ item }">
@@ -129,12 +129,29 @@ export default {
     };
   },
   methods: {
+    parseTimestamp(timestamp) {
+      if (
+        timestamp &&
+        typeof timestamp === "object" &&
+        "seconds" in timestamp
+      ) {
+        return new Date(
+          timestamp.seconds * 1000 + Math.floor(timestamp.nanoseconds / 1000000)
+        );
+      }
+      console.error("Invalid timestamp:", timestamp);
+      return new Date(0);
+    },
     async fetchPetList() {
       try {
         const response = await axios.get(
           "http://localhost:5000/api/adopt_pet/getAll_adopt_pet"
         );
-        this.petList = response.data.data;
+        this.petList = response.data.data.sort((a, b) => {
+          const dateA = this.parseTimestamp(a.created_at);
+          const dateB = this.parseTimestamp(b.created_at);
+          return dateB - dateA;
+        });
       } catch (error) {
         console.error("Error fetching pet list:", error);
       }

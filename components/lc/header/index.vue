@@ -53,7 +53,7 @@
                 </v-list-item>
               </v-list>
             </v-menu>
-            <v-btn class="text-nav" @click="logout" color="red"
+            <v-btn class="text-logout" @click="logout" color="red"
               >ออกจากระบบ</v-btn
             >
           </div>
@@ -117,6 +117,12 @@ const logout = () => {
 }
 .app-header {
   height: 95px !important;
+}
+.text-logout {
+  font-family: "Prompt";
+  font-size: 18px;
+  color: #ff0d00;
+  font-weight: 500;
 }
 .text-nav {
   font-family:  "Prompt";

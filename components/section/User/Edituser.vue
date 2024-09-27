@@ -1,5 +1,5 @@
 <template>
-  <v-container style="margin-top: 90px;">
+  <v-container style="margin-top: 90px">
     <h1 class="text-portfolio-title">แก้ไขข้อมูลส่วนตัว</h1>
     <h5 class="text-portfolio">
       ข้อมูลจะถูกเปิดเผยกรณีที่อนุญาติให้ติดต่อในการลงประกาศ
@@ -15,7 +15,7 @@
             คำนำหน้า&nbsp;<span class="text-red">*</span>
           </div>
           <v-select
-          placeholder="กรุณากรอกคำนำหน้า"
+            placeholder="กรุณากรอกคำนำหน้า"
             v-model="prefix"
             :items="prefixOptions"
             :rules="[rules.required]"
@@ -28,7 +28,7 @@
             เบอร์โทรศัพท์&nbsp;<span class="text-red">*</span>
           </div>
           <v-text-field
-          placeholder="กรุณากรอกเบอร์โทรศัพท์"
+            placeholder="กรุณากรอกเบอร์โทรศัพท์"
             v-model="phone"
             :rules="[rules.required, rules.phone]"
             variant="outlined"
@@ -41,7 +41,7 @@
             ชื่อ&nbsp;<span class="text-red">*</span>
           </div>
           <v-text-field
-             placeholder="กรุณากรอกชื่อ"
+            placeholder="กรุณากรอกชื่อ"
             v-model="firstName"
             :rules="[rules.required]"
             variant="outlined"
@@ -60,9 +60,7 @@
       ></V-row>
       <v-row
         ><v-col cols="12" md="6">
-          <div class="text-subtitle-1 mb-2">
-            Facebook
-          </div>
+          <div class="text-subtitle-1 mb-2">Facebook</div>
           <v-text-field
             placeholder="Facebook"
             v-model="Facebook"
@@ -70,9 +68,7 @@
           />
         </v-col>
         <v-col cols="12" md="6">
-          <div class="text-subtitle-1 mb-2">
-            Line ID
-          </div>
+          <div class="text-subtitle-1 mb-2">Line ID</div>
           <v-text-field
             placeholder="Line ID"
             v-model="Line_id"
@@ -160,7 +156,7 @@
         </v-col>
       </v-row>
 
-      <v-col cols="12" class="d-flex justify-center" >
+      <v-col cols="12" class="d-flex justify-center">
         <v-btn color="primary" :disabled="!valid" @click="updateUser"
           >บันทึกข้อมูล</v-btn
         >
@@ -174,7 +170,7 @@
 <script>
 import axios from "axios";
 import { toast } from "vue3-toastify";
-import { useAuthStore } from '~/stores/auth';
+import { useAuthStore } from "~/stores/auth";
 
 export default {
   data() {
@@ -286,9 +282,15 @@ export default {
     },
     fetchUserData() {
       const authStore = useAuthStore();
+      if (!authStore.user || !authStore.user.id) {
+        console.error("User is not logged in");
+        this.$router.push("/login");
+        return;
+      }
       const userId = authStore.user.id;
 
-      axios.get(`http://localhost:5000/api/user/get_user/${userId}`)
+      axios
+        .get(`http://localhost:5000/api/user/get_user/${userId}`)
         .then((response) => {
           const userData = response.data;
           this.prefix = userData.prefix;
@@ -310,6 +312,10 @@ export default {
     },
     updateUser() {
       const authStore = useAuthStore();
+      if (!authStore.user || !authStore.user.id) {
+        console.error("User is not logged in");
+        return;
+      }
       const userId = authStore.user.id;
 
       const userData = {
@@ -327,17 +333,20 @@ export default {
         email: this.email,
       };
 
-      axios.put(`http://localhost:5000/api/user/update_user/${userId}`, userData)
-      
+      axios
+        .put(`http://localhost:5000/api/user/update_user/${userId}`, userData)
         .then(() => {
-          toast.success("อัปเดตข้อมูลสำเร็จ", { autoClose: this.autoCloseTime });
+          toast.success("อัปเดตข้อมูลสำเร็จ", {
+            autoClose: this.autoCloseTime,
+          });
           setTimeout(() => {
-            this.$router.push('/');
+            this.$router.push("/");
           }, 3000);
-          
         })
         .catch((error) => {
-          toast.error("เกิดข้อผิดพลาดในการอัปเดตข้อมูล", { autoClose: this.autoCloseTime });
+          toast.error("เกิดข้อผิดพลาดในการอัปเดตข้อมูล", {
+            autoClose: this.autoCloseTime,
+          });
           console.error("Error updating user data:", error);
         });
     },

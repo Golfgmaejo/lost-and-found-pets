@@ -196,7 +196,7 @@ export default {
             `http://localhost:5000/api/product/update_product/${this.productData.id}`,
             this.form
           );
-          toast.success("อัปเดตข้อมูลสินค้าสำเร็จ", { autoClose: this.autoCloseTime });
+          toast.success("อัปเดตข้อมูลสำเร็จ", { autoClose: this.autoCloseTime });
           this.$emit("updateproduct");
         } catch (error) {
           console.error("Error updating product:", error);

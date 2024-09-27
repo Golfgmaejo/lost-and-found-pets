@@ -450,7 +450,7 @@ export default {
             "http://localhost:5000/api/lost_pet/add_lost_pets",
             data
           );
-          toast.success("ประกาศสัตว์เลี้ยงหายแล้ว", {
+          toast.success("ประกาศสัตว์เลี้ยงหายสำเร็จ", {
             autoClose: this.autoCloseTime,
           });
           this.$emit("addlostpet");

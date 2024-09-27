@@ -34,7 +34,7 @@
       :headers="headers"
       :items="productList"
       item-value="id"
-      :sort-by="[{ key: 'name', order: 'asc' }]"
+      :sort-by="[{ key: 'created_at', order: 'asc' }]"
       class="table-style"
     >
       <template v-slot:item.name="{ item }">
@@ -133,12 +133,29 @@ export default {
     };
   },
   methods: {
+    parseTimestamp(timestamp) {
+      if (
+        timestamp &&
+        typeof timestamp === "object" &&
+        "seconds" in timestamp
+      ) {
+        return new Date(
+          timestamp.seconds * 1000 + Math.floor(timestamp.nanoseconds / 1000000)
+        );
+      }
+      console.error("Invalid timestamp:", timestamp);
+      return new Date(0);
+    },
     async fetchProductList() {
       try {
         const response = await axios.get(
           "http://localhost:5000/api/product/getAll_product"
         );
-        this.productList = response.data.data;
+        this.productList = response.data.data.sort((a, b) => {
+          const dateA = this.parseTimestamp(a.created_at);
+          const dateB = this.parseTimestamp(b.created_at);
+          return dateB - dateA;
+        });
       } catch (error) {
         console.error("Error fetching product list:", error);
       }
