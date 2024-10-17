@@ -1,5 +1,4 @@
 <template>
-
   <v-container fluid>
     <v-main>
       <v-container class="mt-16">
@@ -37,16 +36,18 @@
           <v-col v-if="adoptpetbyid" cols="12" md="8">
             <v-card class="card-detail">
               <v-row>
-                <v-col cols="12" md="6" >
+                <v-col cols="12" md="6">
                   <v-img :src="adoptpetbyid.image_url" class="first-image" />
                 </v-col>
-                <v-col cols="12" md="6" style="margin-top: 24px;">
+                <v-col cols="12" md="6" style="margin-top: 24px">
                   <v-card-title>
                     <h3 class="text-1">ประกาศหาบ้าน</h3>
                   </v-card-title>
                   <div class="card-detail-1">
                     <div class="text-2">
-                      เพศ:&nbsp;<span class="span-1">{{ adoptpetbyid.gender }}</span>
+                      เพศ:&nbsp;<span class="span-1">{{
+                        adoptpetbyid.gender
+                      }}</span>
                     </div>
                     <div class="text-2">
                       สายพันธุ์:&nbsp;<span class="span-1">
@@ -61,7 +62,7 @@
                     <div class="text-2">
                       วันที่ประกาศ:&nbsp;<span class="span-1">
                         {{ adoptpetbyid.adopt_date }}
-                          {{ adoptpetbyid.adopt_time }}</span
+                        {{ adoptpetbyid.adopt_time }}</span
                       >
                     </div>
                   </div>
@@ -70,7 +71,9 @@
                     style="display: flex; justify-content: space-evenly"
                   >
                     <div class="div-1">
-                      ประกาศเมื่อ:&nbsp;{{ formatDateTime(adoptpetbyid.created_at) }}
+                      ประกาศเมื่อ:&nbsp;{{
+                        formatDateTime(adoptpetbyid.created_at)
+                      }}
                     </div>
                   </div>
                 </v-col>
@@ -79,9 +82,7 @@
 
             <v-card class="mt-4 card-detail">
               <div>
-                <div class="div-detail-1">
-                  รายละเอียดของสัตว์
-                </div>
+                <div class="div-detail-1">รายละเอียดของสัตว์</div>
                 <div class="div-detail-2">
                   {{ adoptpetbyid.detail }}
                 </div>
@@ -90,28 +91,28 @@
 
             <v-card class="mt-4 card-detail">
               <div>
-                <div class="div-detail-1">สถานที่พบ</div>
+                <div class="div-detail-1">ที่อยู่</div>
                 <div class="div-detail-2">
                   {{ adoptpetbyid.adopt_place }}
                 </div>
                 <div class="div-detail-2 mt-2">
                   <LMap
-                  :zoom="zoom"
-                  :center="[adoptpetbyid.lat, adoptpetbyid.lng]"
-                  :use-global-leaflet="false"
-                  style="height: 350px; width: 100%"
-                >
-                  <LTileLayer
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    attribution='&amp;copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                    layer-type="base"
-                    name="OpenStreetMap"
-                  />
-                  <LMarker
-                    :lat-lng="[adoptpetbyid.lat, adoptpetbyid.lng]"
-                    :draggable="false"
-                  ></LMarker>
-                </LMap>
+                    :zoom="zoom"
+                    :center="[adoptpetbyid.lat, adoptpetbyid.lng]"
+                    :use-global-leaflet="false"
+                    style="height: 350px; width: 100%"
+                  >
+                    <LTileLayer
+                      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                      attribution='&amp;copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                      layer-type="base"
+                      name="OpenStreetMap"
+                    />
+                    <LMarker
+                      :lat-lng="[adoptpetbyid.lat, adoptpetbyid.lng]"
+                      :draggable="false"
+                    ></LMarker>
+                  </LMap>
                 </div>
               </div>
             </v-card>
@@ -124,11 +125,11 @@
                 <v-row>
                   <v-col cols="12" md="4">
                     <v-img
-                    :src="adoptpetbyid.image_url"
-                    height="256"
-                    @click="openImageModal(adoptpetbyid)"
-                    class="all-image"
-                  />
+                      :src="adoptpetbyid.image_url"
+                      height="256"
+                      @click="openImageModal(adoptpetbyid)"
+                      class="all-image"
+                    />
                   </v-col>
                 </v-row>
               </div>
@@ -137,23 +138,25 @@
 
           <v-col cols="12" md="4">
             <v-card class="card-detail-3 pa-2">
-              <div class="div-detail-1" style="margin-bottom: 8px;">ผู้ลงประกาศ</div>
+              <div class="div-detail-1" style="margin-bottom: 8px">
+                ผู้ลงประกาศ
+              </div>
               <div class="div-detail-2" v-if="postedBy">
                 <div style="display: flex">
                   <v-icon color="primary">mdi-account</v-icon> &nbsp;
                   <div class="text-3">
                     ชื่อ:&nbsp;<span class="span-2"
-                      >{{ postedBy.prefix }}
-                      {{ postedBy.first_name }} {{
-                        postedBy.last_name
-                      }}</span
+                      >{{ postedBy.prefix }} {{ postedBy.first_name }}
+                      {{ postedBy.last_name }}</span
                     >
                   </div>
                 </div>
                 <div style="display: flex">
                   <v-icon color="primary">mdi-phone</v-icon> &nbsp;
                   <div class="text-3">
-                    เบอร์โทร:&nbsp;<span class="span-2">{{ postedBy.phone }}</span>
+                    เบอร์โทร:&nbsp;<span class="span-2">{{
+                      postedBy.phone
+                    }}</span>
                   </div>
                 </div>
                 <div style="display: flex">
@@ -165,13 +168,17 @@
                 <div style="display: flex" v-if="postedBy.Facebook">
                   <v-icon color="primary">mdi-facebook</v-icon> &nbsp;
                   <div class="text-3">
-                    Facebook:&nbsp;<span class="span-2">{{ postedBy.Facebook }}</span>
+                    Facebook:&nbsp;<span class="span-2">{{
+                      postedBy.Facebook
+                    }}</span>
                   </div>
                 </div>
                 <div style="display: flex" v-if="postedBy.Line_id">
                   <v-icon color="primary">mdi-chat</v-icon> &nbsp;
                   <div class="text-3">
-                    LINE ID:&nbsp;<span class="span-2">{{ postedBy.Line_id }}</span>
+                    LINE ID:&nbsp;<span class="span-2">{{
+                      postedBy.Line_id
+                    }}</span>
                   </div>
                 </div>
               </div>
@@ -180,17 +187,24 @@
                 class="border-opacity-100"
                 :thickness="1"
                 color="#d69d6b"
-                style="margin-bottom: 16px; margin-top: 16px;"
+                style="margin-bottom: 16px; margin-top: 16px"
               ></v-divider>
 
               <div>
-                <div  class="div-detail-1" style="margin-bottom: 8px;">
+                <div class="div-detail-1" style="margin-bottom: 8px">
                   สมัครสมาชิกแล้วดียังไง
                 </div>
                 <div class="div-detail-2">
-                  แจ้งหายง่าย รวดเร็ว ถึงไม่หายก็ลงได้ มาร่วมเป็นเพื่อนบ้านกับเราเพื่อให้ช่วยกันสอดส่องตามหา
+                  แจ้งหายง่าย รวดเร็ว ถึงไม่หายก็ลงได้
+                  มาร่วมเป็นเพื่อนบ้านกับเราเพื่อให้ช่วยกันสอดส่องตามหา
                   <div>
-                    <v-btn to="/register" color="primary"  block class="mt-3 btn-member">สมัครสมาชิก</v-btn>
+                    <v-btn
+                      to="/register"
+                      color="primary"
+                      block
+                      class="mt-3 btn-member"
+                      >สมัครสมาชิก</v-btn
+                    >
                   </div>
                 </div>
               </div>
@@ -199,14 +213,11 @@
         </v-row>
       </v-container>
 
-      <v-dialog v-model="imageDialog" max-width="800px">
-        <v-carousel>
-          <v-carousel-item :src="selectedImage" />
-        </v-carousel>
+      <v-dialog v-model="imageDialog" max-width="500px">
+        <v-img :src="selectedImage" />
       </v-dialog>
     </v-main>
   </v-container>
-
 </template>
 <script>
 import axios from "axios";
@@ -243,7 +254,7 @@ export default {
         });
     },
     formatDateTime(date) {
-      return format(new Date(date.seconds * 1000), 'dd/MM/yyyy HH:mm');
+      return format(new Date(date.seconds * 1000), "dd/MM/yyyy HH:mm");
     },
     openImageModal(adoptpetbyid) {
       this.selectedImage = adoptpetbyid.image_url;

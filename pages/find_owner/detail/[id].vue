@@ -200,10 +200,8 @@
           </v-col>
         </v-row>
       </v-container>
-      <v-dialog v-model="imageDialog" max-width="800px">
-        <v-carousel>
-          <v-carousel-item :src="selectedImage" />
-        </v-carousel>
+      <v-dialog v-model="imageDialog" max-width="500px">
+          <v-img :src="selectedImage" />
       </v-dialog>
     </v-main>
   </v-container>

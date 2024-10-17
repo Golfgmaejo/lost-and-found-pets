@@ -7,6 +7,7 @@
 </template>
 
 <script>
+
 definePageMeta({
   layout: "admin",
 });

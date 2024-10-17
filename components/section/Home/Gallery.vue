@@ -26,18 +26,42 @@ export default {
       images: [],
     };
   },
+  methods: {
+    parseTimestamp(timestamp) {
+      if (
+        timestamp &&
+        typeof timestamp === "object" &&
+        "seconds" in timestamp
+      ) {
+        return new Date(
+          timestamp.seconds * 1000 + Math.floor(timestamp.nanoseconds / 1000000)
+        );
+      }
+      console.error("Invalid timestamp:", timestamp);
+      return new Date(0);
+    },
+    async fetchGalleryImages() {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/api/gallery/getAll_gallery"
+        );
+        const galleryItems = response.data.data;
+
+        this.images = galleryItems
+          .filter((item) => item.status === true)
+          .sort((a, b) => {
+            const dateA = this.parseTimestamp(a.created_at);
+            const dateB = this.parseTimestamp(b.created_at);
+            return dateB - dateA;
+          })
+          .map((item) => item.image_url);
+      } catch (error) {
+        console.error("Error fetching gallery images:", error);
+      }
+    },
+  },
   async mounted() {
-    try {
-      const response = await axios.get(
-        "http://localhost:5000/api/gallery/getAll_gallery"
-      );
-      const galleryItems = response.data.data;
-      this.images = galleryItems
-        .filter((item) => item.status === true)
-        .map((item) => item.image_url);
-    } catch (error) {
-      console.error("Error fetching gallery images:", error);
-    }
+    await this.fetchGalleryImages();
   },
 };
 </script>

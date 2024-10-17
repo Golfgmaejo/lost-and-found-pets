@@ -214,9 +214,7 @@
           />
         </LMap>
         <v-col cols="12" sm="6">
-          <div class="text-subtitle-1 mb-2">
-            ละติจูด
-          </div>
+          <div class="text-subtitle-1 mb-2">ละติจูด</div>
           <v-text-field
             v-model="markerLatLng.lat"
             placeholder="ละติจูด"
@@ -226,9 +224,7 @@
           />
         </v-col>
         <v-col cols="12" sm="6">
-          <div class="text-subtitle-1 mb-2">
-            ลองจิจูด
-          </div>
+          <div class="text-subtitle-1 mb-2">ลองจิจูด</div>
           <v-text-field
             v-model="markerLatLng.lng"
             placeholder="ลองจิจูด"
@@ -279,10 +275,10 @@
           </div>
           <v-select
             v-model="form.status"
-            :items="statuses"
             placeholder="สถานะ"
             variant="outlined"
             :rules="[rules.required]"
+            disabled
           />
         </v-col>
       </v-row>
@@ -325,7 +321,7 @@ export default {
         lostPlace: "",
         details: "",
         image: null,
-        status: null,
+        status: "หาย",
         types: null,
       },
       markerLatLng: {
@@ -336,7 +332,6 @@ export default {
       center: [18.895811354244756, 99.0130001306534],
       genders: ["ผู้", "เมีย", "ไม่ระบุ"],
       types: ["สุนัข", "แมว", "สัตว์เลี้ยงอื่นๆ"],
-      statuses: ["หาย", "เจอแล้ว"],
       rules: {
         required: (value) => {
           return value && value.trim() ? true : "จำเป็นต้องกรอก";
@@ -480,7 +475,7 @@ export default {
         lostPlace: "",
         details: "",
         image: null,
-        status: null,
+        status: "หาย",
         types: null,
       };
       this.markerLatLng = {

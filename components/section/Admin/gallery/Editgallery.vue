@@ -17,6 +17,9 @@
           ></v-text-field>
         </v-col>
         <v-col cols="12" sm="6">
+          <div class="text-subtitle-1 mb-2">
+            แสดงแกลลอรี่
+          </div>
           <v-switch
             v-model="form.status"
             placeholder="แสดงแกลลอรี่"

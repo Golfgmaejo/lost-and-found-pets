@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h1 class="text-portfolio-title text-center my-6">เข้าสู่ระบบ</h1>
+    <h1 class="text-portfolio-title text-center">เข้าสู่ระบบ</h1>
     <v-card
       class="text-form mx-auto pa-12 pb-8"
       elevation="8"

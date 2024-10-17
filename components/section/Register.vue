@@ -9,6 +9,48 @@
     <h5 class="text-red">*กรุณากรอก</h5>
 
     <v-form v-model="valid" ref="form" class="text-form my-5">
+      <v-row
+        ><v-col cols="12" md="6">
+          <div class="text-subtitle-1 mb-2">
+            Email address&nbsp;<span class="text-red">*</span>
+          </div>
+          <v-text-field
+            placeholder="กรุณากรอก Email address"
+            v-model="email"
+            :rules="[rules.required, rules.email]"
+            variant="outlined"
+          />
+        </v-col>
+
+        <v-col cols="12" md="6">
+          <div class="text-subtitle-1 mb-2">
+            Password&nbsp;<span class="text-red">*</span>
+          </div>
+          <v-text-field
+            placeholder="กรุณากรอก Password"
+            v-model="password"
+            :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+            :type="visible ? 'text' : 'password'"
+            :rules="passwordRules"
+            variant="outlined"
+            @click:append-inner="visible = !visible"
+          />
+        </v-col>
+
+        <v-col cols="12" md="6">
+          <div class="text-subtitle-1 mb-2">
+            Confirm password&nbsp;<span class="text-red">*</span>
+          </div>
+          <v-text-field
+            placeholder="กรุณากรอก Confirm password"
+            v-model="confirmPassword"
+            :type="'password'"
+            :rules="confirmPasswordRules"
+            variant="outlined"
+          />
+        </v-col>
+      </v-row>
+
       <v-row>
         <v-col cols="12" md="6">
           <div class="text-subtitle-1 mb-2">
@@ -140,48 +182,6 @@
             variant="outlined"
           ></v-autocomplete> </v-col
       ></v-row>
-
-      <v-row
-        ><v-col cols="12" md="6">
-          <div class="text-subtitle-1 mb-2">
-            Email address&nbsp;<span class="text-red">*</span>
-          </div>
-          <v-text-field
-            placeholder="กรุณากรอก Email address"
-            v-model="email"
-            :rules="[rules.required, rules.email]"
-            variant="outlined"
-          />
-        </v-col>
-
-        <v-col cols="12" md="6">
-          <div class="text-subtitle-1 mb-2">
-            Password&nbsp;<span class="text-red">*</span>
-          </div>
-          <v-text-field
-            placeholder="กรุณากรอก Password"
-            v-model="password"
-            :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
-            :type="visible ? 'text' : 'password'"
-            :rules="passwordRules"
-            variant="outlined"
-            @click:append-inner="visible = !visible"
-          />
-        </v-col>
-
-        <v-col cols="12" md="6">
-          <div class="text-subtitle-1 mb-2">
-            Confirm password&nbsp;<span class="text-red">*</span>
-          </div>
-          <v-text-field
-            placeholder="กรุณากรอก Confirm password"
-            v-model="confirmPassword"
-            :type="'password'"
-            :rules="confirmPasswordRules"
-            variant="outlined"
-          />
-        </v-col>
-      </v-row>
 
       <v-col cols="12" class="d-flex justify-center mb-4">
         <v-checkbox

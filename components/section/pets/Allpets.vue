@@ -272,7 +272,7 @@
                 >
               </div>
               <div class="text-2">
-                สถานที่พบ:&nbsp;<span class="span-1">{{
+                ที่อยู่:&nbsp;<span class="span-1">{{
                   animal.adopt_place
                 }}</span>
               </div>

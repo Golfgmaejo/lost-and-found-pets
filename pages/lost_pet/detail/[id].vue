@@ -155,23 +155,25 @@
 
           <v-col cols="12" md="4">
             <v-card class="card-detail-3 pa-2">
-              <div class="div-detail-1" style="margin-bottom: 8px;">ผู้ลงประกาศ</div>
+              <div class="div-detail-1" style="margin-bottom: 8px">
+                ผู้ลงประกาศ
+              </div>
               <div class="div-detail-2" v-if="postedBy">
                 <div style="display: flex">
                   <v-icon color="primary">mdi-account</v-icon> &nbsp;
                   <div class="text-3">
                     ชื่อ:&nbsp;<span class="span-2"
-                      >{{ postedBy.prefix }}
-                      {{ postedBy.first_name }} {{
-                        postedBy.last_name
-                      }}</span
+                      >{{ postedBy.prefix }} {{ postedBy.first_name }}
+                      {{ postedBy.last_name }}</span
                     >
                   </div>
                 </div>
                 <div style="display: flex">
                   <v-icon color="primary">mdi-phone</v-icon> &nbsp;
                   <div class="text-3">
-                    เบอร์โทร:&nbsp;<span class="span-2">{{ postedBy.phone }}</span>
+                    เบอร์โทร:&nbsp;<span class="span-2">{{
+                      postedBy.phone
+                    }}</span>
                   </div>
                 </div>
                 <div style="display: flex">
@@ -183,13 +185,17 @@
                 <div style="display: flex" v-if="postedBy.Facebook">
                   <v-icon color="primary">mdi-facebook</v-icon> &nbsp;
                   <div class="text-3">
-                    Facebook:&nbsp;<span class="span-2">{{ postedBy.Facebook }}</span>
+                    Facebook:&nbsp;<span class="span-2">{{
+                      postedBy.Facebook
+                    }}</span>
                   </div>
                 </div>
                 <div style="display: flex" v-if="postedBy.Line_id">
                   <v-icon color="primary">mdi-chat</v-icon> &nbsp;
                   <div class="text-3">
-                    LINE ID:&nbsp;<span class="span-2">{{ postedBy.Line_id }}</span>
+                    LINE ID:&nbsp;<span class="span-2">{{
+                      postedBy.Line_id
+                    }}</span>
                   </div>
                 </div>
               </div>
@@ -198,17 +204,24 @@
                 class="border-opacity-100"
                 :thickness="1"
                 color="#d69d6b"
-                style="margin-bottom: 16px; margin-top: 16px;"
+                style="margin-bottom: 16px; margin-top: 16px"
               ></v-divider>
 
               <div>
-                <div  class="div-detail-1" style="margin-bottom: 8px;">
+                <div class="div-detail-1" style="margin-bottom: 8px">
                   สมัครสมาชิกแล้วดียังไง
                 </div>
                 <div class="div-detail-2">
-                  แจ้งหายง่าย รวดเร็ว ถึงไม่หายก็ลงได้ มาร่วมเป็นเพื่อนบ้านกับเราเพื่อให้ช่วยกันสอดส่องตามหา
+                  แจ้งหายง่าย รวดเร็ว ถึงไม่หายก็ลงได้
+                  มาร่วมเป็นเพื่อนบ้านกับเราเพื่อให้ช่วยกันสอดส่องตามหา
                   <div>
-                    <v-btn to="/register" color="primary"  block class="mt-3 btn-member">สมัครสมาชิก</v-btn>
+                    <v-btn
+                      to="/register"
+                      color="primary"
+                      block
+                      class="mt-3 btn-member"
+                      >สมัครสมาชิก</v-btn
+                    >
                   </div>
                 </div>
               </div>
@@ -216,10 +229,8 @@
           </v-col>
         </v-row>
       </v-container>
-      <v-dialog v-model="imageDialog" max-width="800px">
-        <v-carousel>
-          <v-carousel-item :src="selectedImage" />
-        </v-carousel>
+      <v-dialog v-model="imageDialog" max-width="500px">
+          <v-img :src="selectedImage" />
       </v-dialog>
     </v-main>
   </v-container>
@@ -227,7 +238,6 @@
 
 <script>
 import axios from "axios";
-// import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import Bannerlostpets from "~/components/section/banner/Bannerlostpets.vue";
 import { format } from "date-fns";

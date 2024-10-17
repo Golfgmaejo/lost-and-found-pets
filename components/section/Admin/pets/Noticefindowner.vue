@@ -223,10 +223,10 @@
           </div>
           <v-select
             v-model="form.status"
-            :items="statuses"
             placeholder="สถานะ"
             variant="outlined"
             :rules="[rules.required]"
+            disabled
           ></v-select>
         </v-col>
       </v-row>
@@ -264,7 +264,7 @@ export default {
         findownerPlace: "",
         details: "",
         image: null,
-        status: null,
+        status: "กำลังหาเจ้าของ",
         types: null,
       },
       markerLatLng: {
@@ -274,7 +274,6 @@ export default {
       zoom: 16,
       center: [18.895811354244756, 99.0130001306534],
       genders: ["ผู้", "เมีย", "ไม่ระบุ"],
-      statuses: ["กำลังหาเจ้าของ", "พบเจ้าของแล้ว"],
       types: ["สุนัข", "แมว", "สัตว์เลี้ยงอื่นๆ"],
       rules: {
         required: (value) => {
@@ -404,7 +403,7 @@ export default {
         findownerPlace: "",
         details: "",
         image: null,
-        status: null,
+        status: "กำลังหาเจ้าของ",
         types: null,
       };
       this.markerLatLng = {

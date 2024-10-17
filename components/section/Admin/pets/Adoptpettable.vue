@@ -6,7 +6,7 @@
       </v-col>
       <v-spacer></v-spacer>
       <v-col cols="12" lg="auto">
-        <v-dialog v-model="dialog" max-width="1200px">
+        <v-dialog v-model="dialog" max-width="1200px" persistent>
           <template v-slot:activator="{ on, props }">
             <v-btn
               class="mb-2 btn-style"
@@ -69,7 +69,7 @@
         <v-btn color="primary" @click="fetchPetList">รีเซ็ต</v-btn>
       </template>
     </v-data-table>
-    <v-dialog v-model="dialogEdit" max-width="1200px">
+    <v-dialog v-model="dialogEdit" max-width="1200px" persistent>
       <v-card>
         <v-card-text>
           <Editadoptpet :petData="editedItem" @updateadoptpet="onEditUpdate" />
@@ -121,7 +121,7 @@ export default {
         { title: "เพศ", key: "gender" },
         { title: "สายพันธุ์", key: "breed" },
         { title: "วันที่ประกาศ", key: "adopt_date" },
-        { title: "สถานที่พบ", key: "adopt_place" },
+        { title: "ที่อยู่", key: "adopt_place" },
         { title: "รูปภาพ", key: "image_url" },
         { title: "สถานะ", key: "status" },
         { title: "จัดการ", key: "actions", sortable: false },

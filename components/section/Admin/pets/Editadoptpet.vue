@@ -128,11 +128,11 @@
       <v-row>
         <v-col cols="12">
           <div class="text-subtitle-1 mb-2">
-            สถานที่หาย&nbsp;<span class="text-red">*</span>
+            ที่อยู่&nbsp;<span class="text-red">*</span>
           </div>
           <v-text-field
             v-model="form.adopt_place"
-            placeholder="สถานที่หาย"
+            placeholder="ที่อยู่"
             variant="outlined"
             :rules="[rules.required]"
           ></v-text-field>

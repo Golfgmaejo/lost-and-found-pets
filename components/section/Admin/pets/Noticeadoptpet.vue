@@ -128,11 +128,11 @@
       <v-row>
         <v-col cols="12">
           <div class="text-subtitle-1 mb-2">
-            สถานที่พบ&nbsp;<span class="text-red">*</span>
+            ที่อยู่&nbsp;<span class="text-red">*</span>
           </div>
           <v-text-field
             v-model="form.adoptPlace"
-            placeholder="สถานที่พบ"
+            placeholder="ที่อยู่"
             variant="outlined"
             :rules="[rules.required]"
           ></v-text-field>
@@ -222,10 +222,10 @@
           </div>
           <v-select
             v-model="form.status"
-            :items="statuses"
             placeholder="สถานะ"
             variant="outlined"
             :rules="[rules.required]"
+            disabled
           ></v-select>
         </v-col>
       </v-row>
@@ -260,7 +260,7 @@ export default {
         adoptPlace: "",
         details: "",
         image: null,
-        status: null,
+        status: "กำลังหาบ้าน",
         types: null,
       },
       markerLatLng: {
@@ -270,7 +270,6 @@ export default {
       zoom: 16,
       center: [18.895811354244756, 99.0130001306534],
       genders: ["ผู้", "เมีย", "ไม่ระบุ"],
-      statuses: ["กำลังหาบ้าน", "ได้บ้านแล้ว"],
       types: ["สุนัข", "แมว", "สัตว์เลี้ยงอื่นๆ"],
       rules: {
         required: (value) => {
@@ -394,7 +393,7 @@ export default {
         adoptPlace: "",
         details: "",
         image: null,
-        status: null,
+        status: "กำลังหาบ้าน",
         types: null,
       };
       this.markerLatLng = {

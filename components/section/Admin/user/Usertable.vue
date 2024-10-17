@@ -6,7 +6,7 @@
       </v-col>
       <v-spacer></v-spacer>
       <v-col cols="12" lg="auto" class="mr-14">
-        <v-dialog v-model="dialog" max-width="1200px">
+        <v-dialog v-model="dialog" max-width="1200px" persistent>
           <template v-slot:activator="{ on, props }">
             <v-btn
               class="mb-2 btn-style"
@@ -131,7 +131,7 @@
       </template>
     </v-data-table>
 
-    <v-dialog v-model="dialogEdit" max-width="1200px">
+    <v-dialog v-model="dialogEdit" max-width="1200px" persistent>
       <v-card>
         <v-card-text>
           <EditUser :userData="editedItem" @updateuser="onEditUpdate" />
