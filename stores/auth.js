@@ -17,7 +17,7 @@ export const useAuthStore = defineStore("auth", {
     },
     async login(email, password, router) {
       try {
-        const response = await axios.post("http://localhost:5000/api/login", {
+        const response = await axios.post("https://lost-and-found-pets-backend.onrender.com/api/login", {
           email,
           password,
         });

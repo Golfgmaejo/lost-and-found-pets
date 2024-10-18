@@ -146,7 +146,7 @@ export default {
     async fetchArticleList() {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/article/getAll_article"
+          "https://lost-and-found-pets-backend.onrender.com/api/article/getAll_article"
         );
         this.articleList = response.data.data.sort((a, b) => {
           const dateA = this.parseTimestamp(a.created_at);
@@ -191,11 +191,11 @@ export default {
         if (!articleId) {
           throw new Error("No valid ID found for the selected item.");
         }
-        await axios.post("http://localhost:5000/api/image/delete_image", {
+        await axios.post("https://lost-and-found-pets-backend.onrender.com/api/image/delete_image", {
           imageUrl: this.editedItem.image_url,
         });
         await axios.delete(
-          `http://localhost:5000/api/article/delete_article/${articleId}`
+          `https://lost-and-found-pets-backend.onrender.com/api/article/delete_article/${articleId}`
         );
         this.fetchArticleList();
         this.dialogDelete = false;

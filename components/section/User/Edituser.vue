@@ -290,7 +290,7 @@ export default {
       const userId = authStore.user.id;
 
       axios
-        .get(`http://localhost:5000/api/user/get_user/${userId}`)
+        .get(`https://lost-and-found-pets-backend.onrender.com/api/user/get_user/${userId}`)
         .then((response) => {
           const userData = response.data;
           this.prefix = userData.prefix;
@@ -334,7 +334,7 @@ export default {
       };
 
       axios
-        .put(`http://localhost:5000/api/user/update_user/${userId}`, userData)
+        .put(`https://lost-and-found-pets-backend.onrender.com/api/user/update_user/${userId}`, userData)
         .then(() => {
           toast.success("อัปเดตข้อมูลสำเร็จ", {
             autoClose: this.autoCloseTime,

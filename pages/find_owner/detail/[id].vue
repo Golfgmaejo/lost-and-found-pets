@@ -230,7 +230,7 @@ export default {
   },
   methods: {
     fetchFindownerbyid(id) {
-      const url = `http://localhost:5000/api/find_owner/get_find_owner_byid/${id}`;
+      const url = `https://lost-and-found-pets-backend.onrender.com/api/find_owner/get_find_owner_byid/${id}`;
       axios
         .get(url)
         .then((response) => {

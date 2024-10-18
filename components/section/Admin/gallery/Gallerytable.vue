@@ -131,7 +131,7 @@ export default {
     async fetchGalleryList() {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/gallery/getAll_gallery"
+          "https://lost-and-found-pets-backend.onrender.com/api/gallery/getAll_gallery"
         );
         this.galleryList = response.data.data.sort((a, b) => {
           const dateA = this.parseTimestamp(a.created_at);
@@ -167,11 +167,11 @@ export default {
         if (!galleryId) {
           throw new Error("No valid ID found for the selected item.");
         }
-        await axios.post("http://localhost:5000/api/image/delete_image", {
+        await axios.post("https://lost-and-found-pets-backend.onrender.com/api/image/delete_image", {
           imageUrl: this.editedItem.image_url,
         });
         await axios.delete(
-          `http://localhost:5000/api/gallery/delete_gallery/${galleryId}`
+          `https://lost-and-found-pets-backend.onrender.com/api/gallery/delete_gallery/${galleryId}`
         );
         this.fetchGalleryList();
         this.dialogDelete = false;

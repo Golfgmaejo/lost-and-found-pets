@@ -161,7 +161,7 @@ export default {
         formData.append("image", this.newImage);
         formData.append("old_image_url", this.form.image_url || "");
         const response = await axios.put(
-          `http://localhost:5000/api/image/update_images_products`,
+          `https://lost-and-found-pets-backend.onrender.com/api/image/update_images_products`,
           formData,
           {
             headers: {
@@ -193,7 +193,7 @@ export default {
             await this.handleFileUpload();
           }
           await axios.put(
-            `http://localhost:5000/api/product/update_product/${this.productData.id}`,
+            `https://lost-and-found-pets-backend.onrender.com/api/product/update_product/${this.productData.id}`,
             this.form
           );
           toast.success("อัปเดตข้อมูลสำเร็จ", { autoClose: this.autoCloseTime });

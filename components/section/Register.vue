@@ -345,7 +345,7 @@ export default {
           username: this.email,
         };
         axios
-          .post("http://localhost:5000/api/user/create", data)
+          .post("https://lost-and-found-pets-backend.onrender.com/api/user/create", data)
           .then((response) => {
             this.emailError = "";
             this.success = true;

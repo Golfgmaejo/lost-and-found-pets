@@ -156,7 +156,7 @@ export default {
             imageData.append("file", this.form.image);
             imageData.append("user_id", userId);
             const response = await axios.post(
-              "http://localhost:5000/api/image/upload_images_products",
+              "https://lost-and-found-pets-backend.onrender.com/api/image/upload_images_products",
               imageData,
               {
                 headers: {
@@ -183,7 +183,7 @@ export default {
         };
         try {
           const response = await axios.post(
-            "http://localhost:5000/api/product/add_product",
+            "https://lost-and-found-pets-backend.onrender.com/api/product/add_product",
             data
           );
           this.$emit("addproduct");

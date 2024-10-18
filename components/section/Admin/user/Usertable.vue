@@ -200,7 +200,7 @@ export default {
     async fetchUserList() {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/user/getAll_user"
+          "https://lost-and-found-pets-backend.onrender.com/api/user/getAll_user"
         );
         this.userList = response.data.users;
       } catch (error) {
@@ -235,7 +235,7 @@ export default {
           throw new Error("No valid ID found for the selected item.");
         }
         await axios.delete(
-          `http://localhost:5000/api/user/delete_user/${userId}`
+          `https://lost-and-found-pets-backend.onrender.com/api/user/delete_user/${userId}`
         );
         this.dialogDelete = false;
         this.fetchUserList();

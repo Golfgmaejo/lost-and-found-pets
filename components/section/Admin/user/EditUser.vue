@@ -299,7 +299,7 @@ export default {
       if (this.valid) {
         try {
           await axios.put(
-            `http://localhost:5000/api/user/update_user/${this.userData.id}`,
+            `https://lost-and-found-pets-backend.onrender.com/api/user/update_user/${this.userData.id}`,
             this.form
           );
           toast.success("อัปเดตข้อมูลผู้ใช้สำเร็จ", {

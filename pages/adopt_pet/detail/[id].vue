@@ -242,7 +242,7 @@ export default {
   },
   methods: {
     fetchAdoptpetbyid(id) {
-      const url = `http://localhost:5000/api/adopt_pet/get_adopt_pet_byid/${id}`;
+      const url = `https://lost-and-found-pets-backend.onrender.com/api/adopt_pet/get_adopt_pet_byid/${id}`;
       axios
         .get(url)
         .then((response) => {

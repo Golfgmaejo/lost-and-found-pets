@@ -133,7 +133,7 @@ export default {
             imageData.append("file", this.form.image);
             imageData.append("user_id", userId);
             const response = await axios.post(
-              "http://localhost:5000/api/image/upload_images_article",
+              "https://lost-and-found-pets-backend.onrender.com/api/image/upload_images_article",
               imageData,
               {
                 headers: {
@@ -160,7 +160,7 @@ export default {
         };
         try {
           const response = await axios.post(
-            "http://localhost:5000/api/article/add_article",
+            "https://lost-and-found-pets-backend.onrender.com/api/article/add_article",
             data
           );
           toast.success("เพิ่มบทความสำเร็จ", { autoClose: this.autoCloseTime });

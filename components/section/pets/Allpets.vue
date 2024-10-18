@@ -406,7 +406,7 @@ const parseTimestamp = (timestamp) => {
 const fetchAllpets = async () => {
   try {
     const lostPetsResponse = await axios.get(
-      "http://localhost:5000/api/lost_pet/getAll_lost_pets"
+      "https://lost-and-found-pets-backend.onrender.com/api/lost_pet/getAll_lost_pets"
     );
     const lostPets = lostPetsResponse.data.data.map((pet) => ({
       ...pet,
@@ -414,7 +414,7 @@ const fetchAllpets = async () => {
     }));
 
     const findOwnerResponse = await axios.get(
-      "http://localhost:5000/api/find_owner/getAll_find_owner"
+      "https://lost-and-found-pets-backend.onrender.com/api/find_owner/getAll_find_owner"
     );
     const findOwners = findOwnerResponse.data.data.map((pet) => ({
       ...pet,
@@ -422,7 +422,7 @@ const fetchAllpets = async () => {
     }));
 
     const adoptPetResponse = await axios.get(
-      "http://localhost:5000/api/adopt_pet/getAll_adopt_pet"
+      "https://lost-and-found-pets-backend.onrender.com/api/adopt_pet/getAll_adopt_pet"
     );
     const adoptPets = adoptPetResponse.data.data.map((pet) => ({
       ...pet,

@@ -127,7 +127,7 @@ export default {
       const userId = authStore.user.id;
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/lost_pet/get_lost_pets_by_user_id/${userId}`
+          `https://lost-and-found-pets-backend.onrender.com/api/lost_pet/get_lost_pets_by_user_id/${userId}`
         );
         this.petList = response.data.data;
       } catch (error) {
@@ -161,11 +161,11 @@ export default {
         if (!petId) {
           throw new Error("No valid ID found for the selected item.");
         }
-        await axios.post("http://localhost:5000/api/image/delete_image", {
+        await axios.post("https://lost-and-found-pets-backend.onrender.com/api/image/delete_image", {
           imageUrl: this.editedItem.image_url,
         });
         await axios.delete(
-          `http://localhost:5000/api/lost_pet/delete_lost_pet/${petId}`
+          `https://lost-and-found-pets-backend.onrender.com/api/lost_pet/delete_lost_pet/${petId}`
         );
         this.fetchPetList();
         this.dialogDelete = false;

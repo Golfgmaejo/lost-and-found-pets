@@ -194,7 +194,7 @@ const userData = ref({});
 const fetchUserData = async (userId) => {
   try {
     const response = await axios.get(
-      `http://localhost:5000/api/user/get_user/${userId}`
+      `https://lost-and-found-pets-backend.onrender.com/api/user/get_user/${userId}`
     );
     userData.value = response.data;
   } catch (error) {

@@ -95,7 +95,7 @@ export default {
     async fetchArticles() {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/article/getAll_article"
+          "https://lost-and-found-pets-backend.onrender.com/api/article/getAll_article"
         );
         this.articles = response.data.data;
         this.articles = response.data.data.sort((a, b) => {

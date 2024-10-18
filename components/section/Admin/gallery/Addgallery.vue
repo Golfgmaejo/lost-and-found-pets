@@ -98,7 +98,7 @@ export default {
             imageData.append("file", this.form.image);
             imageData.append("user_id", userId);
             const response = await axios.post(
-              "http://localhost:5000/api/image/upload_images_gallery",
+              "https://lost-and-found-pets-backend.onrender.com/api/image/upload_images_gallery",
               imageData,
               {
                 headers: {
@@ -125,7 +125,7 @@ export default {
 
         try {
           const response = await axios.post(
-            "http://localhost:5000/api/gallery/add_gallery",
+            "https://lost-and-found-pets-backend.onrender.com/api/gallery/add_gallery",
             data
           );
           toast.success("เพิ่มข้อมูลแกลลอรี่สำเร็จ", {

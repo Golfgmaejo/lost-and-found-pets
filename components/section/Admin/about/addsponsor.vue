@@ -119,7 +119,7 @@
   
         try {
           const response = await axios.post(
-            "http://localhost:5000/api/about/upload_images_sponsors",
+            "https://lost-and-found-pets-backend.onrender.com/api/about/upload_images_sponsors",
             formData,
             {
               headers: {
@@ -142,7 +142,7 @@
             sponsorImage3: imageUrl3,
           };
   
-          await axios.post("http://localhost:5000/api/about/add_sponsor", data);
+          await axios.post("https://lost-and-found-pets-backend.onrender.com/api/about/add_sponsor", data);
           toast.success("เพิ่มข้อมูลผู้สนับสนุนสำเร็จ", {
             autoClose: this.autoCloseTime,
           });

@@ -206,7 +206,7 @@ const parseTimestamp = (timestamp) => {
 };
 
 const fetchProduct = async () => {
-  const url = "http://localhost:5000/api/product/getAll_product";
+  const url = "https://lost-and-found-pets-backend.onrender.com/api/product/getAll_product";
   try {
     const response = await axios.get(url);
     let products = response.data.data;

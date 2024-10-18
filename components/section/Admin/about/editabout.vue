@@ -124,7 +124,7 @@ export default {
         formData.append("old_image_url2", oldImageURL2 || "");
 
         const response = await axios.put(
-          `http://localhost:5000/api/about/update_images_about`,
+          `https://lost-and-found-pets-backend.onrender.com/api/about/update_images_about`,
           formData,
           {
             headers: {
@@ -166,7 +166,7 @@ export default {
 
   try {
     const response = await axios.put(
-      `http://localhost:5000/api/about/update_about/${this.form.id}`,
+      `https://lost-and-found-pets-backend.onrender.com/api/about/update_about/${this.form.id}`,
       {
         description1: this.form.description1,
         description2: this.form.description2,

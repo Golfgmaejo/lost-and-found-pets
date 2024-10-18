@@ -92,7 +92,7 @@ export default {
 
       try {
         const response = await axios.post(
-          "http://localhost:5000/api/about/upload_images_about",
+          "https://lost-and-found-pets-backend.onrender.com/api/about/upload_images_about",
           formData,
           {
             headers: {
@@ -111,7 +111,7 @@ export default {
           image2: imageUrl2,
         };
         const saveResponse = await axios.post(
-          "http://localhost:5000/api/about/add_about",
+          "https://lost-and-found-pets-backend.onrender.com/api/about/add_about",
           data
         );
         toast.success("เพิ่มข้อมูลเกี่ยวกับสำเร็จ", {

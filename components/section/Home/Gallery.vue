@@ -43,7 +43,7 @@ export default {
     async fetchGalleryImages() {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/gallery/getAll_gallery"
+          "https://lost-and-found-pets-backend.onrender.com/api/gallery/getAll_gallery"
         );
         const galleryItems = response.data.data;
 

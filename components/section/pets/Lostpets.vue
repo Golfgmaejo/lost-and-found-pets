@@ -252,7 +252,7 @@ const parseTimestamp = (timestamp) => {
 };
 
 const fetchLostpets = async () => {
-  const url = "http://localhost:5000/api/lost_pet/getAll_lost_pets";
+  const url = "https://lost-and-found-pets-backend.onrender.com/api/lost_pet/getAll_lost_pets";
   try {
     const response = await axios.get(url);
     lostpetsList.value = response.data.data.sort((a, b) => {

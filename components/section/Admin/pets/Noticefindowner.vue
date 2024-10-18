@@ -341,7 +341,7 @@ export default {
             imageData.append("file", this.form.image);
             imageData.append("user_id", userId);
             const response = await axios.post(
-              "http://localhost:5000/api/image/upload_images_find_owner",
+              "https://lost-and-found-pets-backend.onrender.com/api/image/upload_images_find_owner",
               imageData,
               {
                 headers: {
@@ -374,7 +374,7 @@ export default {
         };
         try {
           const response = await axios.post(
-            "http://localhost:5000/api/find_owner/add_find_owner",
+            "https://lost-and-found-pets-backend.onrender.com/api/find_owner/add_find_owner",
             data
           );
           toast.success("ประกาศสัตว์หาเจ้าของสำเร็จ", {

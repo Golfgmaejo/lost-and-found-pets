@@ -229,7 +229,7 @@ const parseTimestamp = (timestamp) => {
 };
 
 const fetchFindowners = async () => {
-  const url = "http://localhost:5000/api/find_owner/getAll_find_owner";
+  const url = "https://lost-and-found-pets-backend.onrender.com/api/find_owner/getAll_find_owner";
   try {
     const response = await axios.get(url);
     findownersList.value = response.data.data.sort((a, b) => {

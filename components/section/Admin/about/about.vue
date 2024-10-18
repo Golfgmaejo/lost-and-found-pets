@@ -219,7 +219,7 @@ export default {
     async fetchAboutData() {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/about/get_description`
+          `https://lost-and-found-pets-backend.onrender.com/api/about/get_description`
         );
         this.aboutDataItem = response.data.data;
       } catch (error) {
@@ -230,7 +230,7 @@ export default {
     async fetchSponsorsData() {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/about/get_sponsors`
+          `https://lost-and-found-pets-backend.onrender.com/api/about/get_sponsors`
         );
         const sponsorData = response.data.data[0];
         this.sponsorsDataItem = {
